@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr.Artist | Bespoke Fine Art Wall Prints & Triptych Studio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logo.png">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Elevate your home with Mr.Artist — Design That Speaks. Handcrafted fine art wall prints, panoramic 3-panel triptych splits, single landscapes, and bespoke portraits.">
+    <meta name="keywords" content="Mr.Artist, Design That Speaks, wall art sri lanka, triptych prints, landscape posters, bespoke portraits, modern home decor prints">
+    <meta property="og:image" content="/logo.png" />
+    
+    <!-- Google Fonts: Space Grotesk (Display) & Plus Jakarta Sans (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Critical Inline Styles for Instant Preloader (Zero Flash of Unstyled Content) -->
+    <style>
+        #page-preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #FDFBF7;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        #page-preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .preloader-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 90vw;
+        }
+        .preloader-img {
+            width: 240px;
+            max-width: 70vw;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(200, 90, 50, 0.12));
+            animation: preloader-logo-pulse 2s infinite ease-in-out;
+        }
+        .preloader-track {
+            width: 130px;
+            height: 3px;
+            background-color: #E8E3D9;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+        .preloader-progress {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #C85A32, #E59838, #C85A32);
+            border-radius: 9999px;
+            animation: preloader-bar-slide 1.2s infinite ease-in-out;
+        }
+        @keyframes preloader-logo-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.04); opacity: 0.92; }
+        }
+        @keyframes preloader-bar-slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(220%); }
+        }
+    </style>
+</head>
+<body class="bg-[#FDFBF7] text-[#222222] font-sans antialiased overflow-x-hidden selection:bg-[#C85A32] selection:text-white">
+
+    <!-- Full-Screen Brand Loading Page (Immediate Instant Render) -->
+    <div id="page-preloader">
+        <div class="preloader-box">
+            <img src="/logo.png" alt="Mr.Artist" class="preloader-img">
+            <div class="preloader-track">
+                <div class="preloader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js Ambient Particle Background -->
+    <div id="three-ambient-canvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none opacity-70"></div>
+    <div class="fixed top-0 left-0 w-full h-full -z-10 bg-gradient-to-b from-[#FDFBF7]/40 via-[#F5F2EB]/30 to-[#FDFBF7] pointer-events-none"></div>
+
+    <!-- Floating Navigation Bar -->
+    <nav class="fixed top-5 left-1/2 transform -translate-x-1/2 w-[92%] max-w-[960px] h-16 glass-nav rounded-full flex items-center justify-between px-5 md:px-7 z-50 shadow-soft">
+        <a href="#" class="flex items-center group py-1">
+            <img src="/logo.png" alt="Mr.Artist - Design That Speaks" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-sm">
+        </a>
+
+        <!-- Center Links -->
+        <div class="hidden md:flex items-center space-x-1">
+            <a href="#formats" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Formats</a>
+            <a href="#gallery" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Gallery</a>
+            <a href="#pricing" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Pricing</a>
+            <a href="#quality" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Quality</a>
+            <a href="#calculator" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Calculator</a>
+        </div>
+
+        <!-- Studio Status Pill -->
+        <div class="flex items-center space-x-2 px-3.5 py-1.5 bg-[#FBF2ED] border border-[#C85A32]/25 rounded-full">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C85A32] opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#C85A32]"></span>
+            </span>
+            <span class="text-[11px] font-bold text-[#C85A32] tracking-wider uppercase">Studio Open</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center items-center px-6 relative pt-28 pb-20 text-center">
+        <!-- Floating Subtle Decorative Frame -->
+        <div class="absolute inset-0 flex items-center justify-center -z-10 pointer-events-none opacity-40">
+            <div class="w-[min(90vw,760px)] aspect-[16/9] border border-[#C85A32]/20 rounded-3xl bg-[#F5F2EB]/40 blur-[1px]"></div>
+        </div>
+
+        <div class="max-w-[860px] space-y-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#C85A32]/30 bg-[#FBF2ED] text-xs font-bold text-[#C85A32]">
+                <i class="fa-solid fa-crown text-amber-600 text-xs"></i> Design That Speaks — Bespoke Archival Wall Art
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-extrabold text-[#222222] leading-[1.15] tracking-tight">
+                Artful Living, <br>
+                <span class="italic font-normal text-[#C85A32]">Masterfully Framed.</span>
+            </h1>
+
+            <p class="max-w-[620px] mx-auto text-sm sm:text-base text-[#666666] leading-relaxed font-normal">
+                Transforming residential living rooms and modern workspaces with panoramic 3-panel landscape triptychs, single gallery landscapes, and bespoke portraits.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+                <a href="#gallery" class="px-8 py-3.5 bg-[#C85A32] hover:bg-[#B04A25] text-white font-bold text-sm rounded-full tracking-wide transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-images text-xs"></i>
+                    <span>Explore Gallery</span>
+                </a>
+                <a href="#calculator" class="px-8 py-3.5 border border-[#E8E3D9] bg-white hover:bg-[#F5F2EB] text-[#222222] font-semibold text-sm rounded-full transition-all duration-300 hover:border-[#C85A32]/40 shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-calculator text-xs text-[#C85A32]"></i>
+                    <span>Instant Quote Calculator</span>
+                </a>
+            </div>
+
+            <!-- Features Highlights Chips -->
+            <div class="flex flex-wrap justify-center items-center gap-4 pt-8 text-xs text-[#666666]">
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-check text-[#C85A32]"></i>
+                    <span>A4 & A3 300GSM Boards</span>
+                </div>
+                <span class="text-[#E8E3D9]">•</span>
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-check text-[#C85A32]"></i>
+                    <span>4mm (2600GSM) Rigid Boards</span>
+                </div>
+                <span class="text-[#E8E3D9]">•</span>
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-check text-[#C85A32]"></i>
+                    <span>12.5x18" x3 Triptych Splits</span>
+                </div>
+                <span class="text-[#E8E3D9]">•</span>
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-check text-[#C85A32]"></i>
+                    <span>Island-Wide Delivery</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Down Link -->
+        <a href="#formats" class="mt-14 flex flex-col items-center gap-2 text-xs text-[#888888] hover:text-[#C85A32] transition animate-bounce">
+            <span>Explore Wall Art Formats</span>
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+        </a>
+    </header>
+
+    <!-- Wall Art Formats Section -->
+    <section id="formats" class="py-24 max-w-[1400px] mx-auto px-6 scroll-mt-24">
+        <div class="text-center max-w-[700px] mx-auto mb-16 space-y-3">
+            <span class="text-xs font-bold text-[#C85A32] tracking-widest uppercase">Signature Layouts & Boards</span>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#222222]">Tailored Board Formats</h2>
+            <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">
+                Choose the perfect format for your wall proportions — from heavy 4mm (2600GSM) rigid landscape & triptych boards to 300GSM standard art boards.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            
+            <!-- Format 1: 12.5 x 18" x3 Triptych 4mm (2600GSM) Board -->
+            <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 flex flex-col justify-between relative overflow-hidden group hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full bg-[#FBF2ED] border border-[#C85A32]/30 text-[#C85A32] text-[10px] font-bold uppercase tracking-wider">
+                            Flagship Triptych Set
+                        </span>
+                        <span class="text-xs font-bold text-[#C85A32]">LKR 2,900</span>
+                    </div>
+
+                    <h3 class="font-serif text-2xl font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">
+                        12.5 x 18" x3 Triptych
+                    </h3>
+                    <p class="text-xs text-[#666666] leading-relaxed">
+                        Three portrait panels in heavy 4mm (2600GSM) rigid thickness board forming a continuous panoramic landscape. Produces an architectural 3D depth on modern living and office walls.
+                    </p>
+                </div>
+
+                <!-- 3-Panel Split Visual Mockup -->
+                <div class="py-4 bg-[#F5F2EB] rounded-2xl p-4 flex items-center justify-center gap-2 sm:gap-3 border border-[#E8E3D9]">
+                    <div class="w-1/3 aspect-[2/3] bg-white p-1 rounded-sm art-frame-shadow overflow-hidden">
+                        <div class="w-full h-full bg-cover bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80'); background-size: 300% 100%; background-position: 0% 50%;"></div>
+                    </div>
+                    <div class="w-1/3 aspect-[2/3] bg-white p-1 rounded-sm art-frame-shadow overflow-hidden">
+                        <div class="w-full h-full bg-cover bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80'); background-size: 300% 100%; background-position: 50% 50%;"></div>
+                    </div>
+                    <div class="w-1/3 aspect-[2/3] bg-white p-1 rounded-sm art-frame-shadow overflow-hidden">
+                        <div class="w-full h-full bg-cover bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80'); background-size: 300% 100%; background-position: 100% 50%;"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <div class="text-[11px] text-[#666666] flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-[#C85A32]"></i>
+                        <span>3x 12.5x18" | 4mm (2600GSM) Rigid Board</span>
+                    </div>
+                    <a href="#calculator" class="w-full py-3 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center block border border-[#C85A32]/25">
+                        Order 3-Panel Set (LKR 2,900)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Format 2: 12.5 x 24.5" Landscape 4mm (2600GSM) Board -->
+            <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 flex flex-col justify-between relative overflow-hidden group hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full bg-[#F5F2EB] border border-[#E8E3D9] text-[#666666] text-[10px] font-bold uppercase tracking-wider">
+                            Panoramic Board
+                        </span>
+                        <span class="text-xs font-bold text-[#C85A32]">LKR 2,400</span>
+                    </div>
+
+                    <h3 class="font-serif text-2xl font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">
+                        12.5 x 24.5" Landscape
+                    </h3>
+                    <p class="text-xs text-[#666666] leading-relaxed">
+                        Expansive single horizontal artwork on 4mm (2600GSM) rigid board. Captures wide mountain vistas, coastal headlands, and skyline horizons.
+                    </p>
+                </div>
+
+                <!-- Single Landscape Visual Mockup -->
+                <div class="py-4 bg-[#F5F2EB] rounded-2xl p-4 flex items-center justify-center border border-[#E8E3D9]">
+                    <div class="w-5/6 aspect-[16/10] bg-white p-1.5 rounded-sm art-frame-shadow overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="12.5x24.5 Landscape" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <div class="text-[11px] text-[#666666] flex items-center gap-2">
+                        <i class="fa-solid fa-ruler-combined text-[#C85A32]"></i>
+                        <span>12.5 x 24.5" | 4mm (2600GSM) Board</span>
+                    </div>
+                    <a href="#calculator" class="w-full py-3 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center block border border-[#C85A32]/25">
+                        Order Landscape Board (LKR 2,400)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Format 3: A4 & A3 Standard Art Boards (300GSM) -->
+            <div class="glass-card rounded-3xl p-6 md:p-8 space-y-6 flex flex-col justify-between relative overflow-hidden group hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full bg-[#F5F2EB] border border-[#E8E3D9] text-[#666666] text-[10px] font-bold uppercase tracking-wider">
+                            Standard Art Boards
+                        </span>
+                        <span class="text-xs font-bold text-[#C85A32]">500 / 900 LKR</span>
+                    </div>
+
+                    <h3 class="font-serif text-2xl font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">
+                        A4 & A3 Art Boards
+                    </h3>
+                    <p class="text-xs text-[#666666] leading-relaxed">
+                        High-density 300GSM fine art boards in A4 and A3 dimensions. Perfect for custom portraits, modern botanicals, and gallery wall collections.
+                    </p>
+                </div>
+
+                <!-- Single Portrait Visual Mockup -->
+                <div class="py-4 bg-[#F5F2EB] rounded-2xl p-4 flex items-center justify-center border border-[#E8E3D9]">
+                    <div class="w-1/2 aspect-[3/4] bg-white p-1.5 rounded-sm art-frame-shadow overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80" alt="A4 and A3 Boards" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <div class="text-[11px] text-[#666666] flex items-center gap-2">
+                        <i class="fa-solid fa-certificate text-[#C85A32]"></i>
+                        <span>A4: LKR 500 | A3: LKR 900 (300GSM)</span>
+                    </div>
+                    <a href="#calculator" class="w-full py-3 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center block border border-[#C85A32]/25">
+                        Order A4/A3 Boards
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Showcase Art Gallery / Carousel Section -->
+    <section id="gallery" class="py-24 bg-[#F5F2EB]/60 border-y border-[#E8E3D9] scroll-mt-24">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="text-center max-w-[700px] mx-auto mb-12 space-y-3">
+                <span class="text-xs font-bold text-[#C85A32] tracking-widest uppercase">Curated Catalog</span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#222222]">Signature Wall Artworks</h2>
+                <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">
+                    Explore our handcrafted collection of museum-grade fine art prints, botanical silhouettes, modern abstracts, and panoramic landscapes.
+                </p>
+
+                <!-- Category Pill Filters -->
+                <div class="flex flex-wrap justify-center items-center gap-2 pt-4">
+                    <button onclick="filterGallery('all')" id="cat-btn-all" class="px-5 py-2 rounded-full text-xs font-bold bg-[#C85A32] text-white shadow-sm transition">All Artworks</button>
+                    <button onclick="filterGallery('landscape')" id="cat-btn-landscape" class="px-5 py-2 rounded-full text-xs font-semibold bg-white border border-[#E8E3D9] text-[#666666] hover:text-[#222222] hover:border-[#C85A32]/50 transition">Landscapes</button>
+                    <button onclick="filterGallery('abstract')" id="cat-btn-abstract" class="px-5 py-2 rounded-full text-xs font-semibold bg-white border border-[#E8E3D9] text-[#666666] hover:text-[#222222] hover:border-[#C85A32]/50 transition">Abstracts</button>
+                    <button onclick="filterGallery('botanical')" id="cat-btn-botanical" class="px-5 py-2 rounded-full text-xs font-semibold bg-white border border-[#E8E3D9] text-[#666666] hover:text-[#222222] hover:border-[#C85A32]/50 transition">Botanicals</button>
+                </div>
+            </div>
+
+            <!-- Carousel Stage -->
+            <div class="relative w-full max-w-[1100px] mx-auto h-[320px] sm:h-[400px] md:h-[440px] overflow-hidden flex items-center justify-center">
+                <!-- Slides Track -->
+                <div id="carousel-track" class="relative w-full h-full flex items-center justify-center">
+                    <!-- Slide items injected dynamically by JS -->
+                </div>
+
+                <!-- Navigation Controls -->
+                <button onclick="prevSlide()" class="absolute left-3 sm:left-6 top-1/2 transform -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 border border-[#E8E3D9] text-[#222222] hover:text-[#C85A32] hover:border-[#C85A32] flex items-center justify-center transition-all z-40 shadow-md">
+                    <i class="fa-solid fa-angle-left text-base"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-3 sm:right-6 top-1/2 transform -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 border border-[#E8E3D9] text-[#222222] hover:text-[#C85A32] hover:border-[#C85A32] flex items-center justify-center transition-all z-40 shadow-md">
+                    <i class="fa-solid fa-angle-right text-base"></i>
+                </button>
+            </div>
+
+            <!-- Active Artwork Info Card -->
+            <div class="max-w-[620px] mx-auto mt-6 text-center space-y-3 glass-card p-6 rounded-3xl shadow-soft">
+                <div class="flex items-center justify-center gap-2">
+                    <span id="gallery-active-tag" class="text-[10px] font-bold uppercase tracking-wider text-[#C85A32] bg-[#FBF2ED] px-3 py-1 rounded-full border border-[#C85A32]/20">300 GSM Fine Art Matte</span>
+                    <span id="gallery-active-price" class="text-sm font-bold text-[#222222]">LKR 2,400</span>
+                </div>
+                <h3 id="gallery-active-title" class="font-serif text-xl font-bold text-[#222222]">Terracotta Abstract Geometry</h3>
+                <p id="gallery-active-desc" class="text-xs text-[#666666] leading-relaxed max-w-[500px] mx-auto">
+                    Expressive textures in warm terracotta, cream, and charcoal. A stunning statement piece for neutral-toned interiors.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Matrix & Formats -->
+    <section id="pricing" class="py-24 max-w-[1400px] mx-auto px-6 scroll-mt-24">
+        <div class="text-center max-w-[700px] mx-auto mb-16 space-y-3">
+            <span class="text-xs font-bold text-[#C85A32] tracking-widest uppercase">Transparent Standards</span>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#222222]">Product Catalog & Pricing</h2>
+            <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">
+                Archival museum grade media with calibrated pigment inks on 300GSM fine boards and heavy 4mm (2600GSM) rigid mounts.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <!-- Product Catalog Table -->
+            <div class="lg:col-span-7 glass-card rounded-3xl p-6 md:p-8 space-y-6 flex flex-col justify-between shadow-soft">
+                <div class="space-y-2">
+                    <span class="text-xs font-bold text-[#C85A32] uppercase tracking-wider">Standard & Rigid Boards</span>
+                    <h3 class="font-serif text-2xl font-bold text-[#222222]">Art Boards & Landscape Formats</h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs sm:text-sm border-collapse">
+                        <thead>
+                            <tr class="border-b border-[#E8E3D9] text-[#888888] uppercase text-[11px] font-bold">
+                                <th class="py-3 px-2">Product & Dimensions</th>
+                                <th class="py-3 px-2 text-center">Board Thickness</th>
+                                <th class="py-3 px-2 text-right">Price (LKR)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#E8E3D9]/60 text-[#222222]">
+                            <tr>
+                                <td class="py-4 px-2">
+                                    <p class="font-bold text-[#222222]">A4 Size Fine Art Board</p>
+                                    <p class="text-[11px] text-[#666666]">Standard A4 (21 x 30cm) — portrait or landscape orientation.</p>
+                                </td>
+                                <td class="py-4 px-2 text-center text-[#666666]">300 GSM Board</td>
+                                <td class="py-4 px-2 text-right font-bold text-[#C85A32]">LKR 500</td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 px-2">
+                                    <p class="font-bold text-[#222222]">A3 Size Fine Art Board</p>
+                                    <p class="text-[11px] text-[#666666]">Expansive A3 (30 x 42cm) — crisp archival detail.</p>
+                                </td>
+                                <td class="py-4 px-2 text-center text-[#666666]">300 GSM Board</td>
+                                <td class="py-4 px-2 text-right font-bold text-[#C85A32]">LKR 900</td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 px-2">
+                                    <p class="font-bold text-[#222222]">12.5 x 24.5" Single Landscape</p>
+                                    <p class="text-[11px] text-[#666666]">Wide panoramic artwork mounted on rigid heavy-duty board.</p>
+                                </td>
+                                <td class="py-4 px-2 text-center text-[#666666]">4mm (2600 GSM)</td>
+                                <td class="py-4 px-2 text-right font-bold text-[#C85A32]">LKR 2,400</td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 px-2">
+                                    <p class="font-bold text-[#222222]">Customizable Design & Orientation</p>
+                                    <p class="text-[11px] text-[#666666]">Bespoke dimensions, custom orientation, and custom photo printing.</p>
+                                </td>
+                                <td class="py-4 px-2 text-center text-[#666666]">Customizable</td>
+                                <td class="py-4 px-2 text-right font-bold text-[#C85A32]">From LKR 500+</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex items-center gap-2 text-[11px] text-[#666666] bg-[#F5F2EB] p-3.5 rounded-2xl">
+                    <i class="fa-solid fa-circle-info text-[#C85A32]"></i>
+                    <span>All single posters come trimmed with precision borderless cutting for direct framing.</span>
+                </div>
+            </div>
+
+            <!-- Flagship 3-Panel Triptych Set Highlight -->
+            <div class="lg:col-span-5 bg-gradient-to-br from-[#FBF2ED] to-[#F5F2EB] border-2 border-[#C85A32]/30 rounded-3xl p-6 md:p-8 space-y-6 flex flex-col justify-between relative overflow-hidden shadow-soft">
+                <div class="space-y-3">
+                    <span class="px-3 py-1 rounded-full bg-[#C85A32] text-white text-[10px] font-bold uppercase tracking-widest inline-block">
+                        Flagship Centerpiece
+                    </span>
+                    <h3 class="font-serif text-2xl md:text-3xl font-bold text-[#222222]">12.5 x 18" x3 Triptych</h3>
+                    <p class="text-xs text-[#666666] leading-relaxed">
+                        A single continuous panoramic landscape art cleanly divided across three 12.5x18 inch rigid 4mm (2600GSM) vertical boards. Delivers an architectural 3D wall display for modern living rooms and offices.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-[#E8E3D9] shadow-sm">
+                        <div>
+                            <p class="text-xs font-bold text-[#222222] uppercase">12.5 x 18" x3 Triptych Set</p>
+                            <p class="text-[11px] text-[#666666]">3x Portrait Boards in 4mm (2600GSM) Rigid Board</p>
+                        </div>
+                        <span class="text-xl font-bold text-[#C85A32]">LKR 2,900</span>
+                    </div>
+
+                    <div class="flex justify-between items-center p-4 bg-white rounded-2xl border border-[#C85A32]/30 shadow-sm">
+                        <div>
+                            <p class="text-xs font-bold text-[#222222] uppercase">12.5 x 24.5" Landscape Board</p>
+                            <p class="text-[11px] text-[#666666]">Single Panoramic 4mm (2600GSM) Rigid Board</p>
+                        </div>
+                        <span class="text-xl font-bold text-[#C85A32]">LKR 2,400</span>
+                    </div>
+                </div>
+
+                <div class="text-xs text-[#666666] bg-white/70 p-4 rounded-2xl border border-[#E8E3D9] leading-relaxed">
+                    <span class="text-[#C85A32] font-bold">💡 Gallery Tip:</span> Mount triptych panels with a 1-inch (2.5cm) gap between panels to achieve optimal visual depth.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Studio Quality & Bespoke Services Section -->
+    <section id="quality" class="py-24 bg-[#F5F2EB]/60 border-t border-[#E8E3D9] scroll-mt-24">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-xs font-bold text-[#C85A32] tracking-widest uppercase">Artisanal Quality</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#222222] leading-tight">
+                        Bespoke Art & Custom Commissions
+                    </h2>
+                    <p class="text-sm text-[#666666] leading-relaxed">
+                        Have a personal photograph, portrait, or digital illustration? Our bespoke studio optimizes your images for large-format printing. We handle AI upscaling, tone correction, background cleanup, and color calibration to match your wall aesthetic.
+                    </p>
+                    <div class="p-4 bg-white border border-[#E8E3D9] rounded-2xl text-xs text-[#666666] space-y-1">
+                        <div class="flex items-center gap-2 text-[#C85A32] font-bold">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Redesigning, AI Upscaling & Custom Creations (+ LKR 500 upwards)</span>
+                        </div>
+                        <p>Simply send your photos as an uncompressed document on WhatsApp.</p>
+                    </div>
+                </div>
+
+                <!-- Grid of Quality Badges -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div class="bg-white border border-[#E8E3D9] rounded-2xl p-6 space-y-3 shadow-soft">
+                        <div class="w-10 h-10 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm font-bold">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-base text-[#222222]">4mm (2600GSM) Rigid Boards</h4>
+                        <p class="text-xs text-[#666666] leading-relaxed">Ultra-sturdy 4mm thick rigid card stock designed to stay completely flat and warp-free on your walls.</p>
+                    </div>
+
+                    <div class="bg-white border border-[#E8E3D9] rounded-2xl p-6 space-y-3 shadow-soft">
+                        <div class="w-10 h-10 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm font-bold">
+                            <i class="fa-solid fa-crop"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-base text-[#222222]">Precision Borderless Trim</h4>
+                        <p class="text-xs text-[#666666] leading-relaxed">All posters and triptych splits are laser-trimmed edge-to-edge for seamless mounting in standard retail frames.</p>
+                    </div>
+
+                    <div class="bg-white border border-[#E8E3D9] rounded-2xl p-6 space-y-3 shadow-soft">
+                        <div class="w-10 h-10 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm font-bold">
+                            <i class="fa-solid fa-certificate"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-base text-[#222222]">300GSM Fine Art Stock</h4>
+                        <p class="text-xs text-[#666666] leading-relaxed">Acid-free 300GSM fine cardstock ensures your A4 and A3 artwork maintains vibrant fidelity for decades.</p>
+                    </div>
+
+                    <div class="bg-white border border-[#E8E3D9] rounded-2xl p-6 space-y-3 shadow-soft">
+                        <div class="w-10 h-10 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm font-bold">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <h4 class="font-serif font-bold text-base text-[#222222]">Island-Wide Delivery</h4>
+                        <p class="text-xs text-[#666666] leading-relaxed">Secure rigid cardboard tube packaging. Delivery charge: LKR 450 across Sri Lanka via tracked courier.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Instant Quote Calculator & Order Form -->
+    <footer id="calculator" class="py-24 max-w-[1400px] mx-auto px-6 scroll-mt-24">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <!-- Left Info Column -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="space-y-2">
+                    <img src="/logo.png" alt="Mr.Artist - Design That Speaks" class="h-14 sm:h-16 w-auto object-contain">
+                </div>
+
+                <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">
+                    Elevate your residential and commercial walls with curated artwork, custom triptych splits, and bespoke prints.
+                </p>
+
+                <!-- Social and Contact Links -->
+                <div class="space-y-3 pt-2">
+                    <a href="https://wa.me/94716354922" target="_blank" class="flex items-center gap-3 text-xs text-[#666666] hover:text-[#C85A32] transition">
+                        <div class="w-7 h-7 rounded-full bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <span>+94 71 635 4922 (WhatsApp Orders)</span>
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="flex items-center gap-3 text-xs text-[#666666] hover:text-[#C85A32] transition">
+                        <div class="w-7 h-7 rounded-full bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm">
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                        <span>@mr.artist.studio</span>
+                    </a>
+                    <a href="mailto:hello.mrartist@gmail.com" class="flex items-center gap-3 text-xs text-[#666666] hover:text-[#C85A32] transition">
+                        <div class="w-7 h-7 rounded-full bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <span>hello.mrartist@gmail.com</span>
+                    </a>
+                    <a href="https://anjanaww.vercel.app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-xs text-[#666666] hover:text-[#C85A32] transition group pt-1">
+                        <div class="w-7 h-7 rounded-full bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-xs group-hover:bg-[#C85A32] group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span>Website by <strong class="text-[#222222] group-hover:text-[#C85A32] transition-colors">Anjana Wijerathna</strong></span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-[#C85A32]"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Courier Tracking -->
+                <div class="pt-6 border-t border-[#E8E3D9] space-y-2">
+                    <p class="text-[11px] text-[#C85A32] font-bold uppercase tracking-wider">Order Tracking</p>
+                    <p class="text-xs text-[#666666]">Track existing shipments via Citypak courier portal:</p>
+                    <a href="https://track.citypak.lk" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-[#E8E3D9] hover:border-[#C85A32] rounded-xl text-xs font-semibold text-[#222222] hover:text-[#C85A32] transition shadow-sm">
+                        <i class="fa-solid fa-truck-fast text-[#C85A32]"></i>
+                        <span>track.citypak.lk</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Calculator Form -->
+            <div class="lg:col-span-7 glass-card rounded-3xl p-6 md:p-8 space-y-6 shadow-soft">
+                <div>
+                    <span class="text-xs font-bold text-[#C85A32] uppercase tracking-wider">Instant Cost Estimator</span>
+                    <h3 class="font-display text-2xl sm:text-3xl font-bold text-[#222222] tracking-tight mt-1">Calculate Quote & Book Order</h3>
+                    <p class="text-xs text-[#666666] mt-1">Select your desired board size and get instant pricing with WhatsApp order booking.</p>
+                </div>
+
+                <!-- Row 1: Product Selection & Quantity (Symmetrical Height & Alignments) -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                    
+                    <!-- Custom Luxury Interactive Dropdown (8 Cols) -->
+                    <div class="md:col-span-7 space-y-2 relative" id="custom-dropdown-container">
+                        <label class="text-[11px] uppercase font-bold text-[#666666] flex items-center justify-between h-5">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-shapes text-[#C85A32] text-xs"></i>
+                                <span>Select Product & Size</span>
+                            </span>
+                            <span class="text-[10px] text-[#C85A32] font-bold">1-Click Selection</span>
+                        </label>
+
+                        <!-- Hidden Native Select (For Form Sync) -->
+                        <select id="calc-format-select" onchange="calculateQuote()" class="hidden">
+                            <option value="triptych-4mm" selected>12.5 x 18" x3 Triptych 4mm Board (2600GSM) — LKR 2,900</option>
+                            <option value="landscape-4mm">12.5 x 24.5" Landscape 4mm Board (2600GSM) — LKR 2,400</option>
+                            <option value="a3">A3 Size Fine Art Board (300GSM) — LKR 900</option>
+                            <option value="a4">A4 Size Fine Art Board (300GSM) — LKR 500</option>
+                            <option value="custom">Customizable Design, Size & Orientation — From LKR 500+</option>
+                        </select>
+
+                        <!-- Custom Trigger Button (Matched Height h-[68px]) -->
+                        <button type="button" onclick="toggleCustomDropdown()" id="custom-dropdown-trigger" 
+                            class="w-full h-[68px] bg-white border-2 border-[#E8E3D9] hover:border-[#C85A32]/60 focus:border-[#C85A32] rounded-2xl p-3 flex items-center justify-between transition-all duration-200 shadow-sm text-left group">
+                            
+                            <div class="flex items-center gap-3 overflow-hidden">
+                                <div id="selected-item-icon-box" class="w-10 h-10 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm font-bold shrink-0 transition-transform group-hover:scale-105">
+                                    <i id="selected-item-icon" class="fa-solid fa-layer-group"></i>
+                                </div>
+                                <div class="truncate">
+                                    <div class="flex items-center gap-2">
+                                        <h4 id="selected-item-title" class="font-display text-xs sm:text-sm font-bold text-[#222222] truncate">12.5 x 18" x3 Triptych</h4>
+                                        <span id="selected-item-badge" class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#C85A32] text-white shrink-0">LKR 2,900</span>
+                                    </div>
+                                    <p id="selected-item-subtitle" class="text-[11px] text-[#666666] truncate mt-0.5">4mm (2600GSM) Rigid Board • 3 Panels</p>
+                                </div>
+                            </div>
+
+                            <div class="w-8 h-8 rounded-xl bg-[#F5F2EB] text-[#C85A32] flex items-center justify-center shrink-0 ml-2 group-hover:bg-[#FBF2ED] transition-colors">
+                                <i id="custom-dropdown-arrow" class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+                            </div>
+                        </button>
+
+                        <!-- Custom Floating Dropdown Menu -->
+                        <div id="custom-dropdown-menu" 
+                            class="absolute top-full left-0 right-0 mt-2 bg-white/98 backdrop-blur-xl border border-[#E8E3D9] rounded-2xl p-2 shadow-2xl z-50 transition-all duration-300 opacity-0 pointer-events-none transform -translate-y-2 divide-y divide-[#E8E3D9]/50">
+                            
+                            <!-- Option 1: 12.5 x 18" x3 Triptych -->
+                            <div onclick="selectCustomOption('triptych-4mm', '12.5 x 18&quot; x3 Triptych', '4mm (2600GSM) Rigid Board • 3 Panels', 'LKR 2,900', 'fa-layer-group')"
+                                class="custom-dropdown-opt flex items-center justify-between p-3 rounded-xl hover:bg-[#FBF2ED] cursor-pointer transition group" data-value="triptych-4mm">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-[#F5F2EB] text-[#C85A32] group-hover:bg-[#C85A32] group-hover:text-white flex items-center justify-center text-xs transition-colors">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-display text-xs sm:text-sm font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">12.5 x 18" x3 Triptych Set</p>
+                                        <p class="text-[10px] text-[#666666]">4mm (2600GSM) Rigid Mount • 3 Panels</p>
+                                    </div>
+                                </div>
+                                <span class="font-display text-xs font-bold text-[#C85A32] bg-[#FBF2ED] px-2.5 py-1 rounded-full border border-[#C85A32]/20">LKR 2,900</span>
+                            </div>
+
+                            <!-- Option 2: 12.5 x 24.5" Landscape -->
+                            <div onclick="selectCustomOption('landscape-4mm', '12.5 x 24.5&quot; Single Landscape', '4mm (2600GSM) Rigid Board • Panoramic', 'LKR 2,400', 'fa-image')"
+                                class="custom-dropdown-opt flex items-center justify-between p-3 rounded-xl hover:bg-[#FBF2ED] cursor-pointer transition group" data-value="landscape-4mm">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-[#F5F2EB] text-[#C85A32] group-hover:bg-[#C85A32] group-hover:text-white flex items-center justify-center text-xs transition-colors">
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-display text-xs sm:text-sm font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">12.5 x 24.5" Single Landscape</p>
+                                        <p class="text-[10px] text-[#666666]">4mm (2600GSM) Rigid Board • Wide Horizon</p>
+                                    </div>
+                                </div>
+                                <span class="font-display text-xs font-bold text-[#C85A32] bg-[#FBF2ED] px-2.5 py-1 rounded-full border border-[#C85A32]/20">LKR 2,400</span>
+                            </div>
+
+                            <!-- Option 3: A3 Size Board -->
+                            <div onclick="selectCustomOption('a3', 'A3 Size Fine Art Board', '300 GSM Fine Art Board • 30 x 42cm', 'LKR 900', 'fa-file-lines')"
+                                class="custom-dropdown-opt flex items-center justify-between p-3 rounded-xl hover:bg-[#FBF2ED] cursor-pointer transition group" data-value="a3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-[#F5F2EB] text-[#C85A32] group-hover:bg-[#C85A32] group-hover:text-white flex items-center justify-center text-xs transition-colors">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-display text-xs sm:text-sm font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">A3 Size Fine Art Board</p>
+                                        <p class="text-[10px] text-[#666666]">300 GSM Archival Board • 30 x 42 cm</p>
+                                    </div>
+                                </div>
+                                <span class="font-display text-xs font-bold text-[#C85A32] bg-[#FBF2ED] px-2.5 py-1 rounded-full border border-[#C85A32]/20">LKR 900</span>
+                            </div>
+
+                            <!-- Option 4: A4 Size Board -->
+                            <div onclick="selectCustomOption('a4', 'A4 Size Fine Art Board', '300 GSM Fine Art Board • 21 x 30cm', 'LKR 500', 'fa-file')"
+                                class="custom-dropdown-opt flex items-center justify-between p-3 rounded-xl hover:bg-[#FBF2ED] cursor-pointer transition group" data-value="a4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-[#F5F2EB] text-[#C85A32] group-hover:bg-[#C85A32] group-hover:text-white flex items-center justify-center text-xs transition-colors">
+                                        <i class="fa-solid fa-file"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-display text-xs sm:text-sm font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">A4 Size Fine Art Board</p>
+                                        <p class="text-[10px] text-[#666666]">300 GSM Archival Board • 21 x 30 cm</p>
+                                    </div>
+                                </div>
+                                <span class="font-display text-xs font-bold text-[#C85A32] bg-[#FBF2ED] px-2.5 py-1 rounded-full border border-[#C85A32]/20">LKR 500</span>
+                            </div>
+
+                            <!-- Option 5: Custom Size & Design -->
+                            <div onclick="selectCustomOption('custom', 'Customizable Size & Design', 'Bespoke Dimensions, Photo & Orientation', 'From LKR 500+', 'fa-wand-magic-sparkles')"
+                                class="custom-dropdown-opt flex items-center justify-between p-3 rounded-xl hover:bg-[#FBF2ED] cursor-pointer transition group" data-value="custom">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-[#F5F2EB] text-[#C85A32] group-hover:bg-[#C85A32] group-hover:text-white flex items-center justify-center text-xs transition-colors">
+                                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-display text-xs sm:text-sm font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">Customizable Size & Design</p>
+                                        <p class="text-[10px] text-[#666666]">Bespoke Dimensions, Orientation & Photo Print</p>
+                                    </div>
+                                </div>
+                                <span class="font-display text-xs font-bold text-[#C85A32] bg-[#FBF2ED] px-2.5 py-1 rounded-full border border-[#C85A32]/20">From LKR 500+</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Symmetrical Quantity Stepper Box (Matched Height h-[68px]) (5 Cols) -->
+                    <div class="md:col-span-5 space-y-2">
+                        <label class="text-[11px] uppercase font-bold text-[#666666] flex items-center justify-between h-5">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-calculator text-[#C85A32] text-xs"></i>
+                                <span>Quantity</span>
+                            </span>
+                            <span class="text-[10px] text-[#888888]">Units</span>
+                        </label>
+
+                        <div class="w-full h-[68px] bg-white border-2 border-[#E8E3D9] hover:border-[#C85A32]/60 focus-within:border-[#C85A32] rounded-2xl p-3 flex items-center justify-between transition-all duration-200 shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-sm font-bold shrink-0">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-display text-xs sm:text-sm font-bold text-[#222222]">Item Count</h4>
+                                    <p class="text-[11px] text-[#666666]">Total Units</p>
+                                </div>
+                            </div>
+
+                            <!-- Stepper Controls -->
+                            <div class="flex items-center gap-1.5 bg-[#F5F2EB] p-1 rounded-xl border border-[#E8E3D9]">
+                                <button type="button" onclick="changeQty(-1)" class="w-7 h-7 rounded-lg bg-white hover:bg-[#FBF2ED] text-[#C85A32] font-bold text-xs flex items-center justify-center transition active:scale-90 shadow-2xs">
+                                    <i class="fa-solid fa-minus text-[10px]"></i>
+                                </button>
+                                <input type="number" id="calc-qty-input" min="1" max="99" value="1" oninput="calculateQuote()" 
+                                    class="w-8 text-center font-display font-bold text-xs sm:text-sm text-[#222222] bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                <button type="button" onclick="changeQty(1)" class="w-7 h-7 rounded-lg bg-white hover:bg-[#FBF2ED] text-[#C85A32] font-bold text-xs flex items-center justify-center transition active:scale-90 shadow-2xs">
+                                    <i class="fa-solid fa-plus text-[10px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 2: Add-on Services (Symmetrical 50/50 Custom Design Cards) -->
+                <div class="space-y-2">
+                    <label class="text-[11px] uppercase font-bold text-[#666666] flex items-center gap-1.5 h-5">
+                        <i class="fa-solid fa-wand-magic-sparkles text-[#C85A32] text-xs"></i>
+                        <span>Custom Design & Image Services</span>
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Custom Option 1: AI Upscale & Enhancement -->
+                        <label class="h-[64px] flex items-center justify-between px-4 bg-white rounded-2xl border-2 border-[#E8E3D9] hover:border-[#C85A32]/60 cursor-pointer transition-all duration-200 shadow-sm group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-xs shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <div>
+                                    <p class="font-display text-xs sm:text-sm font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">Photo AI Upscaling</p>
+                                    <p class="text-[10px] text-[#666666]">+ LKR 500 • High-Res Enhancement</p>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="calc-upscale-check" onchange="calculateQuote()" class="w-5 h-5 rounded-md text-[#C85A32] accent-[#C85A32] cursor-pointer">
+                        </label>
+
+                        <!-- Custom Option 2: Bespoke Redesign & Custom Artwork Creation -->
+                        <label class="h-[64px] flex items-center justify-between px-4 bg-white rounded-2xl border-2 border-[#E8E3D9] hover:border-[#C85A32]/60 cursor-pointer transition-all duration-200 shadow-sm group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-xs shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-solid fa-palette"></i>
+                                </div>
+                                <div>
+                                    <p class="font-display text-xs sm:text-sm font-bold text-[#222222] group-hover:text-[#C85A32] transition-colors">Custom Art & Redesign</p>
+                                    <p class="text-[10px] text-[#666666]">+ LKR 500 • Bespoke Concept Creation</p>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="calc-custom-check" onchange="calculateQuote()" class="w-5 h-5 rounded-md text-[#C85A32] accent-[#C85A32] cursor-pointer">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Row 3: Custom Sizing / Order Notes -->
+                <div class="space-y-2">
+                    <label class="text-[11px] uppercase font-bold text-[#666666] flex items-center gap-1.5 h-5">
+                        <i class="fa-solid fa-comment-dots text-[#C85A32] text-xs"></i>
+                        <span>Custom Sizing or Order Notes (Optional)</span>
+                    </label>
+                    <textarea id="calc-notes-input" rows="2" placeholder="Specify custom dimensions, artwork name, or photo instructions..." class="w-full bg-white border-2 border-[#E8E3D9] hover:border-[#C85A32]/60 focus:border-[#C85A32] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#222222] font-medium focus:outline-none focus:ring-2 focus:ring-[#C85A32]/10 transition shadow-sm"></textarea>
+                </div>
+
+                <!-- Price Breakdown & Button -->
+                <div class="flex flex-col sm:flex-row justify-between items-center p-5 bg-[#FBF2ED] border border-[#C85A32]/30 rounded-2xl gap-4">
+                    <div>
+                        <span class="text-[10px] text-[#C85A32] font-bold uppercase tracking-wider block">Estimated Total</span>
+                        <span class="text-2xl font-bold text-[#222222] block" id="calc-total-tag">LKR 3,350</span>
+                        <span class="text-[10px] text-[#666666] block mt-0.5" id="calc-subtotal-tag">LKR 2,900 + LKR 450 island-wide delivery</span>
+                    </div>
+
+                    <button onclick="sendCustomQuoteOrder()" class="px-8 py-3.5 bg-[#C85A32] hover:bg-[#B04A25] text-white font-bold text-xs tracking-wider uppercase rounded-xl transition shadow-md hover:shadow-lg flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-sm"></i>
+                        <span>Book via WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="pt-12 mt-12 border-t border-[#E8E3D9] flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#888888]">
+            <p>&copy; 2026 Mr.Artist. Bespoke Wall Art & Design Studio. All rights reserved.</p>
+            <p class="flex items-center gap-1.5">
+                <span>Designed & Developed by</span>
+                <a href="https://anjanaww.vercel.app" target="_blank" rel="noopener noreferrer" 
+                   class="font-bold text-[#222222] hover:text-[#C85A32] underline underline-offset-4 decoration-[#C85A32]/40 hover:decoration-[#C85A32] transition inline-flex items-center gap-1">
+                    <span>Anjana Wijerathna</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-[#C85A32]"></i>
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Full-Screen Image Lightbox Modal -->
+    <div id="image-popup-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <!-- Close Button -->
+        <button onclick="closeImagePopup()" class="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-all z-50">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+        
+        <!-- Modal Card -->
+        <div class="relative max-w-[90%] max-h-[85%] overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col items-center">
+            <img id="popup-modal-image" src="" alt="Popup Artwork" class="max-w-full max-h-[68vh] object-contain select-none">
+            <div class="w-full bg-[#FDFBF7] p-5 border-t border-[#E8E3D9] text-center space-y-1">
+                <h4 id="popup-modal-title" class="font-serif font-bold text-base text-[#222222]"></h4>
+                <p id="popup-modal-desc" class="text-xs text-[#666666] max-w-[500px] mx-auto"></p>
+                <p id="popup-modal-price" class="text-xs font-bold text-[#C85A32] pt-1"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vite JS Entry Point -->
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
