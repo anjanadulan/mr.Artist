@@ -517,7 +517,7 @@ async function loadAndRenderSamples() {
 
     showcaseSamples = await fetchSamples();
 
-    if (showcaseSamples.length === 0) {
+    if (!showcaseSamples || showcaseSamples.length === 0) {
         grid.innerHTML = `
             <div class="col-span-full py-16 text-center space-y-3 glass-card rounded-3xl p-8 max-w-md mx-auto">
                 <div class="w-12 h-12 rounded-2xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-xl">
@@ -530,49 +530,68 @@ async function loadAndRenderSamples() {
         return;
     }
 
-    grid.innerHTML = showcaseSamples.map(sample => {
+    grid.innerHTML = '';
+    showcaseSamples.forEach((sample) => {
+        const card = document.createElement('div');
+        card.className = "glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group";
+
         const orderText = encodeURIComponent(`Hello Mr.Artist, I would like to order this sample:\n*Name:* ${sample.name}\n*Size:* ${sample.size}\n*Price:* ${sample.price}\n\nPlease confirm availability!`);
         const waLink = `https://wa.me/94722043235?text=${orderText}`;
 
-        return `
-            <div class="glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group">
-                <!-- Image Container -->
-                <div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden cursor-pointer" onclick="openImagePopup('${sample.src}', '${sample.name}', '${sample.size}', '${sample.price}')">
-                    <img src="${sample.src}" alt="${sample.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    
-                    <!-- Size Badge -->
-                    <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#222222] shadow-2xs">
-                        ${sample.size}
-                    </div>
-
-                    <!-- Price Badge -->
-                    <div class="absolute top-3 right-3 px-3 py-1 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[11px] font-bold text-[#C85A32] shadow-2xs">
-                        ${sample.price}
-                    </div>
-
-                    <!-- Quick View Overlay -->
-                    <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span class="px-3.5 py-1.5 bg-white/95 rounded-full text-xs font-bold text-[#1E1E1E] shadow-sm flex items-center gap-1.5">
-                            <i class="fa-solid fa-expand text-[#C85A32]"></i> Zoom
-                        </span>
-                    </div>
+        card.innerHTML = `
+            <!-- Image Container with Zoom Trigger -->
+            <div class="sample-image-trigger relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden cursor-pointer">
+                <img src="${sample.src}" alt="${sample.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                
+                <!-- Size Badge -->
+                <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#222222] shadow-2xs pointer-events-none">
+                    ${sample.size}
                 </div>
 
-                <!-- Info & Order Button -->
-                <div class="p-5 space-y-3 flex-1 flex flex-col justify-between">
-                    <div>
-                        <h4 class="font-serif font-bold text-base text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors line-clamp-1">${sample.name}</h4>
-                        <p class="text-xs text-[#666666] mt-0.5">${sample.size}</p>
-                    </div>
+                <!-- Price Badge -->
+                <div class="absolute top-3 right-3 px-3 py-1 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[11px] font-bold text-[#C85A32] shadow-2xs pointer-events-none">
+                    ${sample.price}
+                </div>
 
-                    <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">
-                        <i class="fa-brands fa-whatsapp text-sm"></i>
-                        <span>Order This (${sample.price})</span>
-                    </a>
+                <!-- Quick View Overlay -->
+                <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                    <span class="px-3.5 py-1.5 bg-white/95 rounded-full text-xs font-bold text-[#1E1E1E] shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-expand text-[#C85A32]"></i> Zoom
+                    </span>
                 </div>
             </div>
+
+            <!-- Info & Order Button -->
+            <div class="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                <div>
+                    <h4 class="sample-title-trigger font-serif font-bold text-base text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors line-clamp-1 cursor-pointer">${sample.name}</h4>
+                    <p class="text-xs text-[#666666] mt-0.5">${sample.size}</p>
+                </div>
+
+                <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Order This (${sample.price})</span>
+                </a>
+            </div>
         `;
-    }).join('');
+
+        // Direct clean JavaScript click listener (immune to quote escaping)
+        const imgTrigger = card.querySelector('.sample-image-trigger');
+        if (imgTrigger) {
+            imgTrigger.addEventListener('click', () => {
+                openImagePopup(sample.src, sample.name, sample.size, sample.price);
+            });
+        }
+
+        const titleTrigger = card.querySelector('.sample-title-trigger');
+        if (titleTrigger) {
+            titleTrigger.addEventListener('click', () => {
+                openImagePopup(sample.src, sample.name, sample.size, sample.price);
+            });
+        }
+
+        grid.appendChild(card);
+    });
 }
 
 // ----------------- Initialization on DOM Load -----------------
