@@ -250,8 +250,8 @@ document.addEventListener('keydown', (e) => {
 const priceTable = {
     'a4': 500,              // A4 size 300GSM board - 500 LKR
     'a3': 900,              // A3 size 300GSM board - 900 LKR
-    'landscape-4mm': 2400,  // 12.5 x 24.5 in landscape 4mm (2600GSM) board - 2400 LKR
-    'triptych-4mm': 2900,   // 12.5 x 18 in x3 portrait boards triptych 4mm (2600GSM) - 2900 LKR
+    'landscape-4mm': 2800,  // 12.5 x 24.5 in landscape 4mm (2600GSM) board - 2800 LKR
+    'triptych-4mm': 3200,   // 12.5 x 18 in x3 portrait boards triptych 4mm (2600GSM) - 3200 LKR
     'custom': 500           // Customizable design, size & orientation (Base starting 500 LKR)
 };
 

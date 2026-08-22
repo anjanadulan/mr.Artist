@@ -17,8 +17,8 @@ export const defaultArtworks = [
         src: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=85',
         category: 'landscape',
         format: '12.5 x 18" x3 Triptych (4mm 2600GSM)',
-        price: 'LKR 2,900',
-        rawPrice: 2900,
+        price: 'LKR 3,200',
+        rawPrice: 3200,
         tag: '4mm Rigid Triptych Set',
         desc: 'Continuous panoramic landscape across three 12.5x18 inch rigid 4mm (2600GSM) boards.'
     },
@@ -28,8 +28,8 @@ export const defaultArtworks = [
         src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85',
         category: 'landscape',
         format: '12.5 x 24.5" Landscape (4mm 2600GSM)',
-        price: 'LKR 2,400',
-        rawPrice: 2400,
+        price: 'LKR 2,800',
+        rawPrice: 2800,
         tag: '4mm Rigid Landscape Board',
         desc: 'Expansive 12.5 x 24.5 inch horizontal display mounted on heavy 4mm (2600GSM) rigid board.'
     },
@@ -61,21 +61,21 @@ export const defaultArtworks = [
         src: 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1000&q=85',
         category: 'landscape',
         format: '12.5 x 24.5" Landscape (4mm 2600GSM)',
-        price: 'LKR 2,400',
-        rawPrice: 2400,
+        price: 'LKR 2,800',
+        rawPrice: 2800,
         tag: '4mm Rigid Landscape Board',
         desc: 'Calm evergreen wilderness with soft atmospheric mist on 4mm heavy rigid board.'
     },
     {
         id: 'art6',
-        name: 'Minimalist Ceramic Form',
-        src: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=85',
+        name: 'Minimalist Ochre Forms',
+        src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85',
         category: 'abstract',
-        format: 'A4 Size (300GSM Board)',
-        price: 'LKR 500',
-        rawPrice: 500,
-        tag: 'A4 300GSM Board',
-        desc: 'Handcrafted pottery shapes and gentle lighting on 300GSM fine art board.'
+        format: '12.5 x 18" x3 Triptych (4mm 2600GSM)',
+        price: 'LKR 3,200',
+        rawPrice: 3200,
+        tag: '4mm Rigid Triptych Set',
+        desc: 'Bold architectural curves in organic clay and sienna on three vertical rigid panels.'
     }
 ];
 
@@ -125,16 +125,16 @@ export const defaultSamples = [
         name: 'Alpine Panorama 3-Panel Set',
         src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85',
         size: '12.5 x 18" x3 Triptych (4mm Board)',
-        price: 'LKR 2,900',
-        rawPrice: 2900
+        price: 'LKR 3,200',
+        rawPrice: 3200
     },
     {
         id: 'sample2',
         name: 'Mist & Valley Horizontal',
         src: 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1200&q=85',
         size: '12.5 x 24.5" Landscape (4mm Board)',
-        price: 'LKR 2,400',
-        rawPrice: 2400
+        price: 'LKR 2,800',
+        rawPrice: 2800
     },
     {
         id: 'sample3',
