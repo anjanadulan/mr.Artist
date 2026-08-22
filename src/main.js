@@ -2,6 +2,87 @@ import * as THREE from 'three';
 import './style.css';
 import { fetchArtworks, defaultArtworks, fetchSamples } from './supabase.js';
 
+// ----------------- Multi-Currency Conversion Engine -----------------
+export let currentCurrency = 'LKR'; // 'LKR' | 'USD'
+export const USD_EXCHANGE_RATE = 305; // 1 USD ≈ 305 LKR
+
+export function formatPrice(lkrAmount, options = {}) {
+    let num = 0;
+    if (typeof lkrAmount === 'number') {
+        num = lkrAmount;
+    } else if (typeof lkrAmount === 'string') {
+        num = parseFloat(lkrAmount.replace(/[^0-9.]/g, '')) || 0;
+    }
+    
+    if (currentCurrency === 'USD') {
+        const usdVal = num / USD_EXCHANGE_RATE;
+        const formatted = `$${usdVal.toFixed(2)}`;
+        if (options.prefix) return `${options.prefix}${formatted}${options.suffix || ''}`;
+        return formatted;
+    } else {
+        const formatted = `LKR ${num.toLocaleString()}`;
+        if (options.prefix) return `${options.prefix}${formatted}${options.suffix || ''}`;
+        return formatted;
+    }
+}
+
+export function detectUserCurrency() {
+    try {
+        const saved = localStorage.getItem('mrartist_currency');
+        if (saved && (saved === 'LKR' || saved === 'USD')) {
+            return saved;
+        }
+        // Auto-detect based on Sri Lanka timezone
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        if (tz.toLowerCase().includes('colombo')) {
+            return 'LKR';
+        }
+        // If outside Sri Lanka, default to USD for seamless international experience
+        return 'USD';
+    } catch (e) {
+        return 'LKR';
+    }
+}
+
+window.setCurrency = function(currency) {
+    if (currency !== 'LKR' && currency !== 'USD') return;
+    currentCurrency = currency;
+    try {
+        localStorage.setItem('mrartist_currency', currency);
+    } catch (e) {}
+
+    // 1. Update Switcher Toggle UI in Navbar
+    const btnLkr = document.getElementById('curr-btn-lkr');
+    const btnUsd = document.getElementById('curr-btn-usd');
+    if (btnLkr && btnUsd) {
+        if (currency === 'LKR') {
+            btnLkr.className = "px-2.5 py-1 rounded-full text-[10px] font-bold transition-all duration-200 bg-[#C85A32] text-white shadow-xs";
+            btnUsd.className = "px-2.5 py-1 rounded-full text-[10px] font-bold text-[#666666] hover:text-[#222222] transition-all duration-200";
+        } else {
+            btnUsd.className = "px-2.5 py-1 rounded-full text-[10px] font-bold transition-all duration-200 bg-[#C85A32] text-white shadow-xs";
+            btnLkr.className = "px-2.5 py-1 rounded-full text-[10px] font-bold text-[#666666] hover:text-[#222222] transition-all duration-200";
+        }
+    }
+
+    // 2. Update Static Data-Price Elements
+    document.querySelectorAll('[data-price-lkr]').forEach(el => {
+        const lkr = parseFloat(el.getAttribute('data-price-lkr'));
+        const prefix = el.getAttribute('data-price-prefix') || '';
+        const suffix = el.getAttribute('data-price-suffix') || '';
+        el.textContent = formatPrice(lkr, { prefix, suffix });
+    });
+
+    // 3. Update Gallery active card
+    updateCarouselVisuals();
+
+    // 4. Update Samples showcase
+    renderLoadedSamples();
+
+    // 5. Update Quote Calculator dropdown options & calculations
+    updateCalculatorDropdownLabels();
+    window.calculateQuote();
+};
+
 // Active Gallery Database (Populated dynamically from Supabase)
 export let galleryArtworks = [...defaultArtworks];
 export let showcaseSamples = [];
@@ -64,7 +145,7 @@ function renderGallery() {
 window.selectSlide = function(idx) {
     if (carouselIndex === idx) {
         const art = filteredArtworks[idx];
-        if (art) openImagePopup(art.src, art.name, art.desc, art.price);
+        if (art) openImagePopup(art.src, art.name, art.desc, art.rawPrice || art.price);
     } else {
         carouselIndex = idx;
         updateCarouselVisuals();
@@ -123,7 +204,7 @@ function updateCarouselVisuals() {
 
         if (titleEl) titleEl.textContent = activeArt.name;
         if (descEl) descEl.textContent = activeArt.desc;
-        if (priceEl) priceEl.textContent = activeArt.price;
+        if (priceEl) priceEl.textContent = formatPrice(activeArt.rawPrice || activeArt.price);
         if (tagEl) tagEl.textContent = activeArt.tag;
     }
 }
@@ -132,7 +213,7 @@ function updateCarouselVisuals() {
 let isLightboxZoomed = false;
 let currentLightboxZoomScale = 1;
 
-window.openImagePopup = function(src, title, desc, price) {
+window.openImagePopup = function(src, title, desc, rawPriceOrString) {
     const modal = document.getElementById('image-popup-modal');
     const modalImg = document.getElementById('popup-modal-image');
     const modalTitle = document.getElementById('popup-modal-title');
@@ -168,10 +249,11 @@ window.openImagePopup = function(src, title, desc, price) {
         }
     }
 
-    if (modalPrice) modalPrice.textContent = price || 'LKR 500';
+    const formattedPrice = formatPrice(rawPriceOrString || 500);
+    if (modalPrice) modalPrice.textContent = formattedPrice;
 
     if (modalWaBtn) {
-        const orderText = encodeURIComponent(`Hello Mr.Artist, I would like to order this artwork/sample:\n*Name:* ${title || 'Artwork'}\n*Size/Format:* ${desc || ''}\n*Price:* ${price || ''}\n\nPlease confirm availability and payment details.`);
+        const orderText = encodeURIComponent(`Hello Mr.Artist, I would like to order this artwork/sample:\n*Name:* ${title || 'Artwork'}\n*Size/Format:* ${desc || ''}\n*Price:* ${formattedPrice} (${currentCurrency})\n\nPlease confirm availability and payment details.`);
         modalWaBtn.href = `https://wa.me/94722043235?text=${orderText}`;
     }
 
@@ -255,6 +337,46 @@ const priceTable = {
     'custom': 500           // Customizable design, size & orientation (Base starting 500 LKR)
 };
 
+export function updateCalculatorDropdownLabels() {
+    const select = document.getElementById('calc-format-select');
+    if (select) {
+        const optTrip = select.querySelector('option[value="triptych-4mm"]');
+        const optLand = select.querySelector('option[value="landscape-4mm"]');
+        const optA3 = select.querySelector('option[value="a3"]');
+        const optA4 = select.querySelector('option[value="a4"]');
+        const optCustom = select.querySelector('option[value="custom"]');
+
+        if (optTrip) optTrip.textContent = `12.5 x 18" x3 Triptych 4mm Board (2600GSM) — ${formatPrice(3200)}`;
+        if (optLand) optLand.textContent = `12.5 x 24.5" Landscape 4mm Board (2600GSM) — ${formatPrice(2800)}`;
+        if (optA3) optA3.textContent = `A3 Size Fine Art Board (300GSM) — ${formatPrice(900)}`;
+        if (optA4) optA4.textContent = `A4 Size Fine Art Board (300GSM) — ${formatPrice(500)}`;
+        if (optCustom) optCustom.textContent = `Customizable Design, Size & Orientation — ${formatPrice(500, { prefix: 'From ', suffix: '+' })}`;
+    }
+
+    // Update Dropdown menu item badges
+    const menu = document.getElementById('custom-dropdown-menu');
+    if (menu) {
+        const tripBadge = menu.querySelector('[data-value="triptych-4mm"] span.font-display');
+        const landBadge = menu.querySelector('[data-value="landscape-4mm"] span.font-display');
+        const a3Badge = menu.querySelector('[data-value="a3"] span.font-display');
+        const a4Badge = menu.querySelector('[data-value="a4"] span.font-display');
+        const customBadge = menu.querySelector('[data-value="custom"] span.font-display');
+
+        if (tripBadge) tripBadge.textContent = formatPrice(3200);
+        if (landBadge) landBadge.textContent = formatPrice(2800);
+        if (a3Badge) a3Badge.textContent = formatPrice(900);
+        if (a4Badge) a4Badge.textContent = formatPrice(500);
+        if (customBadge) customBadge.textContent = formatPrice(500, { prefix: 'From ' });
+    }
+
+    // Update selected item trigger badge
+    const activeVal = select ? select.value : 'triptych-4mm';
+    const badgeEl = document.getElementById('selected-item-badge');
+    if (badgeEl) {
+        badgeEl.textContent = formatPrice(priceTable[activeVal] || 500);
+    }
+}
+
 window.calculateQuote = function() {
     const formatSelect = document.getElementById('calc-format-select');
     const qtyInput = document.getElementById('calc-qty-input');
@@ -278,18 +400,22 @@ window.calculateQuote = function() {
         unitPrice += 500;
     }
 
-    const subtotal = unitPrice * qty;
-    const delivery = 450;
-    const total = subtotal + delivery;
+    const subtotalLKR = unitPrice * qty;
+    const deliveryLKR = 450;
+    const totalLKR = subtotalLKR + deliveryLKR;
 
     const estimateTag = document.getElementById('calc-total-tag');
     if (estimateTag) {
-        estimateTag.textContent = `LKR ${total.toLocaleString()}`;
+        estimateTag.textContent = formatPrice(totalLKR);
     }
 
     const subtotalTag = document.getElementById('calc-subtotal-tag');
     if (subtotalTag) {
-        subtotalTag.textContent = `LKR ${subtotal.toLocaleString()} + LKR ${delivery} island-wide delivery`;
+        if (currentCurrency === 'USD') {
+            subtotalTag.textContent = `${formatPrice(subtotalLKR)} + ${formatPrice(deliveryLKR)} delivery`;
+        } else {
+            subtotalTag.textContent = `LKR ${subtotalLKR.toLocaleString()} + LKR ${deliveryLKR} island-wide delivery`;
+        }
     }
 };
 
@@ -305,18 +431,19 @@ window.sendCustomQuoteOrder = function() {
     const qty = qtyInput ? qtyInput.value : '1';
     
     let services = [];
-    if (upscaleCheck && upscaleCheck.checked) services.push('Photo AI Upscaling (+LKR 500)');
-    if (customCheck && customCheck.checked) services.push('Custom Art / Redesign (+LKR 500)');
+    if (upscaleCheck && upscaleCheck.checked) services.push(`Photo AI Upscaling (+${formatPrice(500)})`);
+    if (customCheck && customCheck.checked) services.push(`Custom Art / Redesign (+${formatPrice(500)})`);
     const servicesText = services.length > 0 ? services.join(', ') : 'Standard Catalog Artwork';
 
     const notes = notesInput && notesInput.value.trim() ? notesInput.value.trim() : 'None';
-    const total = totalTag ? totalTag.textContent : 'LKR 3,350';
+    const total = totalTag ? totalTag.textContent : formatPrice(3650);
 
     const message = `Hello Mr.Artist! 🎨
 I would like to place a custom order inquiry:
 
 • Product / Board Format: ${formatText}
 • Quantity: ${qty}
+• Currency: ${currentCurrency}
 • Custom Services: ${servicesText}
 • Special Notes: ${notes}
 • Estimated Total: ${total}
@@ -355,7 +482,7 @@ window.toggleCustomDropdown = function() {
     }
 };
 
-window.selectCustomOption = function(value, title, subtitle, price, icon) {
+window.selectCustomOption = function(value, title, subtitle, rawPrice, icon) {
     const select = document.getElementById('calc-format-select');
     const titleEl = document.getElementById('selected-item-title');
     const subEl = document.getElementById('selected-item-subtitle');
@@ -367,7 +494,7 @@ window.selectCustomOption = function(value, title, subtitle, price, icon) {
     }
     if (titleEl) titleEl.textContent = title;
     if (subEl) subEl.textContent = subtitle;
-    if (badgeEl) badgeEl.textContent = price;
+    if (badgeEl) badgeEl.textContent = formatPrice(priceTable[value] || rawPrice || 500);
     if (iconEl) iconEl.className = `fa-solid ${icon}`;
 
     window.toggleCustomDropdown();
@@ -511,11 +638,9 @@ function dismissPreloader() {
 }
 
 // ----------------- Printed Samples Showcase -----------------
-async function loadAndRenderSamples() {
-    const grid = document.getElementById('samples-grid');
+function renderLoadedSamples() {
+    const grid = document.getElementById('samples-showcase-grid');
     if (!grid) return;
-
-    showcaseSamples = await fetchSamples();
 
     if (!showcaseSamples || showcaseSamples.length === 0) {
         grid.innerHTML = `
@@ -535,7 +660,8 @@ async function loadAndRenderSamples() {
         const card = document.createElement('div');
         card.className = "glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group";
 
-        const orderText = encodeURIComponent(`Hello Mr.Artist, I would like to order this sample:\n*Name:* ${sample.name}\n*Size:* ${sample.size}\n*Price:* ${sample.price}\n\nPlease confirm availability!`);
+        const priceDisplay = formatPrice(sample.rawPrice || sample.price);
+        const orderText = encodeURIComponent(`Hello Mr.Artist, I would like to order this sample:\n*Name:* ${sample.name}\n*Size:* ${sample.size}\n*Price:* ${priceDisplay} (${currentCurrency})\n\nPlease confirm availability!`);
         const waLink = `https://wa.me/94722043235?text=${orderText}`;
 
         card.innerHTML = `
@@ -550,7 +676,7 @@ async function loadAndRenderSamples() {
 
                 <!-- Price Badge -->
                 <div class="absolute top-3 right-3 px-3 py-1 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[11px] font-bold text-[#C85A32] shadow-2xs pointer-events-none">
-                    ${sample.price}
+                    ${priceDisplay}
                 </div>
 
                 <!-- Quick View Overlay -->
@@ -570,7 +696,7 @@ async function loadAndRenderSamples() {
 
                 <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">
                     <i class="fa-brands fa-whatsapp text-sm"></i>
-                    <span>Order This (${sample.price})</span>
+                    <span>Order This (${priceDisplay})</span>
                 </a>
             </div>
         `;
@@ -579,14 +705,14 @@ async function loadAndRenderSamples() {
         const imgTrigger = card.querySelector('.sample-image-trigger');
         if (imgTrigger) {
             imgTrigger.addEventListener('click', () => {
-                openImagePopup(sample.src, sample.name, sample.size, sample.price);
+                openImagePopup(sample.src, sample.name, sample.size, sample.rawPrice || sample.price);
             });
         }
 
         const titleTrigger = card.querySelector('.sample-title-trigger');
         if (titleTrigger) {
             titleTrigger.addEventListener('click', () => {
-                openImagePopup(sample.src, sample.name, sample.size, sample.price);
+                openImagePopup(sample.src, sample.name, sample.size, sample.rawPrice || sample.price);
             });
         }
 
@@ -594,24 +720,33 @@ async function loadAndRenderSamples() {
     });
 }
 
+async function loadAndRenderSamples() {
+    showcaseSamples = await fetchSamples();
+    renderLoadedSamples();
+}
+
 // ----------------- Initialization on DOM Load -----------------
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Fetch live artworks from Supabase (or fallback)
+    // 1. Detect & set initial currency (Auto-detect location or read saved preference)
+    const initialCurrency = detectUserCurrency();
+    window.setCurrency(initialCurrency);
+
+    // 2. Fetch live artworks from Supabase (or fallback)
     galleryArtworks = await fetchArtworks();
     filteredArtworks = [...galleryArtworks];
 
-    // 2. Render Gallery with loaded artworks
+    // 3. Render Gallery with loaded artworks
     filterGallery('all');
 
-    // 3. Load & Render Printed Samples Showcase
-    loadAndRenderSamples();
+    // 4. Load & Render Printed Samples Showcase
+    await loadAndRenderSamples();
 
-    // 4. Init Quote Calculator
+    // 5. Init Quote Calculator
     calculateQuote();
 
-    // 5. Init Three.js Background
+    // 6. Init Three.js Background
     setTimeout(initThreeCanvas, 100);
 
-    // 6. Dismiss preloader
+    // 7. Dismiss preloader
     dismissPreloader();
 });
