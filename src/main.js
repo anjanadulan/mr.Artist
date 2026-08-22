@@ -128,89 +128,121 @@ function updateCarouselVisuals() {
     }
 }
 
-// ----------------- Interactive Large Zoom Lightbox -----------------
+// ----------------- Interactive Zoom Lightbox Modal -----------------
 let isLightboxZoomed = false;
+let currentLightboxZoomScale = 1;
 
 window.openImagePopup = function(src, title, desc, price) {
     const modal = document.getElementById('image-popup-modal');
     const modalImg = document.getElementById('popup-modal-image');
     const modalTitle = document.getElementById('popup-modal-title');
+    const modalSize = document.getElementById('popup-modal-size');
     const modalDesc = document.getElementById('popup-modal-desc');
     const modalPrice = document.getElementById('popup-modal-price');
-    const modalBadge = document.getElementById('popup-modal-badge');
-    const waLinkBtn = document.getElementById('popup-modal-wa-link');
+    const modalWaBtn = document.getElementById('popup-modal-wa-btn');
 
     if (!modal || !modalImg) return;
 
-    // Reset zoom state
+    // Reset Zoom
     isLightboxZoomed = false;
-    resetLightboxZoom();
-
-    modalImg.src = src;
-    if (modalTitle) modalTitle.textContent = title || 'Mr.Artist Artwork';
-    if (modalDesc) modalDesc.textContent = desc || '';
-    if (modalPrice) modalPrice.textContent = price || '';
-    if (modalBadge) modalBadge.textContent = desc && desc.includes('"') ? 'Printed Board Sample' : 'Artwork View';
-
-    if (waLinkBtn) {
-        const orderText = encodeURIComponent(`Hello Mr.Artist, I am viewing this piece:\n*Item:* ${title || 'Wall Art'}\n*Specs:* ${desc || 'Fine Art'}\n*Price:* ${price || ''}\n\nI would like to order or ask for more details!`);
-        waLinkBtn.href = `https://wa.me/94722043235?text=${orderText}`;
-    }
-
-    modal.classList.remove('opacity-0', 'pointer-events-none');
-    modal.classList.add('opacity-100');
-    document.body.style.overflow = 'hidden';
-};
-
-window.toggleLightboxZoom = function() {
-    const modalImg = document.getElementById('popup-modal-image');
-    const wrapper = document.getElementById('popup-img-wrapper');
-    const zoomText = document.getElementById('popup-zoom-text');
-    const zoomBtn = document.getElementById('popup-zoom-toggle-btn');
-    if (!modalImg) return;
-
-    isLightboxZoomed = !isLightboxZoomed;
-
-    if (isLightboxZoomed) {
-        modalImg.style.transform = 'scale(1.9)';
-        if (wrapper) {
-            wrapper.classList.remove('cursor-zoom-in');
-            wrapper.classList.add('cursor-zoom-out');
-        }
-        if (zoomText) zoomText.textContent = 'Reset Zoom';
-        if (zoomBtn) zoomBtn.classList.add('bg-[#C85A32]', 'text-white');
-    } else {
-        resetLightboxZoom();
-    }
-};
-
-function resetLightboxZoom() {
-    const modalImg = document.getElementById('popup-modal-image');
-    const wrapper = document.getElementById('popup-img-wrapper');
-    const zoomText = document.getElementById('popup-zoom-text');
-    const zoomBtn = document.getElementById('popup-zoom-toggle-btn');
-    if (modalImg) modalImg.style.transform = 'scale(1)';
+    currentLightboxZoomScale = 1;
+    modalImg.style.transform = `scale(1)`;
+    const wrapper = document.getElementById('lightbox-img-wrapper');
     if (wrapper) {
         wrapper.classList.remove('cursor-zoom-out');
         wrapper.classList.add('cursor-zoom-in');
     }
-    if (zoomText) zoomText.textContent = 'Zoom Large';
-    if (zoomBtn) zoomBtn.classList.remove('bg-[#C85A32]');
-}
+
+    modalImg.src = src;
+    if (modalTitle) modalTitle.textContent = title || 'Mr.Artist Artwork';
+    
+    // Check if desc is a size or general description
+    if (modalSize) {
+        if (desc && (desc.includes('Board') || desc.includes('Triptych') || desc.includes('x') || desc.includes('"'))) {
+            modalSize.textContent = desc;
+            modalSize.classList.remove('hidden');
+            if (modalDesc) modalDesc.textContent = 'High-resolution printed wall board setup.';
+        } else {
+            modalSize.textContent = 'Fine Wall Art';
+            if (modalDesc) modalDesc.textContent = desc || '';
+        }
+    }
+
+    if (modalPrice) modalPrice.textContent = price || 'LKR 500';
+
+    if (modalWaBtn) {
+        const orderText = encodeURIComponent(`Hello Mr.Artist, I would like to order this artwork/sample:\n*Name:* ${title || 'Artwork'}\n*Size/Format:* ${desc || ''}\n*Price:* ${price || ''}\n\nPlease confirm availability and payment details.`);
+        modalWaBtn.href = `https://wa.me/94722043235?text=${orderText}`;
+    }
+
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.classList.add('opacity-100');
+    document.body.style.overflow = 'hidden'; // Lock background scroll
+};
 
 window.closeImagePopup = function() {
     const modal = document.getElementById('image-popup-modal');
     if (!modal) return;
     modal.classList.remove('opacity-100');
     modal.classList.add('opacity-0', 'pointer-events-none');
-    document.body.style.overflow = '';
-    resetLightboxZoom();
+    document.body.style.overflow = ''; // Unlock background scroll
+
+    // Reset Zoom
+    isLightboxZoomed = false;
+    currentLightboxZoomScale = 1;
+    const modalImg = document.getElementById('popup-modal-image');
+    if (modalImg) modalImg.style.transform = `scale(1)`;
 };
 
-// Listen for Escape key
+window.toggleLightboxZoom = function(forceZoomIn) {
+    const modalImg = document.getElementById('popup-modal-image');
+    const wrapper = document.getElementById('lightbox-img-wrapper');
+    if (!modalImg) return;
+
+    if (typeof forceZoomIn === 'boolean') {
+        if (forceZoomIn) {
+            currentLightboxZoomScale = Math.min(currentLightboxZoomScale + 0.4, 2.8);
+            isLightboxZoomed = true;
+        } else {
+            currentLightboxZoomScale = Math.max(currentLightboxZoomScale - 0.4, 1);
+            if (currentLightboxZoomScale <= 1) isLightboxZoomed = false;
+        }
+    } else {
+        // Toggle on image click
+        if (isLightboxZoomed) {
+            currentLightboxZoomScale = 1;
+            isLightboxZoomed = false;
+        } else {
+            currentLightboxZoomScale = 1.8;
+            isLightboxZoomed = true;
+        }
+    }
+
+    modalImg.style.transform = `scale(${currentLightboxZoomScale})`;
+
+    if (wrapper) {
+        if (isLightboxZoomed) {
+            wrapper.classList.remove('cursor-zoom-in');
+            wrapper.classList.add('cursor-zoom-out');
+        } else {
+            wrapper.classList.remove('cursor-zoom-out');
+            wrapper.classList.add('cursor-zoom-in');
+        }
+    }
+};
+
+window.handleLightboxBackdropClick = function(event) {
+    // If click was outside the lightbox card, close modal
+    const card = document.getElementById('lightbox-card');
+    if (card && !card.contains(event.target) && !event.target.closest('#btn-zoom-in') && !event.target.closest('#btn-zoom-out')) {
+        closeImagePopup();
+    }
+};
+
+// Keyboard escape key listener
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        window.closeImagePopup();
+        closeImagePopup();
     }
 });
 
