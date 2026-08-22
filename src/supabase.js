@@ -154,10 +154,10 @@ export const defaultSamples = [
     }
 ];
 
-// Fetch Samples from Supabase Database (or fallback)
+// Fetch Samples from Supabase Database
 export async function fetchSamples() {
     if (!supabase) {
-        return defaultSamples;
+        return [];
     }
 
     try {
@@ -168,10 +168,10 @@ export async function fetchSamples() {
 
         if (error) {
             console.warn("Error fetching from Supabase 'samples' table:", error.message);
-            return defaultSamples;
+            return [];
         }
 
-        if (data && data.length > 0) {
+        if (data) {
             return data.map(item => ({
                 id: item.id,
                 name: item.name,
@@ -182,9 +182,9 @@ export async function fetchSamples() {
             }));
         }
 
-        return defaultSamples;
+        return [];
     } catch (err) {
-        console.warn("Supabase samples fetch failed, using fallback:", err);
-        return defaultSamples;
+        console.warn("Supabase samples fetch failed:", err);
+        return [];
     }
 }

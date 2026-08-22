@@ -426,7 +426,15 @@ async function loadAndRenderSamples() {
     showcaseSamples = await fetchSamples();
 
     if (showcaseSamples.length === 0) {
-        grid.innerHTML = `<p class="col-span-full text-center text-xs text-[#888888] py-8">Printed samples will appear here soon.</p>`;
+        grid.innerHTML = `
+            <div class="col-span-full py-16 text-center space-y-3 glass-card rounded-3xl p-8 max-w-md mx-auto">
+                <div class="w-12 h-12 rounded-2xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-camera-retro"></i>
+                </div>
+                <h4 class="font-serif text-lg font-bold text-[#1E1E1E]">Real Samples Coming Soon</h4>
+                <p class="text-xs text-[#666666]">New printed wall board setups will appear here directly as soon as they are uploaded from the studio manager.</p>
+            </div>
+        `;
         return;
     }
 
