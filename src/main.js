@@ -128,31 +128,91 @@ function updateCarouselVisuals() {
     }
 }
 
-// Lightbox Modal
+// ----------------- Interactive Large Zoom Lightbox -----------------
+let isLightboxZoomed = false;
+
 window.openImagePopup = function(src, title, desc, price) {
     const modal = document.getElementById('image-popup-modal');
     const modalImg = document.getElementById('popup-modal-image');
     const modalTitle = document.getElementById('popup-modal-title');
     const modalDesc = document.getElementById('popup-modal-desc');
     const modalPrice = document.getElementById('popup-modal-price');
+    const modalBadge = document.getElementById('popup-modal-badge');
+    const waLinkBtn = document.getElementById('popup-modal-wa-link');
 
     if (!modal || !modalImg) return;
+
+    // Reset zoom state
+    isLightboxZoomed = false;
+    resetLightboxZoom();
 
     modalImg.src = src;
     if (modalTitle) modalTitle.textContent = title || 'Mr.Artist Artwork';
     if (modalDesc) modalDesc.textContent = desc || '';
     if (modalPrice) modalPrice.textContent = price || '';
+    if (modalBadge) modalBadge.textContent = desc && desc.includes('"') ? 'Printed Board Sample' : 'Artwork View';
+
+    if (waLinkBtn) {
+        const orderText = encodeURIComponent(`Hello Mr.Artist, I am viewing this piece:\n*Item:* ${title || 'Wall Art'}\n*Specs:* ${desc || 'Fine Art'}\n*Price:* ${price || ''}\n\nI would like to order or ask for more details!`);
+        waLinkBtn.href = `https://wa.me/94722043235?text=${orderText}`;
+    }
 
     modal.classList.remove('opacity-0', 'pointer-events-none');
     modal.classList.add('opacity-100');
+    document.body.style.overflow = 'hidden';
 };
+
+window.toggleLightboxZoom = function() {
+    const modalImg = document.getElementById('popup-modal-image');
+    const wrapper = document.getElementById('popup-img-wrapper');
+    const zoomText = document.getElementById('popup-zoom-text');
+    const zoomBtn = document.getElementById('popup-zoom-toggle-btn');
+    if (!modalImg) return;
+
+    isLightboxZoomed = !isLightboxZoomed;
+
+    if (isLightboxZoomed) {
+        modalImg.style.transform = 'scale(1.9)';
+        if (wrapper) {
+            wrapper.classList.remove('cursor-zoom-in');
+            wrapper.classList.add('cursor-zoom-out');
+        }
+        if (zoomText) zoomText.textContent = 'Reset Zoom';
+        if (zoomBtn) zoomBtn.classList.add('bg-[#C85A32]', 'text-white');
+    } else {
+        resetLightboxZoom();
+    }
+};
+
+function resetLightboxZoom() {
+    const modalImg = document.getElementById('popup-modal-image');
+    const wrapper = document.getElementById('popup-img-wrapper');
+    const zoomText = document.getElementById('popup-zoom-text');
+    const zoomBtn = document.getElementById('popup-zoom-toggle-btn');
+    if (modalImg) modalImg.style.transform = 'scale(1)';
+    if (wrapper) {
+        wrapper.classList.remove('cursor-zoom-out');
+        wrapper.classList.add('cursor-zoom-in');
+    }
+    if (zoomText) zoomText.textContent = 'Zoom Large';
+    if (zoomBtn) zoomBtn.classList.remove('bg-[#C85A32]');
+}
 
 window.closeImagePopup = function() {
     const modal = document.getElementById('image-popup-modal');
     if (!modal) return;
     modal.classList.remove('opacity-100');
     modal.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
+    resetLightboxZoom();
 };
+
+// Listen for Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        window.closeImagePopup();
+    }
+});
 
 // ----------------- Quote Calculator -----------------
 const priceTable = {
