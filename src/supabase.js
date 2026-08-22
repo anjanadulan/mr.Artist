@@ -1,10 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Read Supabase credentials from Vite environment variables (.env)
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+// Default public Supabase project credentials (safe for client-side use with RLS)
+const DEFAULT_SUPABASE_URL = 'https://thxgqzgquhnbezhggvyo.supabase.co';
+const DEFAULT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoeGdxemdxdWhuYmV6aGdndnlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTMxNzUsImV4cCI6MjEwMjk4OTE3NX0.hJrTnqsmqzg0kP2H3HuJ1PDWpE7jv2KkUunmVSMXHkU';
 
-// Create client instance if credentials exist
+// Read Supabase credentials from Vite environment variables (.env) or use default
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY;
+
+// Create client instance
 export const supabase = (supabaseUrl && supabaseAnonKey) 
     ? createClient(supabaseUrl, supabaseAnonKey) 
     : null;
