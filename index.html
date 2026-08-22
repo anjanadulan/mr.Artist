@@ -115,6 +115,7 @@
         <div class="hidden md:flex items-center space-x-1">
             <a href="#formats" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Formats</a>
             <a href="#gallery" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Gallery</a>
+            <a href="#samples" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Samples</a>
             <a href="#pricing" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Pricing</a>
             <a href="#quality" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Quality</a>
             <a href="#calculator" class="px-4 py-2 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Calculator</a>
@@ -368,6 +369,22 @@
                     Expressive textures in warm terracotta, cream, and charcoal. A stunning statement piece for neutral-toned interiors.
                 </p>
             </div>
+        </div>
+    </section>
+
+    <!-- Real Printed Samples Showcase Section -->
+    <section id="samples" class="py-24 max-w-[1400px] mx-auto px-6 scroll-mt-24">
+        <div class="text-center max-w-[720px] mx-auto mb-16 space-y-3">
+            <span class="text-xs font-bold text-[#C85A32] tracking-widest uppercase">Client Proof & Visuals</span>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#222222]">Printed Board Samples</h2>
+            <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">
+                Explore real printed wall board samples and client setups. Every piece is crafted in rich vivid pigments on heavy rigid board.
+            </p>
+        </div>
+
+        <!-- Samples Dynamic Grid -->
+        <div id="samples-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamically populated from Supabase 'samples' table via main.js -->
         </div>
     </section>
 

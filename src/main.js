@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import './style.css';
-import { fetchArtworks, defaultArtworks } from './supabase.js';
+import { fetchArtworks, defaultArtworks, fetchSamples } from './supabase.js';
 
 // Active Gallery Database (Populated dynamically from Supabase)
 export let galleryArtworks = [...defaultArtworks];
+export let showcaseSamples = [];
 
 // Carousel State
 let carouselIndex = 0;
@@ -417,6 +418,63 @@ function dismissPreloader() {
     }, 850);
 }
 
+// ----------------- Printed Samples Showcase -----------------
+async function loadAndRenderSamples() {
+    const grid = document.getElementById('samples-grid');
+    if (!grid) return;
+
+    showcaseSamples = await fetchSamples();
+
+    if (showcaseSamples.length === 0) {
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-[#888888] py-8">Printed samples will appear here soon.</p>`;
+        return;
+    }
+
+    grid.innerHTML = showcaseSamples.map(sample => {
+        const orderText = encodeURIComponent(`Hello Mr.Artist, I would like to order this sample:\n*Name:* ${sample.name}\n*Size:* ${sample.size}\n*Price:* ${sample.price}\n\nPlease confirm availability!`);
+        const waLink = `https://wa.me/94722043235?text=${orderText}`;
+
+        return `
+            <div class="glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group">
+                <!-- Image Container -->
+                <div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden cursor-pointer" onclick="openImagePopup('${sample.src}', '${sample.name}', '${sample.size}', '${sample.price}')">
+                    <img src="${sample.src}" alt="${sample.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    
+                    <!-- Size Badge -->
+                    <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#222222] shadow-2xs">
+                        ${sample.size}
+                    </div>
+
+                    <!-- Price Badge -->
+                    <div class="absolute top-3 right-3 px-3 py-1 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[11px] font-bold text-[#C85A32] shadow-2xs">
+                        ${sample.price}
+                    </div>
+
+                    <!-- Quick View Overlay -->
+                    <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="px-3.5 py-1.5 bg-white/95 rounded-full text-xs font-bold text-[#1E1E1E] shadow-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-expand text-[#C85A32]"></i> Zoom
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Info & Order Button -->
+                <div class="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-serif font-bold text-base text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors line-clamp-1">${sample.name}</h4>
+                        <p class="text-xs text-[#666666] mt-0.5">${sample.size}</p>
+                    </div>
+
+                    <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">
+                        <i class="fa-brands fa-whatsapp text-sm"></i>
+                        <span>Order This (${sample.price})</span>
+                    </a>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
 // ----------------- Initialization on DOM Load -----------------
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Fetch live artworks from Supabase (or fallback)
@@ -426,12 +484,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Render Gallery with loaded artworks
     filterGallery('all');
 
-    // 3. Init Quote Calculator
+    // 3. Load & Render Printed Samples Showcase
+    loadAndRenderSamples();
+
+    // 4. Init Quote Calculator
     calculateQuote();
 
-    // 4. Init Three.js Background
+    // 5. Init Three.js Background
     setTimeout(initThreeCanvas, 100);
 
-    // 5. Dismiss preloader
+    // 6. Dismiss preloader
     dismissPreloader();
 });

@@ -113,7 +113,78 @@ export async function fetchArtworks() {
 
         return defaultArtworks;
     } catch (err) {
-        console.error("Supabase fetch exception:", err);
+        console.warn("Supabase fetch failed, using fallback:", err);
         return defaultArtworks;
+    }
+}
+
+// Default fallback samples for printed showcase
+export const defaultSamples = [
+    {
+        id: 'sample1',
+        name: 'Alpine Panorama 3-Panel Set',
+        src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85',
+        size: '12.5 x 18" x3 Triptych (4mm Board)',
+        price: 'LKR 2,900',
+        rawPrice: 2900
+    },
+    {
+        id: 'sample2',
+        name: 'Mist & Valley Horizontal',
+        src: 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1200&q=85',
+        size: '12.5 x 24.5" Landscape (4mm Board)',
+        price: 'LKR 2,400',
+        rawPrice: 2400
+    },
+    {
+        id: 'sample3',
+        name: 'Earthy Minimalist Texture',
+        src: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1000&q=85',
+        size: 'A3 Size (300GSM Board)',
+        price: 'LKR 900',
+        rawPrice: 900
+    },
+    {
+        id: 'sample4',
+        name: 'Golden Botanical Leaves',
+        src: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1000&q=85',
+        size: 'A4 Size (300GSM Board)',
+        price: 'LKR 500',
+        rawPrice: 500
+    }
+];
+
+// Fetch Samples from Supabase Database (or fallback)
+export async function fetchSamples() {
+    if (!supabase) {
+        return defaultSamples;
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from('samples')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.warn("Error fetching from Supabase 'samples' table:", error.message);
+            return defaultSamples;
+        }
+
+        if (data && data.length > 0) {
+            return data.map(item => ({
+                id: item.id,
+                name: item.name,
+                src: item.image_url,
+                size: item.size || 'Fine Art Board',
+                price: `LKR ${(item.price || 500).toLocaleString()}`,
+                rawPrice: item.price || 500
+            }));
+        }
+
+        return defaultSamples;
+    } catch (err) {
+        console.warn("Supabase samples fetch failed, using fallback:", err);
+        return defaultSamples;
     }
 }
