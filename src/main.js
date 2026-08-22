@@ -639,7 +639,7 @@ function dismissPreloader() {
 
 // ----------------- Printed Samples Showcase -----------------
 function renderLoadedSamples() {
-    const grid = document.getElementById('samples-showcase-grid');
+    const grid = document.getElementById('samples-grid');
     if (!grid) return;
 
     if (!showcaseSamples || showcaseSamples.length === 0) {
