@@ -231,7 +231,7 @@ I would like to place a custom order inquiry:
 Please guide me on sending high-res images and finalizing the order. Thank you!`;
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/94716354922?text=${encoded}`, '_blank');
+    window.open(`https://wa.me/94722043235?text=${encoded}`, '_blank');
 };
 
 // ----------------- Symmetrical Quantity Stepper Controller -----------------
