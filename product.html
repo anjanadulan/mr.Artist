@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr.Artist | Bespoke Fine Art Wall Prints</title>
+    
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="apple-touch-icon" href="/logo.png">
+    <meta name="theme-color" content="#C85A32">
+
+    <!-- Meta Tags -->
+    <meta name="description" content="Handcrafted fine art wall prints, panoramic rigid board landscapes, and 3-panel split triptych sets from Mr.Artist Studio. Island-wide Sri Lanka delivery & international shipping.">
+    
+    <!-- Direct CSS Link for Immediate Vite Loading -->
+    <link rel="stylesheet" href="/src/style.css">
+
+    <!-- Google Fonts: Space Grotesk (Display) & Plus Jakarta Sans (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Critical Inline Styles to prevent FOUC -->
+    <style>
+        img { max-width: 100%; height: auto; }
+        .header-logo-img { height: 44px; width: auto; object-fit: contain; }
+
+        /* Instant Brand Preloader */
+        #page-preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #FDFBF7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #page-preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .preloader-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .preloader-img {
+            width: 130px;
+            height: auto;
+            animation: preloader-logo-pulse 1.8s infinite ease-in-out;
+        }
+        .preloader-track {
+            width: 130px;
+            height: 3px;
+            background: #E8E3D9;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+        .preloader-progress {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #C85A32, #E59838, #C85A32);
+            border-radius: 9999px;
+            animation: preloader-bar-slide 1.2s infinite ease-in-out;
+        }
+        @keyframes preloader-logo-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.04); opacity: 0.92; }
+        }
+        @keyframes preloader-bar-slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(220%); }
+        }
+    </style>
+</head>
+<body class="bg-[#FDFBF7] text-[#222222] font-sans antialiased selection:bg-[#C85A32] selection:text-white relative overflow-x-hidden min-h-screen flex flex-col justify-between">
+
+    <!-- Instant Brand Loading Page -->
+    <div id="page-preloader">
+        <div class="preloader-box">
+            <img src="/logo.png" alt="Mr.Artist" class="preloader-img">
+            <div class="preloader-track">
+                <div class="preloader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Atmospheric Blurs (Matching Homepage) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-60">
+        <div class="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vw] rounded-full bg-[#E5D7C5]/40 blur-[120px]"></div>
+        <div class="absolute top-[40%] -right-[15%] w-[50vw] h-[50vw] rounded-full bg-[#EADCC9]/50 blur-[130px]"></div>
+        <div class="absolute -bottom-[20%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-[#E8DDD0]/40 blur-[140px]"></div>
+    </div>
+
+    <!-- Floating Navigation Bar (EXACT HOMEPAGE CAPSULE STYLE) -->
+    <nav class="fixed top-5 left-1/2 transform -translate-x-1/2 w-[92%] max-w-[960px] h-16 glass-nav rounded-full flex items-center justify-between px-5 md:px-7 z-50 shadow-soft">
+        <a href="/" class="flex items-center group py-1">
+            <img src="/logo.png" alt="Mr.Artist - Design That Speaks" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-sm header-logo-img" style="height: 44px; width: auto;">
+        </a>
+
+        <!-- Center Links -->
+        <div class="hidden md:flex items-center space-x-1">
+            <a href="/" class="px-3.5 py-1.5 text-xs font-bold text-[#1E1E1E] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                <span>Home</span>
+            </a>
+            <a href="/#formats" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Formats</a>
+            <a href="/#gallery" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Gallery</a>
+            <a href="/#samples" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Samples</a>
+            <a href="/#pricing" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Pricing</a>
+            <a href="/#quality" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Quality</a>
+            <a href="/#calculator" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Calculator</a>
+        </div>
+
+        <!-- Currency Switcher & Studio Status -->
+        <div class="flex items-center gap-2">
+            <!-- Currency Switcher Toggle -->
+            <div class="flex items-center bg-[#F5F2EB] p-0.5 rounded-full border border-[#E8E3D9] shadow-2xs">
+                <button type="button" id="curr-btn-lkr" onclick="setCurrency('LKR')" class="px-2.5 py-1 rounded-full text-[10px] font-bold transition-all duration-200 bg-[#C85A32] text-white shadow-xs">
+                    🇱🇰 LKR
+                </button>
+                <button type="button" id="curr-btn-usd" onclick="setCurrency('USD')" class="px-2.5 py-1 rounded-full text-[10px] font-bold text-[#666666] hover:text-[#222222] transition-all duration-200">
+                    💵 USD
+                </button>
+            </div>
+
+            <!-- Studio Status Pill -->
+            <div class="hidden sm:flex items-center space-x-2 px-3.5 py-1.5 bg-[#FBF2ED] border border-[#C85A32]/25 rounded-full">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C85A32] opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#C85A32]"></span>
+                </span>
+                <span class="text-[11px] font-bold text-[#C85A32] tracking-wider uppercase">Studio Open</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container with Proper Top Clearance (pt-28 sm:pt-32) -->
+    <main class="relative z-10 pt-28 sm:pt-32 pb-16 max-w-7xl mx-auto px-4 sm:px-8 w-full flex-1">
+        
+        <!-- Breadcrumb Navigation Bar -->
+        <div class="pb-5 mb-8 border-b border-[#E8E3D9]/70">
+            <div class="flex items-center gap-2 text-xs font-semibold text-[#777777] overflow-x-auto pb-1">
+                <a href="/" class="hover:text-[#C85A32] transition whitespace-nowrap">Home</a>
+                <i class="fa-solid fa-chevron-right text-[8px] text-[#BBB]"></i>
+                <a id="breadcrumb-category-link" href="/#samples" class="hover:text-[#C85A32] transition whitespace-nowrap">Printed Samples</a>
+                <i class="fa-solid fa-chevron-right text-[8px] text-[#BBB]"></i>
+                <span id="breadcrumb-title" class="text-[#1E1E1E] font-bold truncate">Zenitsu Agatsuma</span>
+            </div>
+        </div>
+
+        <!-- 2-Column Product Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+            <!-- ================= LEFT COLUMN: Image Showcase ================= -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Main Image Card Container -->
+                <div class="bg-white rounded-3xl p-4 sm:p-6 border border-[#E8E3D9] shadow-soft relative">
+                    
+                    <!-- Inner Photo Box -->
+                    <div class="relative w-full rounded-2xl overflow-hidden bg-[#F5F2EB] flex items-center justify-center min-h-[340px] sm:min-h-[460px] p-2">
+                        
+                        <!-- Main Photo (Proper Aspect & No Overflow) -->
+                        <img id="main-product-image" src="" alt="Artwork Preview" class="max-w-full max-h-[500px] w-auto h-auto object-contain rounded-xl drop-shadow-md cursor-pointer transition-transform duration-300 hover:scale-[1.02]" onclick="openFullscreenZoom()">
+
+                        <!-- Top-Left Dimension Tag -->
+                        <div class="absolute top-4 left-4 z-20">
+                            <span id="product-badge-tag" class="px-3.5 py-1.5 bg-white/95 backdrop-blur-md rounded-full border border-[#E8E3D9] text-xs font-bold text-[#1E1E1E] shadow-sm">
+                                12.5 x 24.5" 4mm Rigid Board
+                            </span>
+                        </div>
+
+                        <!-- Top-Right Fullscreen Zoom Button -->
+                        <button onclick="openFullscreenZoom()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white/95 hover:bg-[#C85A32] text-[#1E1E1E] hover:text-white flex items-center justify-center transition shadow-sm backdrop-blur-md" title="Zoom Image">
+                            <i class="fa-solid fa-expand text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3-Item Trust Pill Row (Equal Heights & Gaps) -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white border border-[#E8E3D9] rounded-2xl p-4 text-center space-y-1.5 shadow-2xs">
+                        <div class="w-8 h-8 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-sm">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <p class="text-xs font-bold text-[#1E1E1E]">2–4 Days</p>
+                        <p class="text-[11px] text-[#777]">Island-Wide Delivery</p>
+                    </div>
+
+                    <div class="bg-white border border-[#E8E3D9] rounded-2xl p-4 text-center space-y-1.5 shadow-2xs">
+                        <div class="w-8 h-8 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-sm">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <p class="text-xs font-bold text-[#1E1E1E]">4mm Rigid Core</p>
+                        <p class="text-[11px] text-[#777]">2600GSM Structural</p>
+                    </div>
+
+                    <div class="bg-white border border-[#E8E3D9] rounded-2xl p-4 text-center space-y-1.5 shadow-2xs">
+                        <div class="w-8 h-8 rounded-xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-sm">
+                            <i class="fa-solid fa-certificate"></i>
+                        </div>
+                        <p class="text-xs font-bold text-[#1E1E1E]">Archival Inks</p>
+                        <p class="text-[11px] text-[#777]">Fade-Proof Color</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ================= RIGHT COLUMN: Details & Order Desk ================= -->
+            <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E3D9] shadow-soft space-y-6">
+
+                <!-- Header Info & Dynamic Price -->
+                <div class="space-y-3 border-b border-[#E8E3D9] pb-6">
+                    <div class="flex items-center justify-between">
+                        <span id="edition-type-tag" class="px-3 py-1 bg-[#FBF2ED] text-[#C85A32] text-xs font-bold uppercase tracking-wider rounded-full border border-[#C85A32]/20">
+                            Printed Studio Showcase
+                        </span>
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-200 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span>In Stock & Ready</span>
+                        </span>
+                    </div>
+
+                    <h1 id="product-title" class="font-serif text-2xl sm:text-3xl font-bold text-[#1E1E1E] leading-snug">
+                        Zenitsu Agatsuma
+                    </h1>
+
+                    <!-- Dynamic Price Display -->
+                    <div class="flex items-baseline gap-3 pt-1">
+                        <span id="product-active-price" class="text-3xl sm:text-4xl font-extrabold text-[#C85A32] font-display">
+                            LKR 2,800
+                        </span>
+                        <span class="text-xs text-[#777] font-medium">+ LKR 450 Delivery</span>
+                    </div>
+                </div>
+
+                <!-- Format Selection Cards -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold uppercase tracking-wider text-[#444]">
+                            Select Format & Dimensions:
+                        </label>
+                        <span class="text-[11px] text-[#C85A32] font-bold">1-Click Selection</span>
+                    </div>
+
+                    <div class="space-y-2.5">
+                        <!-- Landscape 4mm -->
+                        <div onclick="selectFormat('landscape-4mm')" data-format="landscape-4mm" class="format-card cursor-pointer border-2 border-[#C85A32] bg-[#FBF2ED] text-[#C85A32] rounded-2xl p-3.5 flex items-center justify-between transition shadow-xs">
+                            <div class="flex items-center gap-3">
+                                <div class="w-4 h-4 rounded-full border-2 border-[#C85A32] flex items-center justify-center p-0.5 shrink-0">
+                                    <div class="w-full h-full bg-[#C85A32] rounded-full format-dot"></div>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-[#1E1E1E]">12.5 x 24.5" Landscape (4mm Board)</p>
+                                    <p class="text-[11px] text-[#666]">Horizontal Centerpiece • 2600GSM Core</p>
+                                </div>
+                            </div>
+                            <span data-format-price="landscape-4mm" class="text-xs font-bold font-display text-[#C85A32]">LKR 2,800</span>
+                        </div>
+
+                        <!-- Triptych 4mm -->
+                        <div onclick="selectFormat('triptych-4mm')" data-format="triptych-4mm" class="format-card cursor-pointer border-2 border-[#E8E3D9] bg-white text-[#222222] rounded-2xl p-3.5 flex items-center justify-between transition shadow-xs hover:border-[#C85A32]/40">
+                            <div class="flex items-center gap-3">
+                                <div class="w-4 h-4 rounded-full border-2 border-[#BBB] flex items-center justify-center p-0.5 shrink-0">
+                                    <div class="w-full h-full bg-transparent rounded-full format-dot"></div>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-[#1E1E1E]">12.5 x 18" x3 Triptych Set (4mm Board)</p>
+                                    <p class="text-[11px] text-[#666]">3 Continuous Panels • 2600GSM Core</p>
+                                </div>
+                            </div>
+                            <span data-format-price="triptych-4mm" class="text-xs font-bold font-display text-[#222]">LKR 3,200</span>
+                        </div>
+
+                        <!-- A3 Fine Art -->
+                        <div onclick="selectFormat('a3')" data-format="a3" class="format-card cursor-pointer border-2 border-[#E8E3D9] bg-white text-[#222222] rounded-2xl p-3.5 flex items-center justify-between transition shadow-xs hover:border-[#C85A32]/40">
+                            <div class="flex items-center gap-3">
+                                <div class="w-4 h-4 rounded-full border-2 border-[#BBB] flex items-center justify-center p-0.5 shrink-0">
+                                    <div class="w-full h-full bg-transparent rounded-full format-dot"></div>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-[#1E1E1E]">A3 Size Fine Art Board (300GSM)</p>
+                                    <p class="text-[11px] text-[#666]">30 x 42 cm • Archival Matte Board</p>
+                                </div>
+                            </div>
+                            <span data-format-price="a3" class="text-xs font-bold font-display text-[#222]">LKR 900</span>
+                        </div>
+
+                        <!-- A4 Fine Art -->
+                        <div onclick="selectFormat('a4')" data-format="a4" class="format-card cursor-pointer border-2 border-[#E8E3D9] bg-white text-[#222222] rounded-2xl p-3.5 flex items-center justify-between transition shadow-xs hover:border-[#C85A32]/40">
+                            <div class="flex items-center gap-3">
+                                <div class="w-4 h-4 rounded-full border-2 border-[#BBB] flex items-center justify-center p-0.5 shrink-0">
+                                    <div class="w-full h-full bg-transparent rounded-full format-dot"></div>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-[#1E1E1E]">A4 Size Fine Art Board (300GSM)</p>
+                                    <p class="text-[11px] text-[#666]">21 x 30 cm • Desk & Gallery Setup</p>
+                                </div>
+                            </div>
+                            <span data-format-price="a4" class="text-xs font-bold font-display text-[#222]">LKR 500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quantity & Studio Add-ons -->
+                <div class="space-y-3.5 pt-2">
+                    <!-- Quantity Box -->
+                    <div class="flex items-center justify-between bg-[#F5F2EB]/60 border border-[#E8E3D9] rounded-2xl p-3.5 shadow-2xs">
+                        <div>
+                            <span class="text-xs font-bold text-[#1E1E1E] block">Order Quantity</span>
+                            <span class="text-[10px] text-[#777] block">Select number of pieces</span>
+                        </div>
+                        <div class="flex items-center bg-white border border-[#E8E3D9] rounded-xl p-1 shadow-2xs">
+                            <button type="button" onclick="changeQty(-1)" class="w-8 h-8 rounded-lg bg-[#F5F2EB] hover:bg-[#C85A32] hover:text-white font-bold text-xs text-[#222] transition flex items-center justify-center shadow-2xs">-</button>
+                            <input type="number" id="product-qty-input" value="1" min="1" max="99" onchange="calculateProductQuote()" class="w-10 text-center font-bold text-xs text-[#1E1E1E] bg-transparent focus:outline-none">
+                            <button type="button" onclick="changeQty(1)" class="w-8 h-8 rounded-lg bg-[#F5F2EB] hover:bg-[#C85A32] hover:text-white font-bold text-xs text-[#222] transition flex items-center justify-center shadow-2xs">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Add-ons 2-Column Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-[#E8E3D9] hover:border-[#C85A32]/40 cursor-pointer transition shadow-2xs">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-7 h-7 rounded-lg bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-xs">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-[#1E1E1E]">AI Upscale</p>
+                                    <p class="text-[10px] text-[#777]">+LKR 500</p>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="opt-upscale-check" onchange="calculateProductQuote()" class="w-4 h-4 rounded text-[#C85A32] accent-[#C85A32] cursor-pointer">
+                        </label>
+
+                        <label class="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-[#E8E3D9] hover:border-[#C85A32]/40 cursor-pointer transition shadow-2xs">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-7 h-7 rounded-lg bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center text-xs">
+                                    <i class="fa-solid fa-crop-simple"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-[#1E1E1E]">Custom Crop</p>
+                                    <p class="text-[10px] text-[#777]">+LKR 500</p>
+                                </div>
+                            </div>
+                            <input type="checkbox" id="opt-custom-check" onchange="calculateProductQuote()" class="w-4 h-4 rounded text-[#C85A32] accent-[#C85A32] cursor-pointer">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Total Estimation & Primary WhatsApp Action -->
+                <div class="p-5 bg-[#FBF2ED] rounded-2xl border border-[#C85A32]/30 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#C85A32] block">Total Estimated:</span>
+                            <span id="product-total-price" class="text-2xl sm:text-3xl font-extrabold text-[#1E1E1E] font-display">LKR 3,250</span>
+                        </div>
+                        <span id="product-subtotal-calc" class="text-xs text-[#666] text-right">LKR 2,800 + LKR 450 delivery</span>
+                    </div>
+
+                    <button onclick="sendProductWhatsAppOrder()" class="w-full py-4 bg-[#C85A32] hover:bg-[#B04A25] text-white font-bold text-sm tracking-wider uppercase rounded-xl transition shadow-md hover:shadow-lg flex items-center justify-center gap-3 cursor-pointer">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Order via WhatsApp</span>
+                    </button>
+                </div>
+
+                <!-- Accordions -->
+                <div class="space-y-2 pt-3 border-t border-[#E8E3D9]">
+                    <div class="border border-[#E8E3D9] rounded-2xl bg-white overflow-hidden shadow-2xs">
+                        <button type="button" onclick="toggleAccordion('materials')" class="w-full p-4 flex items-center justify-between text-left font-bold text-xs text-[#1E1E1E] hover:text-[#C85A32] transition">
+                            <span class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-layer-group text-[#C85A32] text-xs"></i>
+                                <span>Materials & Archival 4mm Board</span>
+                            </span>
+                            <i id="acc-icon-materials" class="fa-solid fa-chevron-down text-[10px] text-[#888] transition-transform duration-300"></i>
+                        </button>
+                        <div id="acc-content-materials" class="hidden p-4 pt-0 text-xs text-[#666] space-y-1.5 border-t border-[#F5F2EB]">
+                            <p>Printed with high-density Japanese archival pigments mounted on ultra-stiff 4mm (2600GSM) rigid board core.</p>
+                        </div>
+                    </div>
+
+                    <div class="border border-[#E8E3D9] rounded-2xl bg-white overflow-hidden shadow-2xs">
+                        <button type="button" onclick="toggleAccordion('shipping')" class="w-full p-4 flex items-center justify-between text-left font-bold text-xs text-[#1E1E1E] hover:text-[#C85A32] transition">
+                            <span class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-box-archive text-[#C85A32] text-xs"></i>
+                                <span>Island-Wide Delivery & Safe Packaging</span>
+                            </span>
+                            <i id="acc-icon-shipping" class="fa-solid fa-chevron-down text-[10px] text-[#888] transition-transform duration-300"></i>
+                        </button>
+                        <div id="acc-content-shipping" class="hidden p-4 pt-0 text-xs text-[#666] space-y-1.5 border-t border-[#F5F2EB]">
+                            <p>Delivered to all 25 districts in Sri Lanka in 2 to 4 business days. Sealed in multi-layer shockproof boxes.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= BOTTOM SECTION: More Printed Samples Showcase ================= -->
+        <section class="mt-20 pt-12 border-t border-[#E8E3D9]">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-[#C85A32]">Real Photos From Studio</span>
+                    <h3 class="font-serif text-2xl font-bold text-[#1E1E1E]">More Printed Wall Samples</h3>
+                </div>
+                <a href="/#samples" class="text-xs font-bold text-[#C85A32] hover:underline flex items-center gap-1.5">
+                    <span>View All Samples</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+
+            <!-- Compact, Clean 4-Column Grid -->
+            <div id="samples-showcase-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamically populated from product.js -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Fullscreen Lightbox Zoom Modal -->
+    <div id="fullscreen-zoom-modal" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 p-4" onclick="closeFullscreenZoom()">
+        <button onclick="closeFullscreenZoom()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/20 hover:bg-[#C85A32] text-white flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+            <img id="zoom-modal-img" src="" alt="Zoom Artwork" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl">
+            <p id="zoom-modal-title" class="font-serif text-base font-bold text-white mt-3 text-center"></p>
+        </div>
+    </div>
+
+    <!-- Luxury Footer (Identical to Homepage) -->
+    <footer class="relative z-10 border-t border-[#E8E3D9] bg-white/80 backdrop-blur-md py-12 px-4 sm:px-8 mt-20">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[#888888]">
+            <p>&copy; 2026 Mr.Artist (MrArtist Studio) • Bespoke Wall Art & Architectural Prints. All rights reserved.</p>
+            <p class="flex items-center gap-1.5">
+                <span>Designed & Developed by</span>
+                <a href="https://anjanaww.vercel.app" target="_blank" rel="noopener noreferrer" class="font-bold text-[#222222] hover:text-[#C85A32] underline underline-offset-4 decoration-[#C85A32]/40 hover:decoration-[#C85A32] transition inline-flex items-center gap-1">
+                    <span>Anjana Wijerathna</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-[#C85A32]"></i>
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Vite JS Script Entry -->
+    <script type="module" src="/src/product.js"></script>
+</body>
+</html>

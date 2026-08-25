@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Printed Wall Samples & Client Proofs | Mr.Artist</title>
+    
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="apple-touch-icon" href="/logo.png">
+    <meta name="theme-color" content="#C85A32">
+
+    <!-- Meta Tags -->
+    <meta name="description" content="Explore the complete archive of handcrafted fine art wall prints, panoramic 4mm rigid boards, and 3-panel split triptychs from Mr.Artist Studio Sri Lanka.">
+    
+    <!-- Direct CSS Link for Immediate Vite Loading -->
+    <link rel="stylesheet" href="/src/style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Critical Inline Styles to prevent FOUC -->
+    <style>
+        img { max-width: 100%; height: auto; }
+        .header-logo-img { height: 44px; width: auto; object-fit: contain; }
+
+        /* Instant Brand Preloader */
+        #page-preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #FDFBF7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #page-preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .preloader-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .preloader-img {
+            width: 130px;
+            height: auto;
+            animation: preloader-logo-pulse 1.8s infinite ease-in-out;
+        }
+        .preloader-track {
+            width: 130px;
+            height: 3px;
+            background: #E8E3D9;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+        .preloader-progress {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #C85A32, #E59838, #C85A32);
+            border-radius: 9999px;
+            animation: preloader-bar-slide 1.2s infinite ease-in-out;
+        }
+        @keyframes preloader-logo-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.04); opacity: 0.92; }
+        }
+        @keyframes preloader-bar-slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(220%); }
+        }
+    </style>
+</head>
+<body class="bg-[#FDFBF7] text-[#222222] font-sans antialiased selection:bg-[#C85A32] selection:text-white relative overflow-x-hidden min-h-screen flex flex-col justify-between">
+
+    <!-- Instant Brand Loading Page -->
+    <div id="page-preloader">
+        <div class="preloader-box">
+            <img src="/logo.png" alt="Mr.Artist" class="preloader-img">
+            <div class="preloader-track">
+                <div class="preloader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Atmospheric Blurs -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-60">
+        <div class="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vw] rounded-full bg-[#E5D7C5]/40 blur-[120px]"></div>
+        <div class="absolute top-[40%] -right-[15%] w-[50vw] h-[50vw] rounded-full bg-[#EADCC9]/50 blur-[130px]"></div>
+        <div class="absolute -bottom-[20%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-[#E8DDD0]/40 blur-[140px]"></div>
+    </div>
+
+    <!-- Floating Navigation Bar (EXACT HOMEPAGE CAPSULE STYLE) -->
+    <nav class="fixed top-5 left-1/2 transform -translate-x-1/2 w-[92%] max-w-[960px] h-16 glass-nav rounded-full flex items-center justify-between px-5 md:px-7 z-50 shadow-soft">
+        <a href="/" class="flex items-center group py-1">
+            <img src="/logo.png" alt="Mr.Artist Logo" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-sm header-logo-img" style="height: 44px; width: auto;">
+        </a>
+
+        <!-- Center Links -->
+        <div class="hidden md:flex items-center space-x-1">
+            <a href="/" class="px-3.5 py-1.5 text-xs font-bold text-[#1E1E1E] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                <span>Home</span>
+            </a>
+            <a href="/#formats" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Formats</a>
+            <a href="/#gallery" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Gallery</a>
+            <a href="/#samples" class="px-3.5 py-1.5 text-xs font-bold text-[#C85A32] rounded-full bg-[#FBF2ED] transition">Samples</a>
+            <a href="/#pricing" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Pricing</a>
+            <a href="/#calculator" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Calculator</a>
+        </div>
+
+        <!-- Currency Switcher & Studio Status -->
+        <div class="flex items-center gap-2">
+            <!-- Currency Switcher Toggle -->
+            <div class="flex items-center bg-[#F5F2EB] p-0.5 rounded-full border border-[#E8E3D9] shadow-2xs">
+                <button type="button" id="curr-btn-lkr" onclick="setCurrency('LKR')" class="px-2.5 py-1 rounded-full text-[10px] font-bold transition-all duration-200 bg-[#C85A32] text-white shadow-xs">
+                    🇱🇰 LKR
+                </button>
+                <button type="button" id="curr-btn-usd" onclick="setCurrency('USD')" class="px-2.5 py-1 rounded-full text-[10px] font-bold text-[#666666] hover:text-[#222222] transition-all duration-200">
+                    💵 USD
+                </button>
+            </div>
+
+            <!-- Studio Status Pill -->
+            <div class="hidden sm:flex items-center space-x-2 px-3.5 py-1.5 bg-[#FBF2ED] border border-[#C85A32]/25 rounded-full">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C85A32] opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#C85A32]"></span>
+                </span>
+                <span class="text-[11px] font-bold text-[#C85A32] tracking-wider uppercase">Studio Open</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container with Proper Top Clearance -->
+    <main class="relative z-10 pt-28 sm:pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-8 w-full flex-1">
+        
+        <!-- Breadcrumbs -->
+        <div class="pb-4 mb-6 border-b border-[#E8E3D9]/70">
+            <div class="flex items-center gap-2 text-xs font-semibold text-[#777777] overflow-x-auto pb-1">
+                <a href="/" class="hover:text-[#C85A32] transition whitespace-nowrap">Home</a>
+                <i class="fa-solid fa-chevron-right text-[8px] text-[#BBB]"></i>
+                <span class="text-[#1E1E1E] font-bold truncate">All Printed Samples & Proofs</span>
+            </div>
+        </div>
+
+        <!-- Hero Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+            <span class="text-xs font-bold text-[#C85A32] tracking-widest uppercase bg-[#FBF2ED] px-3.5 py-1 rounded-full border border-[#C85A32]/20 inline-block">
+                Studio Archive & Proofs
+            </span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#1E1E1E]">
+                All Printed Wall Board Samples
+            </h1>
+            <p class="text-xs sm:text-sm text-[#666666] leading-relaxed max-w-2xl mx-auto">
+                Explore real studio photographs of printed anime artworks, supercars, superheroes, landscapes, and custom client boards mounted on heavy 4mm rigid core and 300GSM fine art stock.
+            </p>
+        </div>
+
+        <!-- Interactive Search & Format Filters Section -->
+        <div class="bg-white rounded-3xl p-5 sm:p-6 border border-[#E8E3D9] shadow-soft mb-10 space-y-4">
+            <!-- Search Input -->
+            <div class="relative max-w-xl mx-auto">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-[#888888] text-sm"></i>
+                <input type="text" id="sample-search-input" oninput="filterSamples()" placeholder="Search samples by title (e.g. Zenitsu, Spiderman, BatMan, Porsche, BMW...)" class="w-full pl-11 pr-4 py-3 bg-[#F5F2EB] rounded-2xl border border-[#E8E3D9] text-xs sm:text-sm font-medium text-[#1E1E1E] focus:outline-none focus:border-[#C85A32] transition">
+            </div>
+
+            <!-- Format Filter Pills -->
+            <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                <button type="button" onclick="setFormatFilter('all')" data-filter="all" class="format-filter-btn px-4 py-2 rounded-full text-xs font-bold bg-[#C85A32] text-white shadow-xs transition">
+                    All Formats (<span id="count-all">0</span>)
+                </button>
+                <button type="button" onclick="setFormatFilter('landscape')" data-filter="landscape" class="format-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-[#F5F2EB] border border-[#E8E3D9] text-[#666] hover:text-[#222] transition">
+                    12.5 x 24.5" Landscape (4mm) (<span id="count-landscape">0</span>)
+                </button>
+                <button type="button" onclick="setFormatFilter('triptych')" data-filter="triptych" class="format-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-[#F5F2EB] border border-[#E8E3D9] text-[#666] hover:text-[#222] transition">
+                    12.5 x 18" x3 Triptych (4mm) (<span id="count-triptych">0</span>)
+                </button>
+                <button type="button" onclick="setFormatFilter('a3')" data-filter="a3" class="format-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-[#F5F2EB] border border-[#E8E3D9] text-[#666] hover:text-[#222] transition">
+                    A3 Size (300GSM) (<span id="count-a3">0</span>)
+                </button>
+                <button type="button" onclick="setFormatFilter('a4')" data-filter="a4" class="format-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-[#F5F2EB] border border-[#E8E3D9] text-[#666] hover:text-[#222] transition">
+                    A4 Size (300GSM) (<span id="count-a4">0</span>)
+                </button>
+            </div>
+        </div>
+
+        <!-- Samples Dynamic Grid -->
+        <div id="all-samples-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamically populated from src/samples.js -->
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
+        <div id="no-samples-found" class="hidden py-16 text-center space-y-3">
+            <div class="w-16 h-16 rounded-2xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-2xl">
+                <i class="fa-solid fa-box-open"></i>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-[#1E1E1E]">No Matching Samples Found</h3>
+            <p class="text-xs text-[#777]">Try clearing your search query or choosing another format filter.</p>
+            <button onclick="resetFilters()" class="px-5 py-2 bg-[#C85A32] text-white text-xs font-bold rounded-xl shadow-xs hover:bg-[#B04A25] transition mt-2">
+                Reset All Filters
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Fullscreen Lightbox Zoom Modal -->
+    <div id="fullscreen-zoom-modal" class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 p-4" onclick="closeFullscreenZoom()">
+        <button onclick="closeFullscreenZoom()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/20 hover:bg-[#C85A32] text-white flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+            <img id="zoom-modal-img" src="" alt="Zoom Artwork" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl">
+            <p id="zoom-modal-title" class="font-serif text-base font-bold text-white mt-3 text-center"></p>
+        </div>
+    </div>
+
+    <!-- Luxury Footer -->
+    <footer class="relative z-10 border-t border-[#E8E3D9] bg-white/80 backdrop-blur-md py-12 px-4 sm:px-8 mt-20">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[#888888]">
+            <p>&copy; 2026 Mr.Artist (MrArtist Studio) • Bespoke Wall Art & Architectural Prints. All rights reserved.</p>
+            <p class="flex items-center gap-1.5">
+                <span>Designed & Developed by</span>
+                <a href="https://anjanaww.vercel.app" target="_blank" rel="noopener noreferrer" class="font-bold text-[#222222] hover:text-[#C85A32] underline underline-offset-4 decoration-[#C85A32]/40 hover:decoration-[#C85A32] transition inline-flex items-center gap-1">
+                    <span>Anjana Wijerathna</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-[#C85A32]"></i>
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Vite JS Script Entry -->
+    <script type="module" src="/src/samples.js"></script>
+</body>
+</html>

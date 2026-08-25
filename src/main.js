@@ -143,13 +143,8 @@ function renderGallery() {
 }
 
 window.selectSlide = function(idx) {
-    if (carouselIndex === idx) {
-        const art = filteredArtworks[idx];
-        if (art) openImagePopup(art.src, art.name, art.desc, art.rawPrice || art.price);
-    } else {
-        carouselIndex = idx;
-        updateCarouselVisuals();
-    }
+    carouselIndex = idx;
+    updateCarouselVisuals();
 };
 
 window.prevSlide = function() {
@@ -642,35 +637,33 @@ function renderLoadedSamples() {
     const grid = document.getElementById('samples-grid');
     if (!grid) return;
 
-    if (!showcaseSamples || showcaseSamples.length === 0) {
-        grid.innerHTML = `
-            <div class="col-span-full py-16 text-center space-y-3 glass-card rounded-3xl p-8 max-w-md mx-auto">
-                <div class="w-12 h-12 rounded-2xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-xl">
-                    <i class="fa-solid fa-camera-retro"></i>
-                </div>
-                <h4 class="font-serif text-lg font-bold text-[#1E1E1E]">Real Samples Coming Soon</h4>
-                <p class="text-xs text-[#666666]">New printed wall board setups will appear here directly as soon as they are uploaded from the studio manager.</p>
-            </div>
-        `;
+    if (showcaseSamples.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-12 text-center text-[#888888] text-sm">
+            <p>Loading printed showcase samples...</p>
+        </div>`;
         return;
     }
 
     grid.innerHTML = '';
-    showcaseSamples.forEach((sample) => {
-        const card = document.createElement('div');
-        card.className = "glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group";
 
-        const priceDisplay = formatPrice(sample.rawPrice || sample.price);
-        const orderText = encodeURIComponent(`Hello Mr.Artist, I would like to order this sample:\n*Name:* ${sample.name}\n*Size:* ${sample.size}\n*Price:* ${priceDisplay} (${currentCurrency})\n\nPlease confirm availability!`);
-        const waLink = `https://wa.me/94722043235?text=${orderText}`;
+    // Show latest 7 products
+    const displayedSamples = showcaseSamples.slice(0, 7);
+
+    displayedSamples.forEach(sample => {
+        const priceDisplay = formatPrice(sample.rawPrice || sample.price || 2800);
+        const card = document.createElement('div');
+        card.className = "glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group bg-white/90";
+        
+        const waMsg = encodeURIComponent(`Hello Mr.Artist! 🎨\nI would like to order this printed sample:\n• Title: ${sample.name}\n• Format: ${sample.size}\n• Price: ${priceDisplay}\n\nPlease confirm delivery details. Thank you!`);
+        const waLink = `https://wa.me/94722043235?text=${waMsg}`;
 
         card.innerHTML = `
-            <!-- Image Container with Zoom Trigger -->
-            <div class="sample-image-trigger relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden cursor-pointer">
-                <img src="${sample.src}" alt="${sample.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <!-- Image Frame -->
+            <div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden">
+                <img src="${sample.src}" alt="${sample.name}" class="sample-image-trigger w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer">
                 
-                <!-- Size Badge -->
-                <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#222222] shadow-2xs pointer-events-none">
+                <!-- Format Badge -->
+                <div class="absolute top-3 left-3 px-3 py-1 bg-white/95 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#1E1E1E] shadow-2xs pointer-events-none">
                     ${sample.size}
                 </div>
 
@@ -682,7 +675,7 @@ function renderLoadedSamples() {
                 <!-- Quick View Overlay -->
                 <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                     <span class="px-3.5 py-1.5 bg-white/95 rounded-full text-xs font-bold text-[#1E1E1E] shadow-sm flex items-center gap-1.5">
-                        <i class="fa-solid fa-expand text-[#C85A32]"></i> Zoom
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[#C85A32]"></i> View Product Page
                     </span>
                 </div>
             </div>
@@ -694,30 +687,58 @@ function renderLoadedSamples() {
                     <p class="text-xs text-[#666666] mt-0.5">${sample.size}</p>
                 </div>
 
-                <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">
-                    <i class="fa-brands fa-whatsapp text-sm"></i>
-                    <span>Order This (${priceDisplay})</span>
-                </a>
+                <div class="space-y-2 pt-1">
+                    <a href="product.html?id=${sample.id}&type=sample" class="w-full py-2 bg-white hover:bg-[#FBF2ED] text-[#222222] hover:text-[#C85A32] font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-1.5 border border-[#E8E3D9]">
+                        <i class="fa-solid fa-eye text-[11px] text-[#C85A32]"></i>
+                        <span>View Piece Details</span>
+                    </a>
+                    <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">
+                        <i class="fa-brands fa-whatsapp text-sm"></i>
+                        <span>Direct Order (${priceDisplay})</span>
+                    </a>
+                </div>
             </div>
         `;
 
-        // Direct clean JavaScript click listener (immune to quote escaping)
+        // Direct navigation to dedicated product page when clicking image or title
         const imgTrigger = card.querySelector('.sample-image-trigger');
         if (imgTrigger) {
             imgTrigger.addEventListener('click', () => {
-                openImagePopup(sample.src, sample.name, sample.size, sample.rawPrice || sample.price);
+                window.location.href = `product.html?id=${encodeURIComponent(sample.id)}&type=sample`;
             });
         }
 
         const titleTrigger = card.querySelector('.sample-title-trigger');
         if (titleTrigger) {
             titleTrigger.addEventListener('click', () => {
-                openImagePopup(sample.src, sample.name, sample.size, sample.rawPrice || sample.price);
+                window.location.href = `product.html?id=${encodeURIComponent(sample.id)}&type=sample`;
             });
         }
 
         grid.appendChild(card);
     });
+
+    // 8th Card: "View More Samples" Luxury Action Card
+    const viewMoreCard = document.createElement('a');
+    viewMoreCard.href = "samples.html";
+    viewMoreCard.className = "glass-card rounded-3xl overflow-hidden border-2 border-dashed border-[#C85A32]/40 hover:border-[#C85A32] transition-all duration-300 shadow-soft flex flex-col justify-between p-6 text-center group bg-[#FBF2ED]/50 hover:bg-[#FBF2ED] min-h-[380px]";
+    viewMoreCard.innerHTML = `
+        <div class="space-y-4 my-auto">
+            <div class="w-16 h-16 rounded-2xl bg-[#C85A32]/10 text-[#C85A32] group-hover:bg-[#C85A32] group-hover:text-white flex items-center justify-center mx-auto text-2xl transition-all duration-300 shadow-2xs group-hover:scale-110">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div class="space-y-1.5">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-[#C85A32] bg-white px-3 py-1 rounded-full border border-[#C85A32]/20 inline-block shadow-2xs">Complete Archive</span>
+                <h4 class="font-serif text-xl font-bold text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors">Explore All Printed Samples</h4>
+                <p class="text-xs text-[#666666] leading-relaxed max-w-[220px] mx-auto">Browse full gallery with format filters, live dimensions & search.</p>
+            </div>
+        </div>
+        <div class="w-full py-3 bg-[#C85A32] group-hover:bg-[#B04A25] text-white font-bold text-xs tracking-wider uppercase rounded-xl transition shadow-xs flex items-center justify-center gap-2">
+            <span>View All Samples (${showcaseSamples.length}+)</span>
+            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+        </div>
+    `;
+    grid.appendChild(viewMoreCard);
 }
 
 async function loadAndRenderSamples() {
