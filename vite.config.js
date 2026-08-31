@@ -13,7 +13,8 @@ export default defineConfig({
         product: resolve(__dirname, 'product.html'),
         samples: resolve(__dirname, 'samples.html'),
         artworks: resolve(__dirname, 'artworks.html'),
-        artwork: resolve(__dirname, 'artwork.html')
+        artwork: resolve(__dirname, 'artwork.html'),
+        custom: resolve(__dirname, 'custom.html')
       }
     }
   }

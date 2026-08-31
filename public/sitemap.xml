@@ -12,6 +12,14 @@
     <priority>1.00</priority>
   </url>
 
+  <!-- Custom Spec Poster Design & Print Service Page -->
+  <url>
+    <loc>https://mr-artist.vercel.app/custom.html</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- Signature Wall Artworks Catalog Archive -->
   <url>
     <loc>https://mr-artist.vercel.app/artworks.html</loc>

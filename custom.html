@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Poster Design & Fine Art Print Studio | Mr.Artist</title>
+    
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="apple-touch-icon" href="/logo.png">
+    <meta name="theme-color" content="#C85A32">
+
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="OfiOqK86JYEhqeGKT4gsEX_eeErwFwav0jKrvhvDq4I" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="title" content="Custom Poster Design & Fine Art Print Studio | Mr.Artist">
+    <meta name="description" content="Custom supercar spec posters, anime character edits, and bespoke wall prints designed from scratch by Ganusha Dulanga (Mr.Artist). Available in Digital 300DPI Softcopy or Printed 4mm Rigid Board.">
+    <meta name="keywords" content="Mr.Artist, custom car poster, supercar spec poster, anime wall art, custom graphic design sri lanka, bugatti poster, bmw m8 poster, bespoke art board">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://mr-artist.vercel.app/custom.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mr-artist.vercel.app/custom.html">
+    <meta property="og:title" content="Custom Poster Design & Fine Art Print Studio | Mr.Artist">
+    <meta property="og:description" content="Custom supercar spec posters, anime character edits, and bespoke wall prints designed from scratch.">
+    <meta property="og:image" content="https://mr-artist.vercel.app/logo.png">
+    <meta property="og:site_name" content="Mr.Artist">
+
+    <!-- Direct CSS Link for Immediate Vite Loading -->
+    <link rel="stylesheet" href="/src/style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Critical Inline Styles to prevent FOUC -->
+    <style>
+        img { max-width: 100%; height: auto; }
+        .header-logo-img { height: 44px; width: auto; object-fit: contain; }
+
+        /* Instant Brand Preloader */
+        #page-preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #FDFBF7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #page-preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .preloader-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .preloader-img {
+            width: 130px;
+            height: auto;
+            animation: preloader-logo-pulse 1.8s infinite ease-in-out;
+        }
+        .preloader-track {
+            width: 130px;
+            height: 3px;
+            background: #E8E3D9;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+        .preloader-progress {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #C85A32, #E59838, #C85A32);
+            border-radius: 9999px;
+            animation: preloader-bar-slide 1.2s infinite ease-in-out;
+        }
+        @keyframes preloader-logo-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.04); opacity: 0.92; }
+        }
+        @keyframes preloader-bar-slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(220%); }
+        }
+    </style>
+
+    <!-- Schema.org JSON-LD (Service & Breadcrumbs) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "@id": "https://mr-artist.vercel.app/custom.html#service",
+          "name": "Custom Spec Poster Design & Fine Art Print",
+          "provider": {
+            "@type": "ArtGallery",
+            "@id": "https://mr-artist.vercel.app/#store",
+            "name": "Mr.Artist Studio"
+          },
+          "description": "Bespoke custom graphic design and museum-grade 4mm rigid board printing for automotive spec posters, anime, gaming, and personal portraits.",
+          "offers": {
+            "@type": "AggregateOffer",
+            "lowPrice": "1500",
+            "highPrice": "12000",
+            "priceCurrency": "LKR"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://mr-artist.vercel.app/custom.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://mr-artist.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Custom Design Studio",
+              "item": "https://mr-artist.vercel.app/custom.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#FDFBF7] text-[#222222] font-sans antialiased selection:bg-[#C85A32] selection:text-white relative overflow-x-hidden min-h-screen flex flex-col justify-between">
+
+    <!-- Instant Brand Loading Page -->
+    <div id="page-preloader">
+        <div class="preloader-box">
+            <img src="/logo.png" alt="Mr.Artist" class="preloader-img">
+            <div class="preloader-track">
+                <div class="preloader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Atmospheric Blurs -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-60">
+        <div class="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vw] rounded-full bg-[#E5D7C5]/40 blur-[120px]"></div>
+        <div class="absolute top-[40%] -right-[15%] w-[50vw] h-[50vw] rounded-full bg-[#EADCC9]/50 blur-[130px]"></div>
+        <div class="absolute -bottom-[20%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-[#E8DDD0]/40 blur-[140px]"></div>
+    </div>
+
+    <!-- Floating Navigation Bar (EXACT HOMEPAGE CAPSULE STYLE) -->
+    <nav class="fixed top-5 left-1/2 transform -translate-x-1/2 w-[92%] max-w-[960px] h-16 glass-nav rounded-full flex items-center justify-between px-5 md:px-7 z-50 shadow-soft">
+        <a href="/" class="flex items-center group py-1">
+            <img src="/logo.png" alt="Mr.Artist Logo" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-sm header-logo-img" style="height: 44px; width: auto;">
+        </a>
+
+        <!-- Center Links -->
+        <div class="hidden md:flex items-center space-x-1">
+            <a href="/" class="px-3.5 py-1.5 text-xs font-bold text-[#1E1E1E] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                <span>Home</span>
+            </a>
+            <a href="/#formats" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Formats</a>
+            <a href="/artworks.html" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Gallery</a>
+            <a href="/samples.html" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Samples</a>
+            <a href="/custom.html" class="px-3.5 py-1.5 text-xs font-bold text-[#C85A32] rounded-full bg-[#FBF2ED] transition flex items-center gap-1">
+                <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
+                <span>Custom</span>
+            </a>
+            <a href="/#pricing" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Pricing</a>
+            <a href="/#calculator" class="px-3.5 py-1.5 text-xs font-semibold text-[#666666] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition">Calculator</a>
+        </div>
+
+        <!-- Currency Switcher & Studio Status -->
+        <div class="flex items-center gap-2">
+            <!-- Currency Switcher Toggle -->
+            <div class="flex items-center bg-[#F5F2EB] p-0.5 rounded-full border border-[#E8E3D9] shadow-2xs">
+                <button type="button" id="curr-btn-lkr" onclick="setCurrency('LKR')" class="px-2.5 py-1 rounded-full text-[10px] font-bold transition-all duration-200 bg-[#C85A32] text-white shadow-xs">
+                    🇱🇰 LKR
+                </button>
+                <button type="button" id="curr-btn-usd" onclick="setCurrency('USD')" class="px-2.5 py-1 rounded-full text-[10px] font-bold text-[#666666] hover:text-[#222222] transition-all duration-200">
+                    💵 USD
+                </button>
+            </div>
+
+            <!-- Studio Status Pill -->
+            <div class="hidden sm:flex items-center space-x-2 px-3.5 py-1.5 bg-[#FBF2ED] border border-[#C85A32]/25 rounded-full">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C85A32] opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#C85A32]"></span>
+                </span>
+                <span class="text-[11px] font-bold text-[#C85A32] tracking-wider uppercase">Studio Open</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="relative z-10 pt-28 sm:pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-8 w-full flex-1">
+        
+        <!-- Breadcrumbs -->
+        <div class="pb-4 mb-6 border-b border-[#E8E3D9]/70">
+            <div class="flex items-center gap-2 text-xs font-semibold text-[#777777] overflow-x-auto pb-1">
+                <a href="/" class="hover:text-[#C85A32] transition whitespace-nowrap">Home</a>
+                <i class="fa-solid fa-chevron-right text-[8px] text-[#BBB]"></i>
+                <span class="text-[#1E1E1E] font-bold truncate">Custom Poster Design & Print Studio</span>
+            </div>
+        </div>
+
+        <!-- Hero Header -->
+        <div class="text-center max-w-3xl mx-auto mb-14 space-y-4">
+            <span class="text-xs font-bold text-[#C85A32] tracking-widest uppercase bg-[#FBF2ED] px-4 py-1.5 rounded-full border border-[#C85A32]/20 inline-flex items-center gap-2 shadow-2xs">
+                <i class="fa-solid fa-wand-magic-sparkles text-[#C85A32]"></i>
+                <span>Bespoke Graphic Design & Fine Art Print</span>
+            </span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#1E1E1E] leading-tight">
+                Turn Any Car, Anime, or Subject into a Museum-Grade Spec Poster
+            </h1>
+            <p class="text-xs sm:text-sm text-[#666666] leading-relaxed max-w-2xl mx-auto">
+                Ganusha Dulanga (<strong class="text-[#1E1E1E]">Mr.Artist</strong>) crafts bespoke multi-angle visual layouts with verified technical specs, studio lighting, and typography. Available as **Digital Softcopy** or **Printed on 4mm Rigid Board**.
+            </p>
+        </div>
+
+        <!-- 3-Step Process Guide -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-14">
+            <div class="bg-white border border-[#E8E3D9] rounded-3xl p-6 text-center space-y-2 shadow-soft">
+                <div class="w-12 h-12 rounded-2xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-lg font-bold">1</div>
+                <h4 class="font-serif font-bold text-base text-[#1E1E1E]">Send Your Subject</h4>
+                <p class="text-xs text-[#666666]">Send your car photo, favorite anime character, motorcycle, or custom theme.</p>
+            </div>
+
+            <div class="bg-white border border-[#E8E3D9] rounded-3xl p-6 text-center space-y-2 shadow-soft">
+                <div class="w-12 h-12 rounded-2xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-lg font-bold">2</div>
+                <h4 class="font-serif font-bold text-base text-[#1E1E1E]">Bespoke Graphic Design</h4>
+                <p class="text-xs text-[#666666]">We design a multi-angle composition with full vehicle specs & studio aesthetics.</p>
+            </div>
+
+            <div class="bg-white border border-[#E8E3D9] rounded-3xl p-6 text-center space-y-2 shadow-soft">
+                <div class="w-12 h-12 rounded-2xl bg-[#FBF2ED] text-[#C85A32] flex items-center justify-center mx-auto text-lg font-bold">3</div>
+                <h4 class="font-serif font-bold text-base text-[#1E1E1E]">Digital File or 4mm Board</h4>
+                <p class="text-xs text-[#666666]">Receive high-res 300DPI digital softcopy, or get it printed on structural 4mm board.</p>
+            </div>
+        </div>
+
+        <!-- Interactive 2-Column: Left (Showcase Posters) & Right (Transparent Order Desk) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16">
+            
+            <!-- LEFT COLUMN: Dual Masterpieces Showcase -->
+            <div class="lg:col-span-6 space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    
+                    <!-- Bugatti Chiron -->
+                    <div class="glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] shadow-soft group bg-white flex flex-col justify-between">
+                        <div class="relative w-full aspect-[3/4] bg-[#111111] overflow-hidden">
+                            <img src="/samples/bugatti-chiron.jpg" alt="Bugatti Chiron Spec Poster by Mr.Artist" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" onclick="window.location.href='product.html?id=custom_bugatti_chiron&type=sample'">
+                            <div class="absolute top-3 left-3 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#1E1E1E] shadow-2xs">
+                                🚗 Automotive Spec Edit
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-2 bg-white">
+                            <h4 class="font-serif font-bold text-base text-[#1E1E1E]">Bugatti Chiron Top Speed King</h4>
+                            <p class="text-[11px] text-[#666]">8.0L Quad Turbo W16 • 1500 HP • Studio Dark Edition</p>
+                        </div>
+                    </div>
+
+                    <!-- BMW M8 -->
+                    <div class="glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] shadow-soft group bg-white flex flex-col justify-between">
+                        <div class="relative w-full aspect-[3/4] bg-[#111111] overflow-hidden">
+                            <img src="/samples/bmw-m8.jpg" alt="BMW M8 Competition by Mr.Artist" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" onclick="window.location.href='product.html?id=custom_bmw_m8&type=sample'">
+                            <div class="absolute top-3 left-3 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#1E1E1E] shadow-2xs">
+                                🏎️ M Power Night Edition
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-2 bg-white">
+                            <h4 class="font-serif font-bold text-base text-[#1E1E1E]">BMW M8 Competition Night Edition</h4>
+                            <p class="text-[11px] text-[#666]">4.4L V8 TwinPower Turbo • 0-100 in 3.2s • M xDrive</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Trust Row -->
+                <div class="bg-[#FBF2ED] rounded-2xl p-4 border border-[#C85A32]/20 flex items-center justify-around text-center text-xs">
+                    <div>
+                        <span class="font-bold text-[#1E1E1E] block">300 DPI High-Res</span>
+                        <span class="text-[10px] text-[#777]">Ultra-Crisp Typography</span>
+                    </div>
+                    <div class="w-px h-8 bg-[#E8E3D9]"></div>
+                    <div>
+                        <span class="font-bold text-[#1E1E1E]">4mm Rigid Mount</span>
+                        <span class="text-[10px] text-[#777]">2600GSM Heavy Core</span>
+                    </div>
+                    <div class="w-px h-8 bg-[#E8E3D9]"></div>
+                    <div>
+                        <span class="font-bold text-[#1E1E1E]">100% Custom</span>
+                        <span class="text-[10px] text-[#777]">Designed to Your Specs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Interactive Custom Request & Pricing Desk -->
+            <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E3D9] shadow-soft space-y-6">
+                
+                <div class="flex items-center justify-between border-b border-[#E8E3D9] pb-4">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#C85A32] block">Interactive Calculator</span>
+                        <h3 class="font-serif text-xl font-bold text-[#1E1E1E]">Custom Design Order Desk</h3>
+                    </div>
+                    <div class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-200 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>Slots Open</span>
+                    </div>
+                </div>
+
+                <!-- Service Package Switcher -->
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-wider text-[#444] block">
+                        1. Select Service Package:
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <button type="button" onclick="setServiceType('bundle')" id="svc-btn-bundle" class="p-3.5 rounded-2xl border-2 border-[#C85A32] bg-[#FBF2ED] text-[#C85A32] text-left transition shadow-xs">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-[#1E1E1E]">📦 Complete Package</span>
+                                <i class="fa-solid fa-check text-xs text-[#C85A32]"></i>
+                            </div>
+                            <p class="text-[10px] text-[#666] mt-0.5">Design + 4mm Rigid Board Print</p>
+                        </button>
+
+                        <button type="button" onclick="setServiceType('digital')" id="svc-btn-digital" class="p-3.5 rounded-2xl border-2 border-[#E8E3D9] bg-white text-[#222222] text-left transition shadow-xs hover:border-[#C85A32]/40">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-[#1E1E1E]">🎨 Digital Design Only</span>
+                                <i class="fa-solid fa-check text-xs text-[#C85A32] opacity-0"></i>
+                            </div>
+                            <p class="text-[10px] text-[#666] mt-0.5">High-Res 300DPI Softcopy</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Subject Category -->
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-wider text-[#444] block">
+                        2. Subject Category:
+                    </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="setCustomSubject('vehicle')" data-subj="vehicle" class="custom-subj-btn px-3 py-2.5 rounded-xl text-xs font-bold bg-[#FBF2ED] border-2 border-[#C85A32] text-[#C85A32] text-left transition shadow-2xs flex items-center gap-2">
+                            <i class="fa-solid fa-car text-xs"></i>
+                            <span>Vehicle / Car</span>
+                        </button>
+                        <button type="button" onclick="setCustomSubject('anime')" data-subj="anime" class="custom-subj-btn px-3 py-2.5 rounded-xl text-xs font-semibold bg-white border border-[#E8E3D9] text-[#666] text-left hover:text-[#222] transition flex items-center gap-2">
+                            <i class="fa-solid fa-dragon text-xs"></i>
+                            <span>Anime & Manga</span>
+                        </button>
+                        <button type="button" onclick="setCustomSubject('gaming')" data-subj="gaming" class="custom-subj-btn px-3 py-2.5 rounded-xl text-xs font-semibold bg-white border border-[#E8E3D9] text-[#666] text-left hover:text-[#222] transition flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-xs"></i>
+                            <span>Gaming / Hero</span>
+                        </button>
+                        <button type="button" onclick="setCustomSubject('portrait')" data-subj="portrait" class="custom-subj-btn px-3 py-2.5 rounded-xl text-xs font-semibold bg-white border border-[#E8E3D9] text-[#666] text-left hover:text-[#222] transition flex items-center gap-2">
+                            <i class="fa-solid fa-user-astronaut text-xs"></i>
+                            <span>Personal Art</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Reference Input -->
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-wider text-[#444] block">
+                        3. Subject Title or Custom Notes:
+                    </label>
+                    <input type="text" id="custom-subject-input" placeholder="e.g. Nissan GT-R R35, Gojo Satoru, Yamaha R1..." class="w-full px-4 py-2.5 bg-[#F5F2EB] rounded-xl border border-[#E8E3D9] text-xs font-medium text-[#1E1E1E] focus:outline-none focus:border-[#C85A32] transition">
+                </div>
+
+                <!-- Step 4: Format & Pricing Options -->
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-wider text-[#444] block">
+                        4. Choose Size / Format:
+                    </label>
+                    <div id="custom-format-list" class="space-y-2">
+                        <!-- Populated by src/custom.js -->
+                    </div>
+                </div>
+
+                <!-- Total Price Display & WhatsApp CTA (NO DELIVERY CHARGE INCLUDED IN TOTAL) -->
+                <div class="p-5 bg-[#FBF2ED] rounded-2xl border border-[#C85A32]/30 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#C85A32] block" id="quote-price-label">Total Price (Design + Print):</span>
+                            <span id="custom-quote-total" class="text-2xl sm:text-3xl font-extrabold text-[#1E1E1E] font-display">LKR 3,000</span>
+                        </div>
+                        <span id="custom-quote-breakdown" class="text-xs text-[#666] text-right">No hidden fees</span>
+                    </div>
+
+                    <button type="button" onclick="sendCustomWhatsAppOrder()" class="w-full py-4 bg-[#C85A32] hover:bg-[#B04A25] text-white font-bold text-sm tracking-wider uppercase rounded-xl transition shadow-md hover:shadow-lg flex items-center justify-center gap-3 cursor-pointer">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Order Custom Design via WhatsApp</span>
+                    </button>
+                    <p class="text-[11px] text-[#777] text-center">Island-wide Sri Lanka delivery available (LKR 450 flat rate) • Digital softcopy has $0 delivery.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Luxury Footer -->
+    <footer class="relative z-10 border-t border-[#E8E3D9] bg-white/80 backdrop-blur-md py-12 px-4 sm:px-8 mt-20">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[#888888]">
+            <p>&copy; 2026 Mr.Artist (MrArtist Studio) • Bespoke Wall Art & Architectural Prints. All rights reserved.</p>
+            <p class="flex items-center gap-1.5">
+                <span>Designed & Developed by</span>
+                <a href="https://anjanaww.vercel.app" target="_blank" rel="noopener noreferrer" class="font-bold text-[#222222] hover:text-[#C85A32] underline underline-offset-4 decoration-[#C85A32]/40 hover:decoration-[#C85A32] transition inline-flex items-center gap-1">
+                    <span>Anjana Wijerathna</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-[#C85A32]"></i>
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Vite JS Script Entry -->
+    <script type="module" src="/src/custom.js"></script>
+</body>
+</html>
