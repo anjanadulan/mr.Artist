@@ -1,3 +1,5 @@
+import { initAdBlockDetector } from './adblock.js';
+initAdBlockDetector();
 import './style.css';
 
 // ----------------- Multi-Currency Conversion Engine -----------------

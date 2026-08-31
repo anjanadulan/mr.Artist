@@ -1,3 +1,5 @@
+import { initAdBlockDetector } from './adblock.js';
+initAdBlockDetector();
 import * as THREE from 'three';
 import './style.css';
 import { fetchArtworks, defaultArtworks, fetchSamples } from './supabase.js';
