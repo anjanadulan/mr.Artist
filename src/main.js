@@ -771,3 +771,117 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 7. Dismiss preloader
     dismissPreloader();
 });
+
+
+// ----------------- Custom Design Order Desk Logic -----------------
+const customSubjectNames = {
+    'vehicle': 'Supercar / Vehicle Spec Poster',
+    'anime': 'Anime & Manga Aesthetic Poster',
+    'gaming': 'Gaming & Superhero Art Poster',
+    'portrait': 'Personal / Bespoke Portrait Poster'
+};
+
+const customFormatDetails = {
+    'landscape-4mm': { name: '12.5 x 24.5" Landscape (4mm Rigid Board)', price: 2800 },
+    'triptych-4mm': { name: '12.5 x 18" x3 Triptych Set (4mm Rigid Board)', price: 3200 },
+    'a3': { name: 'A3 Size Fine Art Board (300GSM)', price: 900 },
+    'a4': { name: 'A4 Size Fine Art Board (300GSM)', price: 500 }
+};
+
+let activeCustomSubjectKey = 'vehicle';
+let activeCustomFormatKey = 'landscape-4mm';
+
+window.setCustomSubject = function(subjKey) {
+    activeCustomSubjectKey = subjKey;
+    document.querySelectorAll('.custom-subj-btn').forEach(btn => {
+        const key = btn.getAttribute('data-subj');
+        if (key === subjKey) {
+            btn.className = "custom-subj-btn px-3 py-2.5 rounded-xl text-xs font-bold bg-[#FBF2ED] border-2 border-[#C85A32] text-[#C85A32] text-left transition shadow-2xs flex items-center gap-2";
+        } else {
+            btn.className = "custom-subj-btn px-3 py-2.5 rounded-xl text-xs font-semibold bg-white border border-[#E8E3D9] text-[#666] text-left hover:text-[#222] transition flex items-center gap-2";
+        }
+    });
+};
+
+window.setCustomFormat = function(formatKey) {
+    activeCustomFormatKey = formatKey;
+    document.querySelectorAll('.custom-fmt-card').forEach(card => {
+        const fmt = card.getAttribute('data-custom-fmt');
+        const dot = card.querySelector('.custom-fmt-dot');
+        const dotBorder = dot ? dot.parentElement : null;
+        const priceLabel = card.querySelector('.font-display');
+
+        if (fmt === formatKey) {
+            card.classList.add('border-[#C85A32]', 'bg-[#FBF2ED]', 'text-[#C85A32]');
+            card.classList.remove('border-[#E8E3D9]', 'bg-white', 'text-[#222222]');
+            if (dot) {
+                dot.classList.remove('bg-transparent');
+                dot.classList.add('bg-[#C85A32]');
+            }
+            if (dotBorder) {
+                dotBorder.classList.remove('border-[#BBB]');
+                dotBorder.classList.add('border-[#C85A32]');
+            }
+            if (priceLabel) {
+                priceLabel.classList.add('text-[#C85A32]');
+                priceLabel.classList.remove('text-[#222]');
+            }
+        } else {
+            card.classList.remove('border-[#C85A32]', 'bg-[#FBF2ED]', 'text-[#C85A32]');
+            card.classList.add('border-[#E8E3D9]', 'bg-white', 'text-[#222222]');
+            if (dot) {
+                dot.classList.add('bg-transparent');
+                dot.classList.remove('bg-[#C85A32]');
+            }
+            if (dotBorder) {
+                dotBorder.classList.add('border-[#BBB]');
+                dotBorder.classList.remove('border-[#C85A32]');
+            }
+            if (priceLabel) {
+                priceLabel.classList.remove('text-[#C85A32]');
+                priceLabel.classList.add('text-[#222]');
+            }
+        }
+    });
+
+    calculateCustomQuote();
+};
+
+window.calculateCustomQuote = function() {
+    const totalEl = document.getElementById('custom-quote-total');
+    const breakdownEl = document.getElementById('custom-quote-breakdown');
+    if (!totalEl || !breakdownEl) return;
+
+    const fmtInfo = customFormatDetails[activeCustomFormatKey] || customFormatDetails['landscape-4mm'];
+    const basePrice = fmtInfo.price;
+    const delivery = 450;
+    const total = basePrice + delivery;
+
+    if (typeof formatPrice === 'function') {
+        totalEl.textContent = formatPrice(total);
+        breakdownEl.textContent = formatPrice(basePrice) + ' print + ' + formatPrice(delivery) + ' delivery';
+    } else {
+        totalEl.textContent = 'LKR ' + total.toLocaleString();
+        breakdownEl.textContent = 'LKR ' + basePrice.toLocaleString() + ' print + LKR ' + delivery + ' delivery';
+    }
+};
+
+window.sendCustomDesignWhatsAppRequest = function() {
+    const subjectInput = document.getElementById('custom-subject-input');
+    const totalEl = document.getElementById('custom-quote-total');
+
+    const subjectTitle = customSubjectNames[activeCustomSubjectKey] || 'Custom Spec Poster';
+    const subjectDetail = subjectInput && subjectInput.value.trim() ? subjectInput.value.trim() : 'Custom Poster Reference';
+    const fmtInfo = customFormatDetails[activeCustomFormatKey] || customFormatDetails['landscape-4mm'];
+    const total = totalEl ? totalEl.textContent : 'LKR 3,250';
+
+    const message = 'Hello Ganusha / Mr.Artist! 🎨\n' +
+'I would like to request a Custom Graphic Design & Print:\n\n' +
+'• Category: ' + subjectTitle + '\n' +
+'• Subject / Title: ' + subjectDetail + '\n' +
+'• Print Format: ' + fmtInfo.name + '\n' +
+'• Estimated Print Quote: ' + total + '\n\n' +
+'I have photos / references ready. Please let me know how we can proceed with the design!';
+
+    window.open('https://wa.me/94722043235?text=' + encodeURIComponent(message), '_blank');
+};

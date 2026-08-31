@@ -119,7 +119,32 @@ export async function fetchArtworks() {
 }
 
 // Default fallback samples for printed showcase
+// Signature Bespoke Custom Spec Posters
+export const signatureCustomPosters = [
+    {
+        id: 'custom_bugatti_chiron',
+        name: 'Bugatti Chiron Spec Poster (Custom Edit)',
+        src: '/samples/bugatti-chiron.jpg',
+        size: '12.5 x 24.5" Landscape (4mm Rigid Board)',
+        price: 'LKR 2,800',
+        rawPrice: 2800,
+        isCustomDesign: true,
+        category: 'custom'
+    },
+    {
+        id: 'custom_bmw_m8',
+        name: 'BMW M8 Competition Spec Poster (Custom Edit)',
+        src: '/samples/bmw-m8.jpg',
+        size: '12.5 x 24.5" Landscape (4mm Rigid Board)',
+        price: 'LKR 2,800',
+        rawPrice: 2800,
+        isCustomDesign: true,
+        category: 'custom'
+    }
+];
+
 export const defaultSamples = [
+    ...signatureCustomPosters,
     {
         id: 'sample1',
         name: 'Alpine Panorama 3-Panel Set',
@@ -157,7 +182,7 @@ export const defaultSamples = [
 // Fetch Samples from Supabase Database
 export async function fetchSamples() {
     if (!supabase) {
-        return [];
+        return defaultSamples;
     }
 
     try {
@@ -168,23 +193,24 @@ export async function fetchSamples() {
 
         if (error) {
             console.warn("Error fetching from Supabase 'samples' table:", error.message);
-            return [];
+            return defaultSamples;
         }
 
-        if (data) {
-            return data.map(item => ({
-                id: item.id,
+        if (data && data.length > 0) {
+            const fetched = data.map(item => ({
+                id: item.id?.toString() || item.name,
                 name: item.name,
                 src: item.image_url,
                 size: item.size || 'Fine Art Board',
                 price: `LKR ${(item.price || 500).toLocaleString()}`,
                 rawPrice: item.price || 500
             }));
+            return [...signatureCustomPosters, ...fetched];
         }
 
-        return [];
+        return defaultSamples;
     } catch (err) {
         console.warn("Supabase samples fetch failed:", err);
-        return [];
+        return defaultSamples;
     }
 }

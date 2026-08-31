@@ -93,18 +93,21 @@ window.resetFilters = function() {
 
 function updateCounts() {
     const countAll = allSamples.length;
+    const countCustom = allSamples.filter(s => s.isCustomDesign || (s.name || '').toLowerCase().includes('custom') || (s.id || '').includes('custom')).length;
     const countLandscape = allSamples.filter(s => (s.size || '').toLowerCase().includes('landscape')).length;
     const countTriptych = allSamples.filter(s => (s.size || '').toLowerCase().includes('triptych')).length;
     const countA3 = allSamples.filter(s => (s.size || '').toLowerCase().includes('a3')).length;
     const countA4 = allSamples.filter(s => (s.size || '').toLowerCase().includes('a4')).length;
 
     const elAll = document.getElementById('count-all');
+    const elCustom = document.getElementById('count-custom');
     const elLandscape = document.getElementById('count-landscape');
     const elTriptych = document.getElementById('count-triptych');
     const elA3 = document.getElementById('count-a3');
     const elA4 = document.getElementById('count-a4');
 
     if (elAll) elAll.textContent = countAll;
+    if (elCustom) elCustom.textContent = countCustom;
     if (elLandscape) elLandscape.textContent = countLandscape;
     if (elTriptych) elTriptych.textContent = countTriptych;
     if (elA3) elA3.textContent = countA3;
@@ -125,6 +128,7 @@ function renderFilteredSamples() {
         if (!nameMatch) return false;
 
         const sz = (sample.size || '').toLowerCase();
+        if (activeFormatFilter === 'custom') return sample.isCustomDesign || (sample.name || '').toLowerCase().includes('custom') || (sample.id || '').includes('custom');
         if (activeFormatFilter === 'landscape') return sz.includes('landscape');
         if (activeFormatFilter === 'triptych') return sz.includes('triptych');
         if (activeFormatFilter === 'a3') return sz.includes('a3');
