@@ -102,6 +102,45 @@
             100% { transform: translateX(220%); }
         }
     </style>
+    <!-- Schema.org JSON-LD (Collection & Breadcrumbs) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "https://mr-artist.vercel.app/samples.html#webpage",
+          "url": "https://mr-artist.vercel.app/samples.html",
+          "name": "All Printed Wall Samples & Client Proofs | Mr.Artist",
+          "description": "Explore real client printed fine art wall boards, anime posters, supercar boards, and 3-panel triptychs from Mr.Artist Studio Sri Lanka.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://mr-artist.vercel.app/#website",
+            "url": "https://mr-artist.vercel.app/",
+            "name": "Mr.Artist"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://mr-artist.vercel.app/samples.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://mr-artist.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Printed Samples Archive",
+              "item": "https://mr-artist.vercel.app/samples.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body class="bg-[#FDFBF7] text-[#222222] font-sans antialiased selection:bg-[#C85A32] selection:text-white relative overflow-x-hidden min-h-screen flex flex-col justify-between">
 
