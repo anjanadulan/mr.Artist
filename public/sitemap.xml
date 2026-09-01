@@ -52,4 +52,12 @@
     <priority>0.80</priority>
   </url>
 
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://mr-artist.vercel.app/privacy.html</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
+  </url>
+
 </urlset>
