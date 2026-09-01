@@ -47,22 +47,7 @@
         img { max-width: 100%; height: auto; }
         .header-logo-img { height: 44px; width: auto; object-fit: contain; }
 
-        /* Instant Brand Preloader */
-        #page-preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: #FDFBF7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-        #page-preloader.loaded {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+        
         .preloader-box {
             display: flex;
             flex-direction: column;
@@ -161,13 +146,7 @@
 </head>
 <body class="bg-[#FDFBF7] text-[#222222] font-sans antialiased selection:bg-[#C85A32] selection:text-white relative overflow-x-hidden min-h-screen flex flex-col justify-between">
 
-    <!-- Instant Brand Loading Page -->
-    <div id="page-preloader">
-        <div class="preloader-box">
-            <img src="/logo.png" alt="Mr.Artist" class="preloader-img">
-            <div class="preloader-track">
-                <div class="preloader-progress"></div>
-            </div>
+    
         </div>
     </div>
 
@@ -247,7 +226,10 @@
                     <div class="relative w-full rounded-2xl overflow-hidden bg-[#F5F2EB] flex items-center justify-center min-h-[340px] sm:min-h-[460px] p-2">
                         
                         <!-- Main Artwork (Proper Aspect & No Overflow) -->
-                        <img id="main-artwork-image" src="" alt="Artwork Preview" class="max-w-full max-h-[500px] w-auto h-auto object-contain rounded-xl drop-shadow-md cursor-pointer transition-transform duration-300 hover:scale-[1.02]" onclick="openFullscreenZoom()">
+                        <div id="artwork-img-skeleton" class="absolute inset-0 bg-[#EFECE6] animate-pulse flex items-center justify-center rounded-2xl">
+        <i class="fa-solid fa-palette text-2xl text-[#C85A32]/40"></i>
+    </div>
+    <img id="main-artwork-image" src="" alt="" class="max-w-full max-h-[500px] w-auto h-auto object-contain rounded-xl drop-shadow-md cursor-pointer transition-all duration-500 opacity-0 relative z-10 hover:scale-[1.02]" onclick="openFullscreenZoom()">
 
                         <!-- Top-Left Category Tag -->
                         <div class="absolute top-4 left-4 z-20">

@@ -164,3 +164,16 @@ h1, h2, h3, .font-display, .font-serif-display {
 }
 
 
+
+/* GPU Acceleration for Ultra-Smooth 60FPS Animations */
+.glass-card, .carousel-slide, #samples-grid > div {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform, opacity;
+}
+
+.sample-image-trigger {
+    transform: translateZ(0);
+    will-change: transform;
+}

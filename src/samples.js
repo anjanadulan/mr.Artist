@@ -1,3 +1,4 @@
+import { initHeroAnimations, createGridLayout, smoothPageNavigate } from './animations.js';
 import { initAdBlockDetector } from './adblock.js';
 initAdBlockDetector();
 import './style.css';
@@ -68,7 +69,8 @@ window.setCurrency = function(currency) {
 
 // ----------------- State & Filtering -----------------
 let allSamples = [];
-let activeFormatFilter = 'all'; // 'all' | 'landscape' | 'triptych' | 'a3' | 'a4'
+let activeFormatFilter = 'all';
+let samplesLayout = null; // 'all' | 'landscape' | 'triptych' | 'a3' | 'a4'
 
 window.setFormatFilter = function(filterKey) {
     activeFormatFilter = filterKey;
@@ -146,39 +148,50 @@ function renderFilteredSamples() {
 
     if (emptyState) emptyState.classList.add('hidden');
 
-    grid.innerHTML = filtered.map(sample => {
-        const priceDisplay = formatPrice(sample.rawPrice || sample.price || 2800);
-        const waMsg = encodeURIComponent('Hello Mr.Artist! 🎨\nI would like to order this printed sample:\n• Title: ' + sample.name + '\n• Format: ' + sample.size + '\n• Price: ' + priceDisplay + '\n\nPlease confirm delivery details. Thank you!');
-        const waLink = 'https://wa.me/94722043235?text=' + waMsg;
+    const generateHtml = () => {
+        return filtered.map(sample => {
+            const priceDisplay = formatPrice(sample.rawPrice || sample.price || 2800);
+            const waMsg = encodeURIComponent('Hello Mr.Artist! 🎨\nI would like to order this printed sample:\n• Title: ' + sample.name + '\n• Format: ' + sample.size + '\n• Price: ' + priceDisplay + '\n\nPlease confirm delivery details. Thank you!');
+            const waLink = 'https://wa.me/94722043235?text=' + waMsg;
+            const detailUrl = 'product.html?id=' + encodeURIComponent(sample.id) + '&type=sample';
 
-        return '<div class="glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group bg-white/90">' +
-            '<div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden">' +
-                '<img src="' + sample.src + '" alt="' + sample.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" onclick="window.location.href=\'product.html?id=' + encodeURIComponent(sample.id) + '&type=sample\'">' +
-                '<div class="absolute top-3 left-3 px-3 py-1 bg-white/95 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#1E1E1E] shadow-2xs">' +
-                    sample.size +
+            return '<div class="glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group bg-white/90">' +
+                '<div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden">' +
+                    '<img src="' + sample.src + '" alt="' + sample.name + '" class="sample-image-trigger w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" onclick="window.navigateWithCard(event, \'' + detailUrl + '\')">' +
+                    '<div class="absolute top-3 left-3 px-3 py-1 bg-white/95 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#1E1E1E] shadow-2xs pointer-events-none">' +
+                        sample.size +
+                    '</div>' +
+                    '<div class="absolute top-3 right-3 px-3 py-1 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[11px] font-bold text-[#C85A32] shadow-2xs pointer-events-none">' +
+                        priceDisplay +
+                    '</div>' +
                 '</div>' +
-                '<div class="absolute top-3 right-3 px-3 py-1 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[11px] font-bold text-[#C85A32] shadow-2xs">' +
-                    priceDisplay +
+                '<div class="p-5 space-y-3 flex-1 flex flex-col justify-between">' +
+                    '<div>' +
+                        '<h4 onclick="window.navigateWithCard(event, \'' + detailUrl + '\')" class="sample-title-trigger font-serif font-bold text-base text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors line-clamp-1 cursor-pointer">' + sample.name + '</h4>' +
+                        '<p class="text-xs text-[#666666] mt-0.5">' + sample.size + '</p>' +
+                    '</div>' +
+                    '<div class="space-y-2 pt-1">' +
+                        '<a href="' + detailUrl + '" onclick="window.navigateWithCard(event, \'' + detailUrl + '\')" class="w-full py-2 bg-white hover:bg-[#FBF2ED] text-[#222222] hover:text-[#C85A32] font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-1.5 border border-[#E8E3D9]">' +
+                            '<i class="fa-solid fa-eye text-[11px] text-[#C85A32]"></i>' +
+                            '<span>View Piece Details</span>' +
+                        '</a>' +
+                        '<a href="' + waLink + '" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">' +
+                            '<i class="fa-brands fa-whatsapp text-sm"></i>' +
+                            '<span>Direct Order (' + priceDisplay + ')</span>' +
+                        '</a>' +
+                    '</div>' +
                 '</div>' +
-            '</div>' +
-            '<div class="p-5 space-y-3 flex-1 flex flex-col justify-between">' +
-                '<div>' +
-                    '<h4 onclick="window.location.href=\'product.html?id=' + encodeURIComponent(sample.id) + '&type=sample\'" class="font-serif font-bold text-base text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors line-clamp-1 cursor-pointer">' + sample.name + '</h4>' +
-                    '<p class="text-xs text-[#666666] mt-0.5">' + sample.size + '</p>' +
-                '</div>' +
-                '<div class="space-y-2 pt-1">' +
-                    '<a href="product.html?id=' + sample.id + '&type=sample" class="w-full py-2 bg-white hover:bg-[#FBF2ED] text-[#222222] hover:text-[#C85A32] font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-1.5 border border-[#E8E3D9]">' +
-                        '<i class="fa-solid fa-eye text-[11px] text-[#C85A32]"></i>' +
-                        '<span>View Piece Details</span>' +
-                    '</a>' +
-                    '<a href="' + waLink + '" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">' +
-                        '<i class="fa-brands fa-whatsapp text-sm"></i>' +
-                        '<span>Direct Order (' + priceDisplay + ')</span>' +
-                    '</a>' +
-                '</div>' +
-            '</div>' +
-        '</div>';
-    }).join('');
+            '</div>';
+        }).join('');
+    };
+
+    if (samplesLayout) {
+        samplesLayout.animate(() => {
+            grid.innerHTML = generateHtml();
+        });
+    } else {
+        grid.innerHTML = generateHtml();
+    }
 }
 
 // ----------------- Dismiss Preloader -----------------
@@ -209,6 +222,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 3. Update Counts and Render
     updateCounts();
     renderFilteredSamples();
+    samplesLayout = createGridLayout('#all-samples-grid');
 
     // 4. Smoothly Dismiss Preloader
     setTimeout(dismissPreloader, 300);
@@ -217,3 +231,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 window.addEventListener('load', () => {
     setTimeout(dismissPreloader, 450);
 });
+
+window.navigateWithCard = function(event, url) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    const card = event ? event.target.closest('.glass-card') : null;
+    smoothPageNavigate(url, card);
+};

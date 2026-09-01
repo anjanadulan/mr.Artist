@@ -1,3 +1,4 @@
+import { initHeroAnimations } from './animations.js';
 import { initAdBlockDetector } from './adblock.js';
 initAdBlockDetector();
 import './style.css';
@@ -231,6 +232,7 @@ function dismissPreloader() {
 
 // ----------------- Page Initialization -----------------
 document.addEventListener('DOMContentLoaded', () => {
+    initHeroAnimations();
     const initialCurrency = detectUserCurrency();
     window.setCurrency(initialCurrency);
     renderFormatOptions();

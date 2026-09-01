@@ -1,3 +1,4 @@
+import { initHeroAnimations, initProductPageEntrance } from './animations.js';
 import { initAdBlockDetector } from './adblock.js';
 initAdBlockDetector();
 import './style.css';
@@ -50,7 +51,6 @@ window.setCurrency = function(currency) {
         localStorage.setItem('mrartist_currency', currency);
     } catch (e) {}
 
-    // Update Switcher Buttons UI in Navbar
     const btnLkr = document.getElementById('curr-btn-lkr');
     const btnUsd = document.getElementById('curr-btn-usd');
     if (btnLkr && btnUsd) {
@@ -178,8 +178,8 @@ window.sendArtworkWhatsAppOrder = function() {
     const formatName = formatNames[selectedFormat] || selectedFormat;
     let services = [];
     if (upscaleCheck && upscaleCheck.checked) services.push('Photo AI Upscaling (+' + formatPrice(500) + ')');
-    if (customCheck && customCheck.checked) services.push('Custom Crop / Tone (+' + formatPrice(500) + ')');
-    const servicesText = services.length > 0 ? services.join(', ') : 'Curated Edition Print';
+    if (customCheck && customCheck.checked) services.push('Custom Art / Crop (+' + formatPrice(500) + ')');
+    const servicesText = services.length > 0 ? services.join(', ') : 'Standard Board Print';
 
     const total = totalEl ? totalEl.textContent : formatPrice(3650);
 
@@ -191,7 +191,7 @@ window.sendArtworkWhatsAppOrder = function() {
 '• Currency: ' + currentCurrency + '\n' +
 '• Custom Add-ons: ' + servicesText + '\n' +
 '• Estimated Total: ' + total + '\n' +
-'• Artwork URL: ' + window.location.href + '\n\n' +
+'• Product URL: ' + window.location.href + '\n\n' +
 'Please confirm dispatch and order details. Thank you!';
 
     const encoded = encodeURIComponent(message);
@@ -237,17 +237,6 @@ window.closeFullscreenZoom = function() {
     document.body.style.overflow = '';
 };
 
-// ----------------- Dismiss Preloader -----------------
-function dismissPreloader() {
-    const preloader = document.getElementById('page-preloader');
-    if (preloader) {
-        preloader.classList.add('loaded');
-        setTimeout(() => {
-            if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
-        }, 450);
-    }
-}
-
 // ----------------- Render Bottom Artworks Showcase Grid -----------------
 function renderArtworkShowcaseGrid() {
     const grid = document.getElementById('artworks-showcase-grid');
@@ -258,7 +247,7 @@ function renderArtworkShowcaseGrid() {
 
     grid.innerHTML = otherItems.slice(0, 4).map(item => {
         const priceDisplay = formatPrice(item.rawPrice || item.price || 2800);
-        return '<a href="/artwork.html?id=' + item.id + '" class="glass-card rounded-2xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col group bg-white/80">' +
+        return '<a href="artwork.html?id=' + encodeURIComponent(item.id) + '" class="glass-card rounded-2xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col group bg-white/80">' +
             '<div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden">' +
                 '<img src="' + item.src + '" alt="' + item.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">' +
                 '<div class="absolute top-2.5 left-2.5 px-2.5 py-0.5 bg-white/90 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[9px] font-bold text-[#222222] shadow-2xs">' +
@@ -284,6 +273,8 @@ function renderArtworkShowcaseGrid() {
 
 // ----------------- Page Initialization -----------------
 document.addEventListener('DOMContentLoaded', async () => {
+    initHeroAnimations();
+
     // 1. Currency Init
     const initialCurrency = detectUserCurrency();
     window.setCurrency(initialCurrency);
@@ -302,11 +293,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const queryName = params.get('name');
 
     if (queryId) {
-        currentArtwork = allArtworks.find(a => String(a.id) === String(queryId)) ||
-                         allArtworks[0];
+        currentArtwork = allArtworks.find(a => String(a.id) === String(queryId)) || allArtworks[0];
     } else if (queryName) {
-        currentArtwork = allArtworks.find(a => a.name.toLowerCase().includes(queryName.toLowerCase())) ||
-                         allArtworks[0];
+        currentArtwork = allArtworks.find(a => (a.name || '').toLowerCase().includes(queryName.toLowerCase())) || allArtworks[0];
     } else {
         currentArtwork = allArtworks[0];
     }
@@ -325,15 +314,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (tagEl) tagEl.textContent = currentArtwork.tag || 'Curated Signature Art';
         if (editionTag) editionTag.textContent = currentArtwork.category ? (currentArtwork.category.toUpperCase() + ' ARCHIVE') : 'CURATED ARTWORK EDITION';
         if (breadcrumbTitle) breadcrumbTitle.textContent = currentArtwork.name;
-        if (mainImg) mainImg.src = currentArtwork.src;
+        if (mainImg) {
+            mainImg.src = currentArtwork.src;
+            mainImg.onload = () => {
+                mainImg.classList.remove('opacity-0');
+                const skeleton = document.getElementById('artwork-img-skeleton');
+                if (skeleton) skeleton.classList.add('hidden');
+            };
+            if (mainImg.complete) {
+                mainImg.classList.remove('opacity-0');
+                const skeleton = document.getElementById('artwork-img-skeleton');
+                if (skeleton) skeleton.classList.add('hidden');
+            }
+        }
 
         document.title = currentArtwork.name + ' | Mr.Artist Wall Art Studio';
 
-        // Auto-select format matching the artwork format
         const fmt = (currentArtwork.format || currentArtwork.tag || '').toLowerCase();
-        if (fmt.includes('triptych')) {
-            window.selectFormat('triptych-4mm');
-        } else if (fmt.includes('landscape')) {
+        if (fmt.includes('landscape')) {
             window.selectFormat('landscape-4mm');
         } else if (fmt.includes('a3')) {
             window.selectFormat('a3');
@@ -344,13 +342,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // 5. Render Showcase Grid of other artworks
     renderArtworkShowcaseGrid();
-
-    // 6. Smoothly Dismiss Preloader
-    setTimeout(dismissPreloader, 350);
-});
-
-window.addEventListener('load', () => {
-    setTimeout(dismissPreloader, 500);
+    initProductPageEntrance();
 });

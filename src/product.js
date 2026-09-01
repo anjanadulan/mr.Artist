@@ -1,7 +1,8 @@
+import { initHeroAnimations, initProductPageEntrance } from './animations.js';
 import { initAdBlockDetector } from './adblock.js';
 initAdBlockDetector();
 import './style.css';
-import { fetchArtworks, defaultArtworks, fetchSamples } from './supabase.js';
+import { fetchArtworks, defaultArtworks, fetchSamples, defaultSamples } from './supabase.js';
 
 // ----------------- Multi-Currency Conversion Engine -----------------
 export let currentCurrency = 'LKR'; // 'LKR' | 'USD'
@@ -50,7 +51,6 @@ window.setCurrency = function(currency) {
         localStorage.setItem('mrartist_currency', currency);
     } catch (e) {}
 
-    // Update Switcher Buttons UI in Navbar
     const btnLkr = document.getElementById('curr-btn-lkr');
     const btnUsd = document.getElementById('curr-btn-usd');
     if (btnLkr && btnUsd) {
@@ -70,9 +70,8 @@ window.setCurrency = function(currency) {
 
 // ----------------- State & Product Details -----------------
 let currentProduct = null;
-let isSample = true;
 let allArtworks = [...defaultArtworks];
-let allSamples = [];
+let allSamples = [...defaultSamples];
 let selectedFormat = 'landscape-4mm';
 let quantity = 1;
 
@@ -186,7 +185,7 @@ window.sendProductWhatsAppOrder = function() {
     const total = totalEl ? totalEl.textContent : formatPrice(3250);
 
     const message = 'Hello Mr.Artist! 🎨\n' +
-'I would like to order this wall piece:\n\n' +
+'I would like to order this printed wall piece:\n\n' +
 '• Title: ' + currentProduct.name + '\n' +
 '• Format: ' + formatName + '\n' +
 '• Quantity: ' + quantity + '\n' +
@@ -239,34 +238,21 @@ window.closeFullscreenZoom = function() {
     document.body.style.overflow = '';
 };
 
-// ----------------- Dismiss Preloader -----------------
-function dismissPreloader() {
-    const preloader = document.getElementById('page-preloader');
-    if (preloader) {
-        preloader.classList.add('loaded');
-        setTimeout(() => {
-            if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
-        }, 450);
-    }
-}
-
 // ----------------- Render Bottom Samples Showcase Grid -----------------
 function renderSampleShowcaseGrid() {
-    const grid = document.getElementById('samples-showcase-grid');
+    const grid = document.getElementById('product-showcase-grid');
     if (!grid) return;
 
-    const items = allSamples.length > 0 ? allSamples : allArtworks;
     const currentId = currentProduct ? String(currentProduct.id) : '';
-    const otherItems = items.filter(item => String(item.id) !== currentId);
+    const otherItems = allSamples.filter(item => String(item.id) !== currentId);
 
     grid.innerHTML = otherItems.slice(0, 4).map(item => {
         const priceDisplay = formatPrice(item.rawPrice || item.price || 2800);
-        const itemType = item.size ? 'sample' : 'artwork';
-        return '<a href="/product.html?id=' + item.id + '&type=' + itemType + '" class="glass-card rounded-2xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col group bg-white/80">' +
+        return '<a href="product.html?id=' + encodeURIComponent(item.id) + '&type=sample" class="glass-card rounded-2xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col group bg-white/80">' +
             '<div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden">' +
                 '<img src="' + item.src + '" alt="' + item.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">' +
                 '<div class="absolute top-2.5 left-2.5 px-2.5 py-0.5 bg-white/90 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[9px] font-bold text-[#222222] shadow-2xs">' +
-                    (item.size || item.tag || '4mm Board') +
+                    item.size +
                 '</div>' +
                 '<div class="absolute top-2.5 right-2.5 px-2.5 py-0.5 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[10px] font-bold text-[#C85A32] shadow-2xs">' +
                     priceDisplay +
@@ -275,7 +261,7 @@ function renderSampleShowcaseGrid() {
             '<div class="p-4 space-y-2 flex-1 flex flex-col justify-between bg-white">' +
                 '<div>' +
                     '<h4 class="font-serif font-bold text-sm text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors line-clamp-1">' + item.name + '</h4>' +
-                    '<p class="text-[11px] text-[#666666] line-clamp-1 mt-0.5">' + (item.size || item.desc || 'Real printed sample') + '</p>' +
+                    '<p class="text-[11px] text-[#666666] line-clamp-1 mt-0.5">' + item.size + '</p>' +
                 '</div>' +
                 '<div class="pt-1 flex items-center justify-between text-xs font-bold text-[#C85A32]">' +
                     '<span>View Piece</span>' +
@@ -288,88 +274,79 @@ function renderSampleShowcaseGrid() {
 
 // ----------------- Page Initialization -----------------
 document.addEventListener('DOMContentLoaded', async () => {
+    initHeroAnimations();
+
     // 1. Currency Init
     const initialCurrency = detectUserCurrency();
     window.setCurrency(initialCurrency);
 
-    // 2. Fetch artworks and samples
-    const [liveArtworks, liveSamples] = await Promise.all([
-        fetchArtworks(),
-        fetchSamples()
+    // 2. Fetch live samples & artworks from Supabase
+    const [liveSamples, liveArtworks] = await Promise.all([
+        fetchSamples(),
+        fetchArtworks()
     ]);
 
-    if (liveArtworks && liveArtworks.length > 0) {
-        allArtworks = liveArtworks;
-    }
-    if (liveSamples && liveSamples.length > 0) {
-        allSamples = liveSamples;
-    }
+    if (liveSamples && liveSamples.length > 0) allSamples = liveSamples;
+    if (liveArtworks && liveArtworks.length > 0) allArtworks = liveArtworks;
 
-    // 3. Find matching product from URL query (?id=... & type=sample)
+    // 3. Find matching product from URL query (?id=... or ?name=...)
     const params = new URLSearchParams(window.location.search);
     const queryId = params.get('id');
-    const queryType = params.get('type');
     const queryName = params.get('name');
+    const queryType = params.get('type');
 
-    if (queryType === 'sample' || (queryId && String(queryId).startsWith('sample'))) {
-        isSample = true;
-        currentProduct = allSamples.find(s => String(s.id) === String(queryId)) ||
-                         allSamples.find(s => s.name.toLowerCase().includes((queryName || '').toLowerCase())) ||
-                         allSamples[0] || allArtworks[0];
-    } else if (queryId) {
-        currentProduct = allSamples.find(s => String(s.id) === String(queryId)) ||
+    let pool = allSamples;
+    if (queryType === 'artwork') pool = allArtworks;
+
+    if (queryId) {
+        currentProduct = pool.find(p => String(p.id) === String(queryId)) ||
+                         allSamples.find(s => String(s.id) === String(queryId)) ||
                          allArtworks.find(a => String(a.id) === String(queryId)) ||
-                         allSamples[0] || allArtworks[0];
+                         pool[0];
     } else if (queryName) {
-        currentProduct = allSamples.find(s => s.name.toLowerCase().includes(queryName.toLowerCase())) ||
-                         allArtworks.find(a => a.name.toLowerCase().includes(queryName.toLowerCase())) ||
-                         allSamples[0] || allArtworks[0];
+        currentProduct = pool.find(p => (p.name || '').toLowerCase().includes(queryName.toLowerCase())) || pool[0];
     } else {
-        currentProduct = allSamples[0] || allArtworks[0];
+        currentProduct = pool[0];
     }
 
     // 4. Populate Product Info
     if (currentProduct) {
         const titleEl = document.getElementById('product-title');
-        const tagEl = document.getElementById('product-badge-tag');
-        const editionTag = document.getElementById('edition-type-tag');
-        const mainImg = document.getElementById('main-product-image');
+        const sizeEl = document.getElementById('product-size-badge');
         const breadcrumbTitle = document.getElementById('breadcrumb-title');
-        const breadcrumbCat = document.getElementById('breadcrumb-category-link');
+        const mainImg = document.getElementById('main-product-image');
 
         if (titleEl) titleEl.textContent = currentProduct.name;
-        if (tagEl) tagEl.textContent = currentProduct.size || currentProduct.tag || '12.5 x 24.5" 4mm Rigid Board';
-        if (editionTag) editionTag.textContent = isSample ? 'Printed Studio Showcase' : 'Curated Gallery Artwork';
+        if (sizeEl) sizeEl.textContent = currentProduct.size || currentProduct.tag || '4mm Rigid Board';
         if (breadcrumbTitle) breadcrumbTitle.textContent = currentProduct.name;
-        if (breadcrumbCat) {
-            breadcrumbCat.textContent = isSample ? 'Printed Samples' : 'Curated Gallery';
-            breadcrumbCat.href = isSample ? '/#samples' : '/#gallery';
+        if (mainImg) {
+            mainImg.src = currentProduct.src;
+            mainImg.onload = () => {
+                mainImg.classList.remove('opacity-0');
+                const skeleton = document.getElementById('product-img-skeleton');
+                if (skeleton) skeleton.classList.add('hidden');
+            };
+            if (mainImg.complete) {
+                mainImg.classList.remove('opacity-0');
+                const skeleton = document.getElementById('product-img-skeleton');
+                if (skeleton) skeleton.classList.add('hidden');
+            }
         }
-        if (mainImg) mainImg.src = currentProduct.src;
 
-        document.title = currentProduct.name + ' | Mr.Artist Wall Art Studio';
+        document.title = currentProduct.name + ' | Mr.Artist Printed Wall Art';
 
-        // Auto-select format matching the product size
-        const sz = (currentProduct.size || '').toLowerCase();
-        if (sz.includes('triptych')) {
+        const fmt = (currentProduct.size || currentProduct.tag || '').toLowerCase();
+        if (fmt.includes('triptych')) {
             window.selectFormat('triptych-4mm');
-        } else if (sz.includes('a3')) {
+        } else if (fmt.includes('a3')) {
             window.selectFormat('a3');
-        } else if (sz.includes('a4')) {
+        } else if (fmt.includes('a4')) {
             window.selectFormat('a4');
         } else {
             window.selectFormat('landscape-4mm');
         }
     }
 
-    // 5. Render Samples Showcase Grid
     renderSampleShowcaseGrid();
-
-    // 6. Smoothly Dismiss Preloader
-    setTimeout(dismissPreloader, 350);
-});
-
-// Fallback preloader dismissal if anything takes longer
-window.addEventListener('load', () => {
-    setTimeout(dismissPreloader, 500);
+    initProductPageEntrance();
 });

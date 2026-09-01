@@ -1,3 +1,4 @@
+import { initHeroAnimations, createGridLayout, smoothPageNavigate } from './animations.js';
 import { initAdBlockDetector } from './adblock.js';
 initAdBlockDetector();
 import './style.css';
@@ -68,7 +69,8 @@ window.setCurrency = function(currency) {
 
 // ----------------- State & Filtering -----------------
 let allArtworks = [];
-let activeCategoryFilter = 'all'; // 'all' | 'landscape' | 'abstract' | 'botanical'
+let activeCategoryFilter = 'all';
+let artworksLayout = null; // 'all' | 'landscape' | 'abstract' | 'botanical'
 
 window.setCategoryFilter = function(catKey) {
     activeCategoryFilter = catKey;
@@ -137,39 +139,49 @@ function renderFilteredArtworks() {
 
     if (emptyState) emptyState.classList.add('hidden');
 
-    grid.innerHTML = filtered.map(art => {
-        const priceDisplay = formatPrice(art.rawPrice || art.price || 2800);
-        const waMsg = encodeURIComponent('Hello Mr.Artist! 🎨\nI would like to order this signature wall artwork:\n• Title: ' + art.name + '\n• Category: ' + art.category + '\n• Price: ' + priceDisplay + '\n\nPlease confirm order details. Thank you!');
-        const waLink = 'https://wa.me/94722043235?text=' + waMsg;
+    const generateHtml = () => {
+        return filtered.map(art => {
+            const priceDisplay = formatPrice(art.rawPrice || art.price || 2800);
+            const waMsg = encodeURIComponent('Hello Mr.Artist! 🎨\nI would like to order this signature wall artwork:\n• Title: ' + art.name + '\n• Category: ' + art.category + '\n• Price: ' + priceDisplay + '\n\nPlease confirm order details. Thank you!');
+            const waLink = 'https://wa.me/94722043235?text=' + waMsg;
+            const detailUrl = 'artwork.html?id=' + encodeURIComponent(art.id);
+            return '<div class="glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group bg-white/90">' +
+                '<div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden">' +
+                    '<img src="' + art.src + '" alt="' + art.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" onclick="window.navigateWithCard(event, \'' + detailUrl + '\')">' +
+                    '<div class="absolute top-3 left-3 px-3 py-1 bg-white/95 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#1E1E1E] shadow-2xs">' +
+                        (art.tag || 'Signature Art') +
+                    '</div>' +
+                    '<div class="absolute top-3 right-3 px-3 py-1 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[11px] font-bold text-[#C85A32] shadow-2xs">' +
+                        priceDisplay +
+                    '</div>' +
+                '</div>' +
+                '<div class="p-5 space-y-3 flex-1 flex flex-col justify-between">' +
+                    '<div>' +
+                        '<h4 onclick="window.navigateWithCard(event, \'' + detailUrl + '\')" class="font-serif font-bold text-base text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors line-clamp-1 cursor-pointer">' + art.name + '</h4>' +
+                        '<p class="text-xs text-[#666666] mt-0.5 line-clamp-2 leading-relaxed">' + (art.desc || 'Handcrafted bespoke piece.') + '</p>' +
+                    '</div>' +
+                    '<div class="space-y-2 pt-1">' +
+                        '<a href="' + detailUrl + '" onclick="window.navigateWithCard(event, \'' + detailUrl + '\')" class="w-full py-2 bg-white hover:bg-[#FBF2ED] text-[#222222] hover:text-[#C85A32] font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-1.5 border border-[#E8E3D9]">' +
+                            '<i class="fa-solid fa-eye text-[11px] text-[#C85A32]"></i>' +
+                            '<span>View Piece Details</span>' +
+                        '</a>' +
+                        '<a href="' + waLink + '" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">' +
+                            '<i class="fa-brands fa-whatsapp text-sm"></i>' +
+                            '<span>Direct Order (' + priceDisplay + ')</span>' +
+                        '</a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+    };
 
-        return '<div class="glass-card rounded-3xl overflow-hidden border border-[#E8E3D9] hover:border-[#C85A32]/40 transition-all duration-300 shadow-soft flex flex-col justify-between group bg-white/90">' +
-            '<div class="relative w-full aspect-[4/3] bg-[#F5F2EB] overflow-hidden">' +
-                '<img src="' + art.src + '" alt="' + art.name + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" onclick="window.location.href=\'artwork.html?id=' + encodeURIComponent(art.id) + '\'">' +
-                '<div class="absolute top-3 left-3 px-3 py-1 bg-white/95 backdrop-blur-xs rounded-full border border-[#E8E3D9] text-[10px] font-bold text-[#1E1E1E] shadow-2xs">' +
-                    (art.tag || 'Signature Art') +
-                '</div>' +
-                '<div class="absolute top-3 right-3 px-3 py-1 bg-[#FBF2ED] rounded-full border border-[#C85A32]/25 text-[11px] font-bold text-[#C85A32] shadow-2xs">' +
-                    priceDisplay +
-                '</div>' +
-            '</div>' +
-            '<div class="p-5 space-y-3 flex-1 flex flex-col justify-between">' +
-                '<div>' +
-                    '<h4 onclick="window.location.href=\'artwork.html?id=' + encodeURIComponent(art.id) + '\'" class="font-serif font-bold text-base text-[#1E1E1E] group-hover:text-[#C85A32] transition-colors line-clamp-1 cursor-pointer">' + art.name + '</h4>' +
-                    '<p class="text-xs text-[#666666] mt-0.5 line-clamp-2 leading-relaxed">' + (art.desc || 'Handcrafted bespoke piece.') + '</p>' +
-                '</div>' +
-                '<div class="space-y-2 pt-1">' +
-                    '<a href="artwork.html?id=' + encodeURIComponent(art.id) + '" class="w-full py-2 bg-white hover:bg-[#FBF2ED] text-[#222222] hover:text-[#C85A32] font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-1.5 border border-[#E8E3D9]">' +
-                        '<i class="fa-solid fa-eye text-[11px] text-[#C85A32]"></i>' +
-                        '<span>View Piece Details</span>' +
-                    '</a>' +
-                    '<a href="' + waLink + '" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-[#FBF2ED] hover:bg-[#C85A32] text-[#C85A32] hover:text-white font-bold text-xs rounded-xl transition text-center flex items-center justify-center gap-2 border border-[#C85A32]/25">' +
-                        '<i class="fa-brands fa-whatsapp text-sm"></i>' +
-                        '<span>Direct Order (' + priceDisplay + ')</span>' +
-                    '</a>' +
-                '</div>' +
-            '</div>' +
-        '</div>';
-    }).join('');
+    if (artworksLayout) {
+        artworksLayout.animate(() => {
+            grid.innerHTML = generateHtml();
+        });
+    } else {
+        grid.innerHTML = generateHtml();
+    }
 }
 
 // ----------------- Dismiss Preloader -----------------
@@ -200,6 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 3. Update Counts and Render
     updateArtCounts();
     renderFilteredArtworks();
+    artworksLayout = createGridLayout('#all-artworks-grid');
 
     // 4. Smoothly Dismiss Preloader
     setTimeout(dismissPreloader, 300);
@@ -208,3 +221,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 window.addEventListener('load', () => {
     setTimeout(dismissPreloader, 450);
 });
+
+window.navigateWithCard = function(event, url) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    const card = event ? event.target.closest('.glass-card') : null;
+    smoothPageNavigate(url, card);
+};

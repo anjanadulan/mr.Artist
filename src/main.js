@@ -1,3 +1,4 @@
+import { initHeroAnimations, initScrollRevealAnimations, animateSampleCards, animateButtonTap } from './animations.js';
 import { initAdBlockDetector } from './adblock.js';
 initAdBlockDetector();
 import * as THREE from 'three';
@@ -76,6 +77,7 @@ window.setCurrency = function(currency) {
 
     // 3. Update Gallery active card
     updateCarouselVisuals();
+    
 
     // 4. Update Samples showcase
     renderLoadedSamples();
@@ -741,6 +743,7 @@ function renderLoadedSamples() {
         </div>
     `;
     grid.appendChild(viewMoreCard);
+    requestAnimationFrame(() => animateSampleCards());
 }
 
 async function loadAndRenderSamples() {
