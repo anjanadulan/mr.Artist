@@ -220,12 +220,8 @@ window.sendCustomWhatsAppOrder = function() {
 
 // ----------------- Dismiss Preloader -----------------
 function dismissPreloader() {
-    const preloader = document.getElementById('page-preloader');
-    if (preloader) {
-        preloader.classList.add('loaded');
-        setTimeout(() => {
-            if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
-        }, 450);
+    if (window.dismissPreloader) {
+        window.dismissPreloader();
     }
 }
 

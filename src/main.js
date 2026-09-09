@@ -623,16 +623,9 @@ function initThreeCanvas() {
 
 // ----------------- Preloader Dismissal -----------------
 function dismissPreloader() {
-    const preloader = document.getElementById('page-preloader');
-    if (!preloader) return;
-
-    // Smooth fade out after brand logo introduction
-    setTimeout(() => {
-        preloader.classList.add('loaded');
-        setTimeout(() => {
-            preloader.remove();
-        }, 650);
-    }, 850);
+    if (window.dismissPreloader) {
+        window.dismissPreloader();
+    }
 }
 
 // ----------------- Printed Samples Showcase -----------------

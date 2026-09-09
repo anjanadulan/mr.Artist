@@ -45,46 +45,67 @@ window.setCurrency = function(currency) {
     window.dispatchEvent(new CustomEvent('currencyChanged', { detail: { currency } }));
 };
 
-let preloaderTimeout = null;
-
 // 2. Universal Preloader Controller
-export function dismissPreloader() {
+const PAGE_LOAD_START = performance.now();
+const MIN_PRELOADER_DURATION = 650; // Minimum milliseconds to let brand animation play gracefully (eliminates flicker)
+
+export function dismissPreloader(immediate = false) {
     clearTimeout(preloaderTimeout);
     const preloader = document.getElementById('page-preloader');
-    if (preloader && !preloader.classList.contains('loaded')) {
+    if (!preloader || preloader.classList.contains('loaded')) return;
+
+    if (immediate) {
         preloader.classList.add('loaded');
-        setTimeout(() => {
-            if (preloader.parentNode && preloader.classList.contains('loaded')) {
-                preloader.style.display = 'none';
-            }
-        }, 450);
+        preloader.style.display = 'none';
+        return;
     }
+
+    const elapsed = performance.now() - PAGE_LOAD_START;
+    const delay = Math.max(0, MIN_PRELOADER_DURATION - elapsed);
+
+    preloaderTimeout = setTimeout(() => {
+        if (!preloader.classList.contains('loaded')) {
+            preloader.classList.add('loaded');
+            setTimeout(() => {
+                if (preloader.classList.contains('loaded')) {
+                    preloader.style.display = 'none';
+                }
+            }, 400);
+        }
+    }, delay);
 }
 
 export function showPreloader() {
     const preloader = document.getElementById('page-preloader');
     if (preloader) {
         preloader.style.display = 'flex';
+        // Force reflow so transition plays reliably
+        void preloader.offsetHeight;
         preloader.classList.remove('loaded');
         clearTimeout(preloaderTimeout);
-        preloaderTimeout = setTimeout(dismissPreloader, 2500);
+        preloaderTimeout = setTimeout(() => dismissPreloader(), 2500);
     }
 }
 
+window.dismissPreloader = dismissPreloader;
+window.showPreloader = showPreloader;
+
 export function initPreloader() {
     if (document.readyState === 'complete') {
-        setTimeout(dismissPreloader, 100);
+        dismissPreloader();
     } else {
         window.addEventListener('load', () => {
-            setTimeout(dismissPreloader, 100);
+            dismissPreloader();
         });
-        // Safety timeout so preloader never hangs on slow assets or bots
-        setTimeout(dismissPreloader, 900);
+        // Safety timeout so preloader never hangs indefinitely on slow CDN assets
+        setTimeout(() => {
+            dismissPreloader();
+        }, 2200);
     }
 
     // Handle bfcache (browser back/forward navigation)
-    window.addEventListener('pageshow', () => {
-        dismissPreloader();
+    window.addEventListener('pageshow', (e) => {
+        dismissPreloader(true);
     });
 
     // Attach smooth page loading transitions to internal navigation links
@@ -116,7 +137,12 @@ export function initPreloader() {
             return;
         }
 
+        // Intercept to display preloader before browser navigates away (eliminates white flash)
+        e.preventDefault();
         showPreloader();
+        setTimeout(() => {
+            window.location.href = href;
+        }, 180);
     });
 }
 

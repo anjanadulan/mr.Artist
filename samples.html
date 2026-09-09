@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" style="background-color: #FDFBF7;">
 <head>
     <!-- Google AdSense -->
     <meta name="google-adsense-account" content="ca-pub-9803318252367222">
@@ -51,6 +51,11 @@
 
     <!-- Critical Inline Styles for Instant Preloader (Zero FOUC) -->
     <style>
+        html, body {
+            background-color: #FDFBF7 !important;
+            margin: 0;
+            padding: 0;
+        }
         #page-preloader {
             position: fixed;
             top: 0;
@@ -58,7 +63,7 @@
             width: 100vw;
             height: 100vh;
             background-color: #FDFBF7;
-            z-index: 999999;
+            z-index: 9999999;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -67,7 +72,7 @@
             padding: 0;
             opacity: 1;
             visibility: visible;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
             user-select: none;
             -webkit-user-select: none;
         }
@@ -85,15 +90,15 @@
             max-width: 90vw;
         }
         .preloader-img {
-            width: 200px;
+            width: 190px;
             max-width: 65vw;
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0 4px 12px rgba(200, 90, 50, 0.12));
-            animation: preloader-logo-pulse 2s infinite ease-in-out;
+            animation: preloader-logo-pulse 1.8s infinite ease-in-out;
         }
         .preloader-track {
-            width: 130px;
+            width: 140px;
             height: 3px;
             background-color: #E8E3D9;
             border-radius: 9999px;
@@ -113,7 +118,7 @@
         }
         @keyframes preloader-bar-slide {
             0% { transform: translateX(-100%); }
-            100% { transform: translateX(220%); }
+            100% { transform: translateX(250%); }
         }
     </style>
     <!-- Schema.org JSON-LD (Collection & Breadcrumbs) -->
