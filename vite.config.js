@@ -15,7 +15,11 @@ export default defineConfig({
         artworks: resolve(__dirname, 'artworks.html'),
         artwork: resolve(__dirname, 'artwork.html'),
         custom: resolve(__dirname, 'custom.html'),
-        privacy: resolve(__dirname, 'privacy.html')
+        privacy: resolve(__dirname, 'privacy.html'),
+        about: resolve(__dirname, 'about.html'),
+        contact: resolve(__dirname, 'contact.html'),
+        terms: resolve(__dirname, 'terms.html'),
+        journal: resolve(__dirname, 'journal.html')
       }
     }
   }

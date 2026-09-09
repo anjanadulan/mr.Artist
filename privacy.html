@@ -30,82 +30,122 @@
 
     <!-- Header Navigation -->
     <nav class="fixed top-5 left-1/2 transform -translate-x-1/2 w-[92%] max-w-[960px] h-16 glass-nav rounded-full flex items-center justify-between px-5 md:px-7 z-50 shadow-soft">
-        <a href="/" class="flex items-center group py-1">
-            <img src="/logo.png" alt="Mr.Artist Logo" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" style="height: 44px; width: auto;">
-        </a>
-        <a href="/" class="px-4 py-2 text-xs font-bold text-[#1E1E1E] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition flex items-center gap-1.5 border border-[#E8E3D9]">
-            <i class="fa-solid fa-arrow-left text-[10px]"></i>
-            <span>Back to Home</span>
-        </a>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="pt-32 pb-20 max-w-4xl mx-auto px-6 flex-1 space-y-8">
-        
-        <div class="space-y-3 text-center sm:text-left border-b border-[#E8E3D9] pb-6">
-            <span class="text-xs font-bold uppercase tracking-wider text-[#C85A32] bg-[#FBF2ED] px-3.5 py-1 rounded-full border border-[#C85A32]/20 inline-block shadow-2xs">Legal & Compliance</span>
-            <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#1E1E1E]">Privacy Policy</h1>
-            <p class="text-xs text-[#777]">Last updated: September 1, 2026 • Applies to Mr.Artist Web & Mobile App</p>
-        </div>
-
-        <div class="bg-white rounded-3xl p-6 sm:p-10 border border-[#E8E3D9] shadow-soft space-y-8 text-xs sm:text-sm text-[#444] leading-relaxed">
-            
-            <section class="space-y-2">
-                <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">1. Overview</h2>
-                <p>
-                    Mr.Artist Studio ("we", "our", or "us"), owned and operated by Ganusha Dulanga, is committed to protecting your privacy. This Privacy Policy explains how information is collected, used, and safeguarded when you visit our website (<strong>https://mr-artist.vercel.app</strong>) or use our Android mobile application.
-                </p>
-            </section>
-
-            <section class="space-y-2">
-                <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">2. Information We Collect</h2>
-                <p>
-                    • <strong>Direct Communications:</strong> When you initiate a custom poster request or artwork order via WhatsApp or email, we receive your voluntarily provided contact details, vehicle/character references, and order notes to fulfill your request.<br>
-                    • <strong>Log & Device Data:</strong> Like most web and mobile applications, our servers automatically log non-personally identifiable information such as browser type, operating system version, device model, and referring URLs.
-                </p>
-            </section>
-
-            <section class="space-y-2">
-                <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">3. Third-Party Advertising (Google AdSense & AdMob)</h2>
-                <p>
-                    We use <strong>Google AdSense</strong> on our website and <strong>Google AdMob</strong> in our mobile application to serve advertisements. Google and its certified ad partners use cookies and device advertising identifiers (such as Google Advertising ID) to serve personalized and non-personalized ads based on prior visits.<br><br>
-                    You can manage or opt-out of personalized advertising anytime by visiting <a href="https://www.google.com/settings/ads" target="_blank" class="text-[#C85A32] underline font-semibold">Google Ads Settings</a> or adjusting your device's privacy settings.
-                </p>
-            </section>
-
-            <section class="space-y-2">
-                <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">4. Data Storage & Security</h2>
-                <p>
-                    Our catalog inventory and artwork assets are hosted securely via Supabase and Vercel infrastructure. We employ industry-standard encryption protocols (HTTPS/TLS) to secure all data transmissions.
-                </p>
-            </section>
-
-            <section class="space-y-2">
-                <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">5. Contact Us</h2>
-                <p>
-                    If you have questions regarding this Privacy Policy, please contact:<br>
-                    • <strong>Studio Owner:</strong> Ganusha Dulanga (Mr.Artist)<br>
-                    • <strong>Email:</strong> dnmasteryt@gmail.com<br>
-                    • <strong>WhatsApp Support:</strong> +94 72 204 3235<br>
-                    • <strong>Website:</strong> https://mr-artist.vercel.app
-                </p>
-            </section>
-
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-[#E8E3D9] bg-white py-6 px-6 text-center text-xs text-[#888888]">
-        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-            <p>&copy; 2026 Mr.Artist Studio • All rights reserved.</p>
-            <div class="flex items-center gap-4">
-                <a href="/" class="hover:text-[#C85A32] transition">Home</a>
-                <a href="/custom.html" class="hover:text-[#C85A32] transition">Custom Studio</a>
-                <a href="/privacy.html" class="text-[#C85A32] font-bold">Privacy Policy</a>
+            <a href="/" class="flex items-center group py-1">
+                <img src="/logo.png" alt="Mr.Artist Logo" class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform" style="height: 44px; width: auto;">
+            </a>
+            <div class="hidden sm:flex items-center gap-1.5 text-xs font-semibold">
+                <a href="/" class="px-3 py-1.5 text-[#666666] hover:text-[#C85A32] rounded-full transition">Home</a>
+                <a href="/artworks.html" class="px-3 py-1.5 text-[#666666] hover:text-[#C85A32] rounded-full transition">Gallery</a>
+                <a href="/journal.html" class="px-3 py-1.5 text-[#666666] hover:text-[#C85A32] rounded-full transition">Journal</a>
+                <a href="/about.html" class="px-3 py-1.5 text-[#666666] hover:text-[#C85A32] rounded-full transition">About</a>
+                <a href="/contact.html" class="px-3 py-1.5 text-[#666666] hover:text-[#C85A32] rounded-full transition">Contact</a>
             </div>
-        </div>
-    </footer>
+            <a href="/" class="px-4 py-2 text-xs font-bold text-[#1E1E1E] hover:text-[#C85A32] rounded-full hover:bg-[#FBF2ED] transition flex items-center gap-1.5 border border-[#E8E3D9]">
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                <span>Back to Studio</span>
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="pt-32 pb-20 max-w-4xl mx-auto px-6 flex-1 space-y-8">
+            
+            <div class="space-y-3 text-center sm:text-left border-b border-[#E8E3D9] pb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#C85A32] bg-[#FBF2ED] px-3.5 py-1 rounded-full border border-[#C85A32]/20 inline-block shadow-2xs">Legal & Compliance</span>
+                <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#1E1E1E]">Privacy Policy</h1>
+                <p class="text-xs text-[#777]">Last updated: September 9, 2026 • Applies to Mr.Artist Web Platform & Mobile Applications</p>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 sm:p-10 border border-[#E8E3D9] shadow-soft space-y-8 text-xs sm:text-sm text-[#444] leading-relaxed">
+                
+                <section class="space-y-2">
+                    <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">1. Overview & Commitment</h2>
+                    <p>
+                        Mr.Artist Studio ("we", "our", or "us"), owned and operated by Ganusha Dulanga, is committed to safeguarding user privacy and personal data. This Privacy Policy details how information is collected, utilized, and protected across our website (<strong>https://mr-artist.vercel.app</strong>) and our associated digital services.
+                    </p>
+                </section>
+
+                <section class="space-y-2">
+                    <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">2. Information We Collect</h2>
+                    <p>
+                        • <strong>Voluntary Customer Inquiries:</strong> When you initiate an artwork commission or custom spec poster order via WhatsApp or email, we receive voluntarily supplied information such as contact details, reference imagery, custom dimensions, and shipping addresses necessary to fulfill your order.<br>
+                        • <strong>Automated Log Data:</strong> Like most modern web platforms, our servers and analytics automatically capture standard technical diagnostics including browser type, operating system, IP address, referral URLs, and session timestamps.
+                    </p>
+                </section>
+
+                <section class="space-y-3 bg-[#FAF8F5] p-5 rounded-2xl border border-[#E8E3D9]">
+                    <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">3. Third-Party Advertising & Google AdSense Disclosures</h2>
+                    <p>
+                        We partner with third-party advertising vendors, including <strong>Google AdSense</strong>, to serve advertisements when you visit our website. To comply with Google Publisher Policies, please note the following:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>
+                            <strong>Third-Party Vendor Cookies:</strong> Third party vendors, including Google, use cookies to serve ads based on a user's prior visits to our website or other websites across the Internet.
+                        </li>
+                        <li>
+                            <strong>Advertising Cookies:</strong> Google's use of advertising cookies enables it and its partners to serve personalized advertisements to our users based on their visits to our site and/or other sites on the Internet.
+                        </li>
+                        <li>
+                            <strong>Opting Out of Personalized Advertising:</strong> Users may opt out of personalized advertising by visiting Google's <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" class="text-[#C85A32] underline font-semibold">Ads Settings</a>. Alternatively, users may opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://optout.aboutads.info/" target="_blank" rel="noopener noreferrer" class="text-[#C85A32] underline font-semibold">www.aboutads.info</a>.
+                        </li>
+                        <li>
+                            <strong>How Google Uses Data:</strong> For comprehensive information regarding how Google processes information when you visit partner sites, please review <a href="https://www.google.com/policies/privacy/partners/" target="_blank" rel="noopener noreferrer" class="text-[#C85A32] underline font-semibold">How Google uses data when you use our partners' sites or apps</a>.
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="space-y-2">
+                    <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">4. Cookie Policy & Web Beacons</h2>
+                    <p>
+                        A cookie is a small text file placed on your device by websites that you visit. We utilize cookies and similar tracking technologies (such as web beacons and local storage) to ensure site functionality, preserve user preferences (such as currency display in LKR or USD), analyze traffic patterns, and deliver relevant ad experiences through certified networks. You can configure your browser to block or alert you about cookies; however, some site features may experience reduced functionality.
+                    </p>
+                </section>
+
+                <section class="space-y-2">
+                    <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">5. Data Security & Storage</h2>
+                    <p>
+                        Our platform inventory, database, and asset distribution are hosted on enterprise-grade infrastructure managed by Supabase and Vercel. We enforce strict HTTPS encryption across all client-server communication to protect data in transit.
+                    </p>
+                </section>
+
+                <section class="space-y-2">
+                    <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">6. Rights Under Global Regulations (GDPR & CCPA)</h2>
+                    <p>
+                        Depending on your location, you possess rights to request access to, rectify, or erase personal data held by us. You also maintain the right to object to or restrict processing of your information. To exercise any of these rights, contact us at the details below.
+                    </p>
+                </section>
+
+                <section class="space-y-2">
+                    <h2 class="text-base sm:text-lg font-serif font-bold text-[#1E1E1E]">7. Contact Our Privacy Officer</h2>
+                    <p>
+                        For inquiries or concerns regarding this Privacy Policy, please reach out directly:<br>
+                        • <strong>Studio Owner:</strong> Ganusha Dulanga (Mr.Artist Studio)<br>
+                        • <strong>Official Email:</strong> dnmasteryt@gmail.com<br>
+                        • <strong>WhatsApp Support:</strong> +94 72 204 3235<br>
+                        • <strong>Physical Studio:</strong> Colombo, Western Province, Sri Lanka<br>
+                        • <strong>Website:</strong> https://mr-artist.vercel.app
+                    </p>
+                </section>
+
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-[#E8E3D9] bg-white py-8 px-6 text-center text-xs text-[#888888]">
+            <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p>&copy; 2026 Mr.Artist Studio • All rights reserved.</p>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a href="/" class="hover:text-[#C85A32] transition">Home</a>
+                    <a href="/artworks.html" class="hover:text-[#C85A32] transition">Gallery</a>
+                    <a href="/custom.html" class="hover:text-[#C85A32] transition">Custom Studio</a>
+                    <a href="/journal.html" class="hover:text-[#C85A32] transition">Journal</a>
+                    <a href="/about.html" class="hover:text-[#C85A32] transition">About Us</a>
+                    <a href="/contact.html" class="hover:text-[#C85A32] transition">Contact</a>
+                    <a href="/terms.html" class="hover:text-[#C85A32] transition">Terms</a>
+                    <a href="/privacy.html" class="text-[#C85A32] font-bold">Privacy Policy</a>
+                </div>
+            </div>
+        </footer>
 
 </body>
 </html>

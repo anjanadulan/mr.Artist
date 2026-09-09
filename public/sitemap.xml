@@ -55,7 +55,39 @@
   <!-- Privacy Policy -->
   <url>
     <loc>https://mr-artist.vercel.app/privacy.html</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.50</priority>
+  </url>
+
+  <!-- Design Journal & Framing Guides -->
+  <url>
+    <loc>https://mr-artist.vercel.app/journal.html</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- About Studio -->
+  <url>
+    <loc>https://mr-artist.vercel.app/about.html</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- Contact Studio Desk -->
+  <url>
+    <loc>https://mr-artist.vercel.app/contact.html</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- Terms of Service -->
+  <url>
+    <loc>https://mr-artist.vercel.app/terms.html</loc>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.50</priority>
   </url>
