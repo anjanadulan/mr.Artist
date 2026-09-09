@@ -46,45 +46,65 @@ window.setCurrency = function(currency) {
 };
 
 // 2. Universal Preloader Controller
+let preloaderTimeout = null;
+let preloaderDismissTimer = null;
 const PAGE_LOAD_START = performance.now();
-const MIN_PRELOADER_DURATION = 650; // Minimum milliseconds to let brand animation play gracefully (eliminates flicker)
+const MIN_PRELOADER_DURATION = 500; // Calibrated milliseconds for smooth logo animation without hanging
 
 export function dismissPreloader(immediate = false) {
-    clearTimeout(preloaderTimeout);
-    const preloader = document.getElementById('page-preloader');
-    if (!preloader || preloader.classList.contains('loaded')) return;
-
-    if (immediate) {
-        preloader.classList.add('loaded');
-        preloader.style.display = 'none';
-        return;
-    }
-
-    const elapsed = performance.now() - PAGE_LOAD_START;
-    const delay = Math.max(0, MIN_PRELOADER_DURATION - elapsed);
-
-    preloaderTimeout = setTimeout(() => {
-        if (!preloader.classList.contains('loaded')) {
-            preloader.classList.add('loaded');
-            setTimeout(() => {
-                if (preloader.classList.contains('loaded')) {
-                    preloader.style.display = 'none';
-                }
-            }, 400);
+    try {
+        if (preloaderTimeout) {
+            clearTimeout(preloaderTimeout);
+            preloaderTimeout = null;
         }
-    }, delay);
+        if (preloaderDismissTimer) {
+            clearTimeout(preloaderDismissTimer);
+            preloaderDismissTimer = null;
+        }
+        const preloader = document.getElementById('page-preloader');
+        if (!preloader || preloader.classList.contains('loaded')) return;
+
+        if (immediate) {
+            preloader.classList.add('loaded');
+            preloader.style.display = 'none';
+            return;
+        }
+
+        const elapsed = performance.now() - PAGE_LOAD_START;
+        const delay = Math.max(0, MIN_PRELOADER_DURATION - elapsed);
+
+        preloaderDismissTimer = setTimeout(() => {
+            try {
+                if (!preloader.classList.contains('loaded')) {
+                    preloader.classList.add('loaded');
+                    setTimeout(() => {
+                        try {
+                            if (preloader.classList.contains('loaded')) {
+                                preloader.style.display = 'none';
+                            }
+                        } catch (e) {}
+                    }, 350);
+                }
+            } catch (e) {}
+        }, delay);
+    } catch (e) {
+        console.warn("Preloader dismiss error:", e);
+        const p = document.getElementById('page-preloader');
+        if (p) p.style.display = 'none';
+    }
 }
 
 export function showPreloader() {
-    const preloader = document.getElementById('page-preloader');
-    if (preloader) {
-        preloader.style.display = 'flex';
-        // Force reflow so transition plays reliably
-        void preloader.offsetHeight;
-        preloader.classList.remove('loaded');
-        clearTimeout(preloaderTimeout);
-        preloaderTimeout = setTimeout(() => dismissPreloader(), 2500);
-    }
+    try {
+        const preloader = document.getElementById('page-preloader');
+        if (preloader) {
+            preloader.style.display = 'flex';
+            void preloader.offsetHeight;
+            preloader.classList.remove('loaded');
+            if (preloaderTimeout) clearTimeout(preloaderTimeout);
+            preloaderTimeout = setTimeout(() => dismissPreloader(), 2500);
+        }
+    } catch (e) {}
 }
 
 window.dismissPreloader = dismissPreloader;

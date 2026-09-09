@@ -108,6 +108,15 @@
                 <div class="preloader-progress"></div>
             </div>
         </div>
+        <script>
+            setTimeout(function() {
+                var p = document.getElementById('page-preloader');
+                if (p && !p.classList.contains('loaded')) {
+                    p.classList.add('loaded');
+                    setTimeout(function() { if (p) p.style.display = 'none'; }, 400);
+                }
+            }, 1800);
+        </script>
     </div>
 
     <!-- Floating Navigation Bar -->
