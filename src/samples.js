@@ -1,6 +1,5 @@
+import './nav.js';
 import { initHeroAnimations, createGridLayout, smoothPageNavigate } from './animations.js';
-import { initAdBlockDetector } from './adblock.js';
-initAdBlockDetector();
 import './style.css';
 import { fetchSamples, defaultSamples } from './supabase.js';
 

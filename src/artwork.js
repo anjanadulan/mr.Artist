@@ -1,6 +1,5 @@
+import './nav.js';
 import { initHeroAnimations, initProductPageEntrance } from './animations.js';
-import { initAdBlockDetector } from './adblock.js';
-initAdBlockDetector();
 import './style.css';
 import { fetchArtworks, defaultArtworks } from './supabase.js';
 

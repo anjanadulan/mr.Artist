@@ -1,6 +1,5 @@
+import './nav.js';
 import { initHeroAnimations } from './animations.js';
-import { initAdBlockDetector } from './adblock.js';
-initAdBlockDetector();
 import './style.css';
 
 // ----------------- Multi-Currency Conversion Engine -----------------
